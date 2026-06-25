@@ -741,8 +741,8 @@ const TRANSLATIONS = {
   },
 };
 
-// Global lang state with subscriber pattern
-window.__lang = window.__lang || 'pt';
+// Global lang state with subscriber pattern — persiste no localStorage
+window.__lang = window.__lang || localStorage.getItem('nayax_lang') || 'pt';
 window.__langSubs = window.__langSubs || new Set();
 
 const useLang = () => {
@@ -759,6 +759,7 @@ const useLang = () => {
   const setLang = (newLang) => {
     if (TRANSLATIONS[newLang]) {
       window.__lang = newLang;
+      localStorage.setItem('nayax_lang', newLang);
       window.__langSubs.forEach(s => s());
     }
   };
@@ -767,8 +768,8 @@ const useLang = () => {
 
 window.useLang = useLang;
 window.TRANSLATIONS = TRANSLATIONS;
-// Global t() for non-React contexts (modals, helpers)
+// Global t() para contextos não-React
 window.t = (key, fallback) => {
-  const lang = window.__lang || 'pt';
+  const lang = window.__lang || localStorage.getItem('nayax_lang') || 'pt';
   return (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || TRANSLATIONS.pt[key] || fallback || key;
 };
