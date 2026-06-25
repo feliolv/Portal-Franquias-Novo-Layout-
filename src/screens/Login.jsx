@@ -327,7 +327,7 @@ const Login = ({ onSignin }) => {
                 boxShadow: '0 6px 20px rgba(255,122,89,0.25)',
               }}>
                 <Icon name="hubspot" size={18}/>
-                {loading ? loading ? t('login.btnSubmitting') : t('login.btnHubspot')}
+                {loading ? t('login.btnSubmitting') : t('login.btnHubspot')}
                 <Icon name="arrow-right" size={15}/>
               </button>
 
