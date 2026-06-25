@@ -60,33 +60,41 @@ const App = () => {
   };
   const clearCart = () => setCart([]);
 
-  const openProduct = (p) => { setActiveProduct(p); setRoute('product'); };
+  const openProduct = (p) => { setActiveProduct(p); navigate('product'); };
 
   /* ── Route dispatch ── */
   let body;
   if (route === 'login') {
-    body = <Login onSignin={(kind) => {
+    body = <Login onSignin={(kind, user) => {
+      // Salvar user mock no sessionStorage para persistir F5
+      const mockUser = user || {
+        code: kind === 'partner' ? 'F01-204' : 'NX-7842',
+        name: kind === 'admin' ? 'Admin Nayax' : 'Vending Premier Ltda.',
+        role: kind === 'admin' ? 'admin' : 'client',
+        tipo: kind,
+      };
+      sessionStorage.setItem('portal_user', JSON.stringify(mockUser));
       const dest = kind === 'admin' ? 'admin-dashboard' : kind === 'partner' ? 'partner' : 'catalog';
       navigate(dest);
     }}/>;
   } else if (route === 'partner') {
-    body = <Partner setRoute={setRoute}/>;
+    body = <Partner setRoute={navigate}/>;
   } else if (route === 'catalog') {
-    body = <Catalog cart={cart} setRoute={setRoute} addToCart={addToCart} openProduct={openProduct} openCart={() => setCartOpen(true)}/>;
+    body = <Catalog cart={cart} setRoute={navigate} addToCart={addToCart} openProduct={openProduct} openCart={() => setCartOpen(true)}/>;
   } else if (route === 'product') {
-    body = <ProductDetail product={activeProduct} cart={cart} setRoute={setRoute} addToCart={addToCart} openProduct={openProduct} openCart={() => setCartOpen(true)}/>;
+    body = <ProductDetail product={activeProduct} cart={cart} setRoute={navigate} addToCart={addToCart} openProduct={openProduct} openCart={() => setCartOpen(true)}/>;
   } else if (route === 'history') {
-    body = <OrderHistory cart={cart} setRoute={setRoute} openCart={() => setCartOpen(true)}/>;
+    body = <OrderHistory cart={cart} setRoute={navigate} openCart={() => setCartOpen(true)}/>;
   } else if (route === 'materials') {
-    body = <Materials cart={cart} setRoute={setRoute} openCart={() => setCartOpen(true)}/>;
+    body = <Materials cart={cart} setRoute={navigate} openCart={() => setCartOpen(true)}/>;
   } else if (route === 'support') {
-    body = <Support cart={cart} setRoute={setRoute} openCart={() => setCartOpen(true)}/>;
+    body = <Support cart={cart} setRoute={navigate} openCart={() => setCartOpen(true)}/>;
   } else if (route === 'profile') {
-    body = <Profile cart={cart} setRoute={setRoute} openCart={() => setCartOpen(true)}/>;
+    body = <Profile cart={cart} setRoute={navigate} openCart={() => setCartOpen(true)}/>;
   } else if (route.startsWith('admin-')) {
-    body = <AdminShell route={route} setRoute={setRoute}/>;
+    body = <AdminShell route={route} setRoute={navigate}/>;
   } else {
-    body = <Login onSignin={() => setRoute('catalog')}/>;
+    body = <Login onSignin={() => navigate('catalog')}/>;
   }
 
   return (
