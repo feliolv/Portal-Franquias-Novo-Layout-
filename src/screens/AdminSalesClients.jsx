@@ -188,11 +188,11 @@ const AdminSales = () => {
           <thead>
             <tr>
               <th style={{ width: 40 }}><input type="checkbox" checked={selected.length === rows.length && rows.length > 0} onChange={toggleAll} style={{ accentColor: 'var(--accent)' }}/></th>
-              <th>{>{t('admin.sales.colOrder', 'Pedido')}<}</th>
-              <th>{>{t('admin.sales.colFranchise', 'Franquia')}<}</th>
+              <th>{t('admin.sales.colOrder', 'Pedido')}</th>
+              <th>{t('admin.sales.colFranchise', 'Franquia')}</th>
               <th>Itens</th>
-              <th>{>{t('admin.sales.colStatus', 'Status')}<}</th>
-              <th>{>{t('admin.sales.colHubspot', 'HubSpot')}<}</th>
+              <th>{t('admin.sales.colStatus', 'Status')}</th>
+              <th>{t('admin.sales.colHubspot', 'HubSpot')}</th>
               <th>Pagamento</th>
               <th style={{ textAlign: 'right' }}>Valor</th>
               <th>Quando</th>
@@ -403,7 +403,7 @@ const AdminSales = () => {
                   <div style={{ fontSize: 18, fontWeight: 700 }}>{detailOrder.items}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div className="t-overline" style={{ fontSize: 10 }}>{>{t('admin.sales.colTotal', 'Total')}<}</div>
+                  <div className="t-overline" style={{ fontSize: 10 }}>{t('admin.sales.colTotal', 'Total')}</div>
                   <div style={{ fontSize: 22, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{fmtBRL(detailOrder.total)}</div>
                 </div>
               </div>

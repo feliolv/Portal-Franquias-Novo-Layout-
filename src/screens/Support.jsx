@@ -63,7 +63,7 @@ const Support = ({ cart, setRoute, openCart }) => {
           ) : (
             <div className="table-wrap">
               <table className="t">
-                <thead><tr><th>{>{t('support.ticket', 'Chamado')}<}</th><th>t('support.subject', 'Assunto')</th><th>Categoria</th><th>t('support.priority', 'Prioridade')</th><th>Status</th><th>t('common.lastUpdate', 'Última atualização')</th><th></th></tr></thead>
+                <thead><tr><th>{t('support.ticket', 'Chamado')}</th><th>{t('support.subject', 'Assunto')}</th><th>Categoria</th><th>{t('support.priority', 'Prioridade')}</th><th>Status</th><th>{t('common.lastUpdate', 'Última atualização')}</th><th></th></tr></thead>
                 <tbody>
                   {rows.map(t => {
                     const pm = PRIO_META[t.priority], sm = TICKET_STATUS_META[t.status];

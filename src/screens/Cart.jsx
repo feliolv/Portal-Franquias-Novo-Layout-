@@ -19,7 +19,7 @@ const CartDrawer = ({ cart, updateQty, clearCart, onClose, onCheckout }) => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {cart.length > 0 && (
-              <button onClick={clearCart} className="btn btn-ghost btn-sm" title=t('cart.clear', 'Limpar carrinho') style={{ color: 'var(--red-30)' }}>
+              <button onClick={clearCart} className="btn btn-ghost btn-sm" title={t('cart.clear', 'Limpar carrinho')} style={{ color: 'var(--red-30)' }}>
                 <Icon name="trash" size={14}/> Limpar
               </button>
             )}

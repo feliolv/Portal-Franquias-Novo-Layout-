@@ -200,7 +200,7 @@ const AdminTickets = () => {
 
       <div className="table-wrap">
         <table className="t">
-          <thead><tr><th>{>{t('support.ticket', 'Chamado')}<}</th><th>Cliente</th><th>t('support.subject', 'Assunto')</th><th>Categoria</th><th>t('support.priority', 'Prioridade')</th><th>Atribuído</th><th>Status</th><th>Atualizado</th></tr></thead>
+          <thead><tr><th>{t('support.ticket', 'Chamado')}</th><th>Cliente</th><th>{t('support.subject', 'Assunto')}</th><th>Categoria</th><th>{t('support.priority', 'Prioridade')}</th><th>Atribuído</th><th>Status</th><th>Atualizado</th></tr></thead>
           <tbody>
             {rows.map(t => {
               const pm = PM[t.priority], sm = SM[t.status];
