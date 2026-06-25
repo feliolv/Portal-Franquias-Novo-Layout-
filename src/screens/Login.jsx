@@ -14,17 +14,17 @@ const Login = ({ onSignin }) => {
   const [resetSent, setResetSent] = useState(false);
 
   // Rotating value proposition (each ~3.5s)
-  const HEADLINES = [
-    { kicker: 'Para seu negócio', big: 'Cashless,', accent: 'telemetria e gestão', tail: 'em uma só plataforma.' },
-    { kicker: 'Aprovação ágil',     big: 'Pedidos no portal',   accent: 'aprovados em até 2h', tail: 'pelo time comercial.' },
-    { kicker: 'Para todo segmento', big: 'Vending, micromercado,', accent: 'food service, EV e mais', tail: '— um catálogo só.' },
+  const getHeadlines = () => [
+    { kicker: t('login.heroKicker1'), big: t('login.heroBig1'), accent: t('login.heroAccent1'), tail: t('login.heroTail1') },
+    { kicker: t('login.heroKicker2'), big: t('login.heroBig2'), accent: t('login.heroAccent2'), tail: t('login.heroTail2') },
+    { kicker: t('login.heroKicker3'), big: t('login.heroBig3'), accent: t('login.heroAccent3'), tail: t('login.heroTail3') },
   ];
   const [heroIdx, setHeroIdx] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setHeroIdx(i => (i + 1) % HEADLINES.length), 4500);
-    return () => clearInterval(t);
+    const timer = setInterval(() => setHeroIdx(i => (i + 1) % 3), 4500);
+    return () => clearInterval(timer);
   }, []);
-  const headline = HEADLINES[heroIdx];
+  const headline = getHeadlines()[heroIdx];
 
   const submitClient = (e) => {
     e && e.preventDefault();
@@ -385,3 +385,4 @@ const Login = ({ onSignin }) => {
 };
 
 window.Login = Login;
+
