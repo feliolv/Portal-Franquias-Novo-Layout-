@@ -10,7 +10,12 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const App = () => {
-  const [route, setRoute] = useState('login'); // login | catalog | product | history | admin-*
+  // Restaura rota e usuário do sessionStorage ao recarregar
+  const _savedRoute = sessionStorage.getItem('nayax_route');
+  const _savedUser  = (() => { try { return JSON.parse(sessionStorage.getItem('portal_user')); } catch { return null; } })();
+  const _initRoute  = (_savedUser && _savedRoute && _savedRoute !== 'login') ? _savedRoute : 'login';
+
+  const [route, setRoute] = useState(_initRoute); // login | catalog | product | history | admin-*
   const [activeProduct, setActiveProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -29,8 +34,13 @@ const App = () => {
   }, [t.personality, t.density, t.accent]);
 
   // Expose nav globally for components
+  // Wrapper que persiste a rota no sessionStorage
+  const navigate = (r) => {
+    sessionStorage.setItem('nayax_route', r);
+    setRoute(r);
+  };
   useEffect(() => {
-    window.setRoute = setRoute;
+    window.setRoute = navigate;
     window.openCart = () => setCartOpen(true);
     window.openCheckout = () => { setCartOpen(false); setCheckoutOpen(true); };
   }, []);
@@ -55,7 +65,10 @@ const App = () => {
   /* ── Route dispatch ── */
   let body;
   if (route === 'login') {
-    body = <Login onSignin={(kind) => setRoute(kind === 'admin' ? 'admin-dashboard' : kind === 'partner' ? 'partner' : 'catalog')}/>;
+    body = <Login onSignin={(kind) => {
+      const dest = kind === 'admin' ? 'admin-dashboard' : kind === 'partner' ? 'partner' : 'catalog';
+      navigate(dest);
+    }}/>;
   } else if (route === 'partner') {
     body = <Partner setRoute={setRoute}/>;
   } else if (route === 'catalog') {
