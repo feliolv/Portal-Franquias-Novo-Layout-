@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DealNayax v6 — CPQ Platform</title>
+<link rel="icon" href="assets/nayax-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- =========== TOPBAR =========== -->
+<div class="topbar">
+  <div class="tb-brand">
+    <div class="tb-mark"><img src="assets/nayax-mark-light.png" alt="N"></div>
+  </div>
+  <div class="tb-crumb">
+    <a href="#" onclick="nav('dashboard')">DealNayax</a>
+    <span class="sep">/</span>
+    <span class="cur" id="tb-cur-page">Visão Geral</span>
+  </div>
+  <div class="tb-mid"></div>
+  <div class="tb-right">
+    <!-- Team filter (active page context) -->
+    <div class="tb-filters" id="tb-filters" style="display:flex;align-items:center;gap:10px">
+      <div class="seg-group" style="border:1px solid var(--border);border-radius:9px;padding:3px;background:var(--surface-2)">
+        <button class="seg-pill on" onclick="segPill(this,event)">Todos os times</button>
+        <button class="seg-pill" onclick="segPill(this,event)">Unattended</button>
+        <button class="seg-pill" onclick="segPill(this,event)">Food</button>
+        <button class="seg-pill" onclick="segPill(this,event)">Key Account</button>
+      </div>
+      <!-- Period -->
+      <div class="seg-group" style="border:1px solid var(--border);border-radius:9px;padding:3px;background:var(--surface-2)">
+        <button class="seg-pill" onclick="segPill(this,event)">Semana</button>
+        <button class="seg-pill on accent-yellow" onclick="segPill(this,event)">Mês</button>
+        <button class="seg-pill" onclick="segPill(this,event)">Tri</button>
+        <button class="seg-pill" onclick="segPill(this,event)">Ano</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" style="height:32px;border-radius:8px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Customizado
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="lang-sw">
+      <button class="lang-btn on" data-lang="pt" onclick="setLang('pt')">PT</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    </div>
+    <button class="tb-icon-btn" data-tip="Notificações" title="Notificações">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="dot">4</span>
+    </button>
+    <button class="tb-update" onclick="syncFlash(this)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      Atualizar
+    </button>
+  </div>
+</div>
+
+<!-- =========== SIDEBAR (narrow icon-only) =========== -->
+<div class="sidebar">
+  <div class="nav-item on" id="ni-dashboard" data-label="Dashboard" onclick="nav('dashboard')">
+    <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+  </div>
+  <div class="nav-item" id="ni-deals" data-label="Negócios · 47" onclick="nav('deals')">
+    <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+    <span class="nav-badge">47</span>
+  </div>
+  <div class="nav-item" id="ni-quotes" data-label="Orçamentos" onclick="nav('quotes')">
+    <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+  </div>
+  <div class="nav-item" id="ni-builder" data-label="Novo Orçamento" onclick="nav('builder')">
+    <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+  </div>
+  <div class="nav-item" id="ni-approvals" data-label="Aprovações · 3 pendentes" onclick="nav('approvals')">
+    <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+    <span class="nav-badge">3</span>
+  </div>
+
+  <div class="sb-foot">
+    <div class="av av-y user-menu-trigger" data-tip="Felipe Oliveira · abrir menu" onclick="toggleUserMenu(event)">FO</div>
+  </div>
+</div>
+
+<!-- =========== MAIN =========== -->
+<div class="main">
+  <div class="page on" id="pg-dashboard"></div>
+  <div class="page" id="pg-deals"></div>
+  <div class="page" id="pg-quotes"></div>
+  <div class="page" id="pg-builder"></div>
+  <div class="page" id="pg-approvals"></div>
+  <div class="page" id="pg-profile"></div>
+  <div class="page" id="pg-roles"></div>
+  <div class="page" id="pg-catalog"></div>
+  <div class="page" id="pg-pricing"></div>
+  <div class="page" id="pg-clicksign-mirror"></div>
+  <div class="page" id="pg-admin"></div>
+</div>
+
+<!-- USER MENU (anchored to sidebar avatar) -->
+<div id="user-menu" style="display:none;position:fixed;left:64px;bottom:14px;width:260px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-pop);z-index:1100;overflow:hidden">
+  <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px">
+    <div class="av av-y" style="width:36px;height:36px;font-size:13px">FO</div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--fg)">Felipe Oliveira</div>
+      <div style="font-size:11.5px;color:var(--fg-4)">felipeo@nayax.com</div>
+    </div>
+  </div>
+  <div style="padding:6px">
+    <button onclick="openSettings();toggleUserMenu()" style="width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:transparent;border:none;color:var(--fg-2);cursor:pointer;text-align:left;font-size:13px;font-weight:500" onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background='transparent'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Configurações
+    </button>
+    <button onclick="openProfile();toggleUserMenu()" style="width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:transparent;border:none;color:var(--fg-2);cursor:pointer;text-align:left;font-size:13px;font-weight:500" onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background='transparent'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Meu Perfil
+    </button>
+  </div>
+  <div style="padding:6px;border-top:1px solid var(--border)">
+    <button style="width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:transparent;border:none;color:var(--danger-fg);cursor:pointer;text-align:left;font-size:13px;font-weight:500" onmouseover="this.style.background='var(--danger-bg)'" onmouseout="this.style.background='transparent'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </button>
+  </div>
+</div>
+
+<!-- =========== MODALS =========== -->
+<div id="modals-root"></div>
+
+<!-- =========== COMMAND PALETTE =========== -->
+<div class="qa" id="cmd-palette">
+  <div class="qa-input">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fg-4)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="cmd-input" placeholder="Buscar ou executar ação…" oninput="filterCmd(this.value)">
+    <button class="btn btn-ghost btn-xs" onclick="closeCmd()">Esc</button>
+  </div>
+  <div class="qa-list" id="cmd-list">
+    <div class="qa-item on" onclick="nav('builder');closeCmd()"><div class="ico">＋</div><div>Criar novo orçamento</div></div>
+    <div class="qa-item" onclick="nav('approvals');closeCmd()"><div class="ico">✓</div><div>Ver aprovações pendentes</div></div>
+    <div class="qa-item" onclick="nav('clicksign-mirror');closeCmd()"><div class="ico">✎</div><div>Ver tela Clicksign do cliente</div></div>
+    <div class="qa-item" onclick="nav('catalog');closeCmd()"><div class="ico">📦</div><div>Buscar SKU no catálogo</div></div>
+    <div class="qa-item" onclick="nav('pricing');closeCmd()"><div class="ico">%</div><div>Regras de pricing</div></div>
+    <div class="qa-item" onclick="nav('admin');closeCmd()"><div class="ico">⚙</div><div>Admin · Configurações</div></div>
+  </div>
+  <div class="qa-foot">
+    <span><span class="kbd">↑↓</span> navegar · <span class="kbd">↵</span> selecionar</span>
+    <span>DealNayax v6</span>
+  </div>
+</div>
+
+<!-- =========== TWEAKS PANEL =========== -->
+<div id="tweaks-panel" style="display:none;position:fixed;bottom:18px;right:18px;width:280px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-pop);z-index:1500;flex-direction:column;overflow:hidden">
+  <div style="padding:11px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+    <div style="font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:.5px;text-transform:uppercase">Tweaks</div>
+    <button onclick="tweaksClose()" style="background:none;border:none;cursor:pointer;color:var(--fg-4);display:flex">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div style="padding:14px;display:flex;flex-direction:column;gap:14px">
+    <div>
+      <div style="font-size:10.5px;font-weight:600;color:var(--fg-4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Tema</div>
+      <div style="display:flex;gap:5px">
+        <button onclick="tweakSet('theme','light')" id="t-light" class="btn btn-ghost btn-sm" style="flex:1">Claro</button>
+        <button onclick="tweakSet('theme','dark')" id="t-dark" class="btn btn-ghost btn-sm" style="flex:1">Escuro</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10.5px;font-weight:600;color:var(--fg-4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Densidade</div>
+      <div style="display:flex;gap:5px">
+        <button onclick="tweakSet('density','comfortable')" class="btn btn-ghost btn-sm" style="flex:1">Confortável</button>
+        <button onclick="tweakSet('density','compact')" class="btn btn-ghost btn-sm" style="flex:1">Compacta</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10.5px;font-weight:600;color:var(--fg-4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Cor de destaque</div>
+      <div style="display:flex;gap:6px">
+        <button onclick="tweakSet('yellow','#FFCD00')" style="flex:1;height:32px;border-radius:6px;background:#FFCD00;border:1px solid var(--border)"></button>
+        <button onclick="tweakSet('yellow','#FFB300')" style="flex:1;height:32px;border-radius:6px;background:#FFB300;border:1px solid var(--border)"></button>
+        <button onclick="tweakSet('yellow','#F59E0B')" style="flex:1;height:32px;border-radius:6px;background:#F59E0B;border:1px solid var(--border)"></button>
+        <button onclick="tweakSet('yellow','#FACC15')" style="flex:1;height:32px;border-radius:6px;background:#FACC15;border:1px solid var(--border)"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== EDIT MODE PERSISTED STATE =========== -->
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "light",
+  "density": "comfortable",
+  "yellow": "#FFCD00"
+}/*EDITMODE-END*/;
+</script>
+
+<!-- Command palette filter -->
+<script>
+function filterCmd(q){
+  const ql = (q||"").toLowerCase();
+  document.querySelectorAll(".qa-item").forEach(it=>{
+    it.style.display = !q || it.textContent.toLowerCase().includes(ql) ? "flex" : "none";
+  });
+}
+</script>
+
+<!-- =========== JS bundles =========== -->
+<script src="assets/i18n.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/pages-1.js"></script>
+<script src="assets/pages-2.js"></script>
+<script src="assets/pages-3.js"></script>
+<script src="assets/modals.js"></script>
+<script src="assets/cx.js"></script>
+<script src="assets/cx-widgets.js"></script>
+<script src="assets/profile.js"></script>
+<script src="assets/roles.js"></script>
+<script src="assets/pdf-preview.js"></script>
+
+</body>
+</html>

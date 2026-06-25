@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="version" content="20260520133930">
+<title>NAYAX Brasil — Portal de Vendas</title>
+<base href="/">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+  <style>
+    /* ── OVERRIDE MÁXIMO — login redesign ── */
+    html, body { background: #F7F5F0 !important; }
+    #screen-login,
+    #screen-login.active,
+    #screen-login.screen.active,
+    div#screen-login.active {
+      background: #F7F5F0 !important;
+      background-color: #F7F5F0 !important;
+    }
+    #screen-login .login-screen-bg,
+    .login-screen-bg {
+      background: #F7F5F0 !important;
+      background-color: #F7F5F0 !important;
+      background-image: none !important;
+    }
+    .login-dots { display: none !important; }
+    
+    #screen-admin-login.active,
+    #screen-admin-login.screen.active,
+    div#screen-admin-login.active { background: transparent !important; }
+    
+    #screen-admin-login .login-card,
+    div#screen-admin-login .login-card { 
+      background: #ffffff !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    
+    #screen-admin-login .login-card input {
+      background: transparent !important;
+      color: #262626 !important;
+    }
+
+    #screen-login .login-card,
+    div#screen-login .login-card {
+      background: #ffffff !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    #screen-login .login-screen-bg,
+    #screen-login.active .login-screen-bg,
+    .login-screen-bg {
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,205,0,0.10), transparent 60%), #F7F5F0 !important;
+      background-color: #F7F5F0 !important;
+      background-image: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 100vh !important;
+    }
+    #screen-login .login-dots,
+    .login-dots { display: none !important; }
+
+    /* ── Novo design de login ── */
+    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap');
+
+    .lg-card {
+      background: #ffffff;
+      border: 1px solid oklch(0.93 0.005 80);
+      border-radius: 20px;
+      padding: 40px 48px 32px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 1px 2px rgba(14,17,22,0.04), 0 12px 32px rgba(14,17,22,0.06);
+      font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 28px; }
+    .lg-brand-logo {
+      width: 38px; height: 38px; background: #0E1116; border-radius: 10px;
+      display: grid; place-items: center; overflow: hidden; padding: 3px;
+    }
+    .lg-brand-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+    .lg-brand-tag  { font-size: 11px; color: #888; margin-top: 1px; }
+    .lg-title { font-size: 26px; font-weight: 700; letter-spacing: -0.025em; color: #1a1a1a; line-height: 1.15; }
+    .lg-tabs {
+      display: flex; margin-top: 24px;
+      background: #f2f2f0; border-radius: 10px; padding: 3px;
+    }
+    .lg-tab {
+      flex: 1; padding: 9px 12px; border: 0; background: transparent; border-radius: 8px;
+      font-size: 12.5px; font-weight: 600; color: #888; cursor: pointer;
+      transition: all 0.15s; font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-tab.act { background: #fff; color: #1a1a1a; box-shadow: 0 1px 3px rgba(14,17,22,0.08); }
+    .lg-panel { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .lg-field { display: flex; flex-direction: column; gap: 6px; }
+    .lg-label { font-size: 12px; font-weight: 600; color: #555; }
+    .lg-input-wrap {
+      display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+      background: #F9F9F9; border: 1px solid #e0e0e0; border-radius: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .lg-input-wrap:focus-within { border-color: #1a1a1a; box-shadow: 0 0 0 3px rgba(255,205,0,0.20); }
+    .lg-input-wrap svg { color: #aaa; flex-shrink: 0; }
+    .lg-input {
+      flex: 1; border: 0; background: transparent; outline: none;
+      font-size: 13.5px; color: #1a1a1a; font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-input::placeholder { color: #bbb; }
+    .lg-btn-catalog {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 13px 16px; border: 0; border-radius: 10px;
+      font-size: 13.5px; font-weight: 700; color: #1a1a1a; background: #FFCD00;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s; margin-top: 2px;
+      font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-btn-catalog:hover { opacity: 0.9; }
+    .lg-btn-catalog:active { transform: scale(0.99); }
+    .lg-btn-hs {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; padding: 14px 20px;
+      background: linear-gradient(135deg, #FF7A59 0%, #E5573C 100%);
+      border: 1px solid #C24A2F; border-radius: 10px;
+      font-size: 14px; font-weight: 700; color: #fff;
+      cursor: pointer; box-shadow: 0 4px 14px rgba(255,122,89,0.28);
+      transition: opacity 0.15s; font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-btn-hs:hover { opacity: 0.92; }
+    .lg-note {
+      display: flex; align-items: flex-start; gap: 8px; padding: 11px 13px;
+      background: #F9F9F9; border: 1px solid #e8e8e6; border-radius: 10px;
+      font-size: 11.5px; color: #888; line-height: 1.5;
+      font-family: "Geist", system-ui, sans-serif;
+    }
+    .lg-note svg { flex-shrink: 0; margin-top: 1px; }
+    .lg-foot {
+      margin-top: 24px; padding-top: 16px; border-top: 1px solid #f0efeb;
+      text-align: center; font-size: 11px; color: #bbb;
+    }
+  </style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<div id="screen-login" class="screen active">
+  <div class="login-screen-bg">
+    <div class="login-dots"></div>
+
+    <div class="lg-card">
+
+      <!-- Brand -->
+      <div class="lg-brand">
+        <div class="lg-brand-logo">
+          <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
+            <path d="M18 80V20h15l34 40V20h15v60H67L33 40v40H18z" fill="white"/>
+            <path d="M50 68l20 12H50z" fill="#FFCD00"/>
+          </svg>
+        </div>
+        <div>
+          <div class="lg-brand-name">Nayax BR</div>
+          <div class="lg-brand-tag">Portal de Franquia</div>
+        </div>
+      </div>
+
+      <div class="lg-title">Entrar no portal</div>
+
+      <!-- Abas -->
+      <div class="lg-tabs">
+        <button class="lg-tab act" id="tab-catalog" onclick="lgShowTab('catalog')">Acesse seu catálogo</button>
+        <button class="lg-tab" id="tab-admin" onclick="lgShowTab('admin')">Acesso administrativo</button>
+      </div>
+
+      <!-- Painel: Catálogo -->
+      <div class="lg-panel" id="lg-panel-catalog">
+        <div class="lg-field">
+          <div class="lg-label">Código da franquia</div>
+          <div class="lg-input-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke-linecap="round"/></svg>
+            <input class="lg-input" id="input-code" type="text" placeholder="Código da Franquia"
+              autocomplete="off" spellcheck="false"
+              oninput="this.value=this.value.toUpperCase()"
+              onkeydown="if(event.key==='Enter')document.getElementById('input-pw').focus()"/>
+          </div>
+        </div>
+        <div class="lg-field">
+          <div class="lg-label">Senha de acesso</div>
+          <div class="lg-input-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+            <input class="lg-input" id="input-pw" type="password" placeholder="Senha de acesso"
+              autocomplete="off"
+              onkeydown="if(event.key==='Enter')doLogin()"/>
+            <button type="button" id="pw-toggle-btn" onclick="togglePwVisibility()" style="background:none;border:none;cursor:pointer;padding:2px;display:flex;align-items:center;">
+              <svg id="pw-eye-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CCC" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+          <div id="login-error" style="display:none;background:#FCEBEB;border:1px solid #F09595;border-radius:8px;padding:10px 12px;font-size:12px;color:#A32D2D;align-items:center;gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span data-i18n="login.error">Código ou senha incorretos.</span>
+          </div>
+        </div>
+        <button class="lg-btn-catalog" onclick="doLogin()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" stroke-linecap="round"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span data-i18n="login.btn">Acessar catálogo</span>
+        </button>
+      </div>
+
+      <!-- Painel: Admin -->
+      <div class="lg-panel" id="lg-panel-admin" style="display:none">
+        <div id="admin-login-error" style="display:none;background:#FCEBEB;border:1px solid #F09595;border-radius:8px;padding:10px 12px;font-size:12px;color:#A32D2D;align-items:center;gap:8px;margin-bottom:4px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Acesso não autorizado.</span>
+        </div>
+        <button onclick="loginWithHubSpot()" class="lg-btn-hs">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.164 7.93V5.084a2.198 2.198 0 001.266-1.978V3.04A2.2 2.2 0 0017.234.84h-.067a2.2 2.2 0 00-2.196 2.2v.067a2.198 2.198 0 001.266 1.978V7.93a6.232 6.232 0 00-2.962 1.307L5.64 3.646a2.432 2.432 0 10-1.077 1.247l7.518 5.527a6.26 6.26 0 00.037 7.056l-2.29 2.29a2.01 2.01 0 101.414 1.414l2.29-2.29a6.267 6.267 0 104.632-10.96zm-.997 9.39a3.268 3.268 0 110-6.536 3.268 3.268 0 010 6.536z"/></svg>
+          Entrar com HubSpot
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lg-note">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke-linecap="round"/></svg>
+          Acesso restrito a usuários cadastrados no HubSpot Nayax BR · você será redirecionado para autorizar.
+        </div>
+      </div>
+
+      <div class="lg-foot">© 2026 Nayax Brasil</div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-loading" class="screen">
+  <div class="login-screen-bg">
+    <div class="login-dots"></div>
+    <div class="login-card" style="text-align:center;align-items:center;">
+      <div id="load-avatar" style="width:52px;height:52px;border-radius:50%;background:#FFF7D6;border:2px solid #FFCD00;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B89500" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div id="load-name" style="font-size:15px;font-weight:700;color:#262626;margin-top:4px;"></div>
+      <div id="load-company" style="font-size:12px;color:#888;margin-top:2px;"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:8px;">
+        <div class="load-step" id="step-1">
+          <div class="step-dot-l done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="step-text-l">Credenciais verificadas</div>
+        </div>
+        <div class="load-step" id="step-2">
+          <div class="step-dot-l" id="step2-dot">2</div>
+          <div class="step-text-l" id="step2-txt" style="color:#BBB;">Carregando produtos...</div>
+        </div>
+        <div class="load-step" id="step-3">
+          <div class="step-dot-l" id="step3-dot">3</div>
+          <div class="step-text-l" id="step3-txt" style="color:#BBB;">Abrindo catálogo...</div>
+        </div>
+      </div>
+      <div style="height:3px;background:#EBEBEB;border-radius:2px;width:100%;margin-top:8px;overflow:hidden;">
+        <div id="load-bar" style="height:3px;background:#FFCD00;border-radius:2px;width:0%;transition:width .4s ease;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-catalog" class="screen">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 8h4M6 11h2"/></svg></div>
+        <div><div class="sidebar-wordmark">NAYAX</div><div class="sidebar-sub">Brasil</div></div>
+      </div>
+      <div class="sidebar-client">
+        <div class="sidebar-client-label" data-i18n="cat.authClient">Cliente autenticado</div>
+        <div class="sidebar-client-name" id="sb-name">—</div>
+        <div class="sidebar-client-code" id="sb-code">—</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label" data-i18n="cat.all">Catálogo</div>
+        <div class="nav-item active" onclick="filterCat('Todos',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span data-i18n="cat.all">Todos</span>
+        </div>
+        <div class="nav-item" onclick="filterCat('Produtos',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span data-i18n="cat.products">Produtos</span>
+        </div>
+        <div class="nav-item" onclick="filterCat('Serviços',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span data-i18n="cat.services">Serviços</span>
+        </div>
+        <div class="nav-section-label" style="margin-top:1rem;" data-i18n="cat.order">Pedido</div>
+        <div class="nav-item" id="nav-cart-item" style="display:none;" onclick="showCheckoutModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span data-i18n="cat.viewOrder">Ver pedido</span>
+        </div>
+        <div class="nav-item" onclick="showOrderHistory(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Histórico</span>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        
+        <div style="padding:0 1rem 0.75rem;">
+          <div id="client-lang-dropdown" style="position:relative;width:100%;">
+            <button id="client-lang-btn" onclick="toggleClientLangMenu()" style="width:100%;background:rgba(255,205,0,0.08);border:1px solid rgba(255,205,0,0.3);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:600;color:#FFCD00;cursor:pointer;outline:none;display:flex;align-items:center;justify-content:space-between;gap:6px;box-sizing:border-box;">
+              <span id="client-lang-label">PT - Portugues</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#FFCD00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div id="client-lang-menu" style="display:none;position:absolute;bottom:calc(100% + 4px);left:0;right:0;background:#1c1c1c;border:1px solid rgba(255,205,0,0.2);border-radius:8px;overflow:hidden;z-index:9999;">
+              <div onclick="selectClientLang('pt','PT - Portugues')" style="padding:8px 12px;font-size:12px;font-weight:500;color:#FFCD00;cursor:pointer;" onmouseover="this.style.background='rgba(255,205,0,0.08)'" onmouseout="this.style.background=''">PT - Portugues</div>
+              <div onclick="selectClientLang('en','EN - English')" style="padding:8px 12px;font-size:12px;font-weight:500;color:#FFCD00;cursor:pointer;" onmouseover="this.style.background='rgba(255,205,0,0.08)'" onmouseout="this.style.background=''">EN - English</div>
+              <div onclick="selectClientLang('es','ES - Espanol')" style="padding:8px 12px;font-size:12px;font-weight:500;color:#FFCD00;cursor:pointer;" onmouseover="this.style.background='rgba(255,205,0,0.08)'" onmouseout="this.style.background=''">ES - Espanol</div>
+            </div>
+          </div>
+          
+        </div>
+        <button class="btn-logout" onclick="doLogout()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span data-i18n="cat.logout"><span data-i18n="cat.logout">Sair do portal</span></span>
+        </button>
+      </div>
+    </aside>
+    <div class="main-content">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="topbar-title" data-i18n="cat.title">Catálogo de Vendas</div>
+          <div class="topbar-sep"></div>
+          <div class="topbar-sub" id="tb-segment">—</div>
+        </div>
+      </div>
+      <div class="hero-banner">
+        <div class="hero-inner">
+          <div>
+            <div class="hero-eyebrow" data-i18n="cat.eyebrow">Portal exclusivo</div>
+            <div class="hero-title" id="hero-title">Catálogo Personalizado</div>
+            <div class="hero-sub" id="hero-sub">Preços com condições especiais para sua conta.</div>
+          </div>
+          <div class="hero-kpis">
+            <div class="kpi-block">
+              <div class="kpi-val" id="kpi-items">0</div>
+              <div class="kpi-label">Produtos disponíveis</div>
+            </div>
+            <div class="kpi-block">
+              <div class="kpi-val" id="kpi-cats">0</div>
+              <div class="kpi-label">Categorias</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="filter-bar" id="filter-bar-cat">
+        <button class="filter-tab active" onclick="filterCat('Todos',this)" data-cat="Todos"><span data-i18n="cat.filterAll">Todos</span> <span class="filter-count" id="fc-all">0</span></button>
+        <button class="filter-tab" onclick="filterCat('Produtos',this)" data-cat="Produtos"><span data-i18n="cat.filterProducts">Produtos</span> <span class="filter-count" id="fc-prods">0</span></button>
+        <button class="filter-tab" onclick="filterCat('Serviços',this)" data-cat="Serviços"><span data-i18n="cat.filterServices">Serviços</span> <span class="filter-count" id="fc-serv">0</span></button>
+      </div>
+      <div class="content-area">
+        <div class="content-header">
+          <div class="section-label" id="cat-section-label">Todos os produtos</div>
+          <div style="font-size:13px;color:var(--text-muted);" id="cat-count"></div>
+        </div>
+        <div class="products-grid" id="products-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-dock" id="cart-dock">
+    <div class="cart-dock-left">
+      <div class="cart-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <div class="cart-badge" id="cart-badge">0</div>
+      </div>
+      <div>
+        <div class="cart-dock-label" data-i18n="cat.totalLabel">Total do pedido</div>
+        <div class="cart-dock-total" id="cart-total">R$ 0,00</div>
+      </div>
+    </div>
+    <div class="cart-items-preview" id="cart-preview"></div>
+    <div id="cart-clear-wrap" style="display:none;padding:4px 0 8px;">
+      <button onclick="clearCart()" style="width:100%;background:none;border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.5);font-size:11px;font-weight:600;padding:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='none'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        <span data-i18n="cat.clearCart">Limpar carrinho</span>
+      </button>
+    </div>
+    <button class="btn-checkout" onclick="showCheckoutModal()">
+      <span data-i18n="cat.sendOrder">Enviar pedido</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+      <!-- Histórico de pedidos -->
+      <div id="order-history-section" style="display:none;padding:24px;">
+        <div style="font-size:18px;font-weight:500;color:var(--text-1,#262626);margin-bottom:4px;">Histórico de pedidos</div>
+        <div style="font-size:13px;color:#888;margin-bottom:20px;">Todos os pedidos enviados por esta conta</div>
+        <div id="order-history-list">
+          <div style="text-align:center;padding:40px;color:#aaa;font-size:14px;">Carregando...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="screen-admin" class="screen">
+  <div class="admin-topbar">
+    <div class="admin-topbar-left">
+      <div class="admin-logo">NAY<span>AX</span></div>
+      <div class="admin-badge" data-i18n="admin.panel"><span data-i18n="admin.panel">PAINEL ADMINISTRATIVO</span></div>
+    </div>
+    <nav id="admin-topnav">
+      <div class="admin-nav-item active" onclick="adminNav('dashboard',this)"><span data-i18n="admin.dashboard">Dashboard</span></div>
+      <div class="admin-nav-item" onclick="adminNav('ranking',this)"><span data-i18n="admin.ranking">Ranking</span></div>
+      <div class="admin-nav-item" onclick="adminNav('sales',this)"><span data-i18n="admin.sales">Vendas</span></div>
+      <div class="admin-nav-item" onclick="adminNav('products',this)"><span data-i18n="admin.products">Produtos</span></div>
+      <div class="admin-nav-item" onclick="adminNav('bundles',this)"><span data-i18n="admin.bundles">Bundles</span></div>
+      <div class="admin-nav-item" onclick="adminNav('hs-produtos',this)"><span data-i18n="admin.hsProdutos">HS Produtos</span></div>
+      <div class="admin-nav-item" onclick="adminNav('clients',this)"><span data-i18n="admin.clients">Clientes</span></div>
+      <div class="admin-nav-item" onclick="adminNav('integracoes',this)"><span data-i18n="admin.integracoes">Integrações</span></div>
+      <div id="nav-design-injected" style="display:none!important"></div>
+    </nav>
+    <div class="admin-topbar-right">
+      <!-- Busca Global -->
+      <div style="position:relative;margin-right:4px;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:.5;"><circle cx="6" cy="6" r="4" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/><line x1="9.5" y1="9.5" x2="12.5" y2="12.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input id="global-search-input" type="text" placeholder="Buscar... (Ctrl+K)" onkeydown="if(event.key==='Enter')_globalSearch(this.value)" oninput="_globalSearch(this.value)" style="background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px 6px 30px;font-size:12px;color:rgba(255,255,255,0.8);width:200px;outline:none;" onfocus="this.style.background='rgba(255,255,255,0.12)'" onblur="this.style.background='rgba(255,255,255,0.08)'">
+      </div>
+      <select class="lang-selector" onchange="setLang(this.value)">
+        <option value="pt">PT - Portugues</option>
+        <option value="en">EN - English</option>
+        <option value="es">ES - Espanol</option>
+      </select>
+      <!-- Sino de notificações -->
+      <div id="notif-bell-wrap">
+        <button id="notif-bell-btn" onclick="toggleNotifDropdown()" style="width:36px;height:36px;background:rgba(255,255,255,0.08);border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span id="notif-badge" style="display:none;position:absolute;top:4px;right:4px;min-width:16px;height:16px;background:var(--danger);border-radius:8px;font-size:9px;font-weight:700;color:#fff;align-items:center;justify-content:center;padding:0 3px;font-family:'Poppins',sans-serif;"></span>
+        </button>
+      </div>
+      <div class="topbar-user topbar-user-clickable" onclick="toggleProfileDropdown(event)" style="cursor:pointer;position:relative">
+        <div id="admin-avatar" class="topbar-user-avatar"></div>
+        <div>
+          <div id="admin-topbar-name" class="topbar-user-name"></div>
+          <div id="admin-topbar-role" class="topbar-user-role"></div>
+        </div>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left:4px;opacity:0.5"><path d="M1 1l4 4 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <!-- Dropdown do perfil -->
+        <div id="profile-dropdown" style="display:none;position:absolute;top:calc(100% + 10px);right:0;background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:10px;min-width:180px;overflow:hidden;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.4)">
+          <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.06em">Minha conta</div>
+          <div class="profile-dd-item" onclick="profileTab('equipe')" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;color:rgba(255,255,255,0.8);font-size:13px;transition:background .15s">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Equipe
+          </div>
+          <div class="profile-dd-item" onclick="openResetAdminPassword()" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;color:rgba(255,255,255,0.8);font-size:13px;transition:background .15s;border-top:1px solid rgba(255,255,255,0.06)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Alterar Minha Senha
+          </div>
+                  <div class="profile-dd-item" onclick="doAdminLogout()" style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;color:#f87171;font-size:13px;border-top:1px solid rgba(255,255,255,0.1);transition:background .15s">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sair
+          </div>
+</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="admin-main">
+    <div class="admin-section active" id="adm-dashboard">
+        <div style="display:flex;gap:6px;padding:16px 24px 0;flex-wrap:wrap;">
+          <button class="dash-filter-btn" onclick="setDashFilter('week',this)" style="padding:5px 14px;border-radius:20px;border:0.5px solid #e0e0e0;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:#888;transition:all .15s;">Esta semana</button>
+          <button class="dash-filter-btn" onclick="setDashFilter('month',this)" style="padding:5px 14px;border-radius:20px;border:0.5px solid #262626;font-size:12px;font-weight:500;cursor:pointer;background:#262626;color:#FFCD00;transition:all .15s;">Este mês</button>
+          <button class="dash-filter-btn" onclick="setDashFilter('year',this)" style="padding:5px 14px;border-radius:20px;border:0.5px solid #e0e0e0;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:#888;transition:all .15s;">Este ano</button>
+          <button class="dash-filter-btn" onclick="setDashFilter('all',this)" style="padding:5px 14px;border-radius:20px;border:0.5px solid #e0e0e0;font-size:12px;font-weight:500;cursor:pointer;background:transparent;color:#888;transition:all .15s;">Tudo</button>
+        </div>
+        <div class="admin-page-header">
+          <div><div class="admin-page-title" data-i18n="admin.dashTitle">Dashboard</div><div class="admin-page-sub" data-i18n="admin.dashSub">Visão geral do portal de vendas</div></div>
+        </div>
+        <div class="stats-grid" id="dash-stats"></div>
+        
+        <div style="background:var(--white);border:1px solid var(--gray-mid);border-radius:var(--radius-lg);padding:1rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:var(--shadow-card);">
+          <span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Período:</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn-sm yellow" id="df-today"    onclick="setDashFilter('today',this)">Hoje</button>
+            <button class="btn-sm ghost"  id="df-yesterday" onclick="setDashFilter('yesterday',this)">Ontem</button>
+            <button class="btn-sm ghost"  id="df-week"     onclick="setDashFilter('week',this)">Esta semana</button>
+            <button class="btn-sm ghost"  id="df-month"    onclick="setDashFilter('month',this)">Este mês</button>
+            <button class="btn-sm ghost"  id="df-3m"       onclick="setDashFilter('3months',this)">3 meses</button>
+            <button class="btn-sm ghost"  id="df-all"      onclick="setDashFilter('all',this)">Tudo</button>
+            <button class="btn-sm ghost"  id="df-custom"   onclick="setDashFilter('custom',this)">Personalizado</button>
+          </div>
+          <div id="df-custom-wrap" style="display:none;gap:8px;align-items:center;">
+            <input type="date" id="df-from" style="height:32px;border:1.5px solid var(--gray-line);border-radius:var(--radius);padding:0 8px;font-size:13px;outline:none;" onchange="renderDashCharts()">
+            <span style="font-size:13px;color:var(--text-muted);">até</span>
+            <input type="date" id="df-to"   style="height:32px;border:1.5px solid var(--gray-line);border-radius:var(--radius);padding:0 8px;font-size:13px;outline:none;" onchange="renderDashCharts()">
+          </div>
+        </div>
+        
+        <!-- Linha 1: Volume no tempo + Segmentos -->
+        <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="chart-card">
+            <div class="chart-title" style="display:flex;justify-content:space-between;align-items:center;">
+              Volume de vendas no tempo
+              <span id="dash-vol-period-label" style="font-size:11px;color:#888;">Hoje</span>
+            </div>
+            <div style="position:relative;height:180px;"><canvas id="dashChartVolume"></canvas></div>
+          </div>
+          <div class="chart-card" id="dash-segmentos-card">
+            <div class="chart-title">Pedidos por segmento</div>
+            <div id="dash-segmentos-list" style="display:flex;flex-direction:column;gap:4px;"></div>
+          </div>
+        </div>
+
+        <!-- Linha 2: Ranking clientes + Top produtos -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="chart-card" id="dash-ranking-card">
+            <div class="chart-title">Ranking de clientes</div>
+            <div id="dash-ranking-list" style="display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#aaa;padding:8px 0">Carregando...</div>
+            </div>
+          </div>
+          <div class="chart-card" id="dash-volume-card">
+            <div class="chart-title">Top produtos</div>
+            <div id="dash-volume-list" style="display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#aaa;padding:8px 0">Carregando...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Linha 3: Gráficos adicionais -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="chart-card">
+            <div class="chart-title">Pedidos diários</div>
+            <div style="position:relative;height:160px;"><canvas id="chart-daily"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Status dos pedidos</div>
+            <div style="position:relative;height:160px;"><canvas id="chart-status"></canvas></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="chart-card">
+            <div class="chart-title">Top produtos (volume)</div>
+            <div style="position:relative;height:160px;"><canvas id="chart-products"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title">Top clientes (volume)</div>
+            <div style="position:relative;height:160px;"><canvas id="chart-clients"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Feed de atividades -->
+        <div class="chart-card" style="margin-bottom:12px">
+          <div class="chart-title">Atividade recente</div>
+          <div id="dash-feed-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;">
+            <div style="font-size:11px;color:#aaa;padding:8px 0">Carregando...</div>
+          </div>
+        </div>
+        </div>
+
+      <div class="admin-section" id="adm-clients">
+        <div class="admin-page-header">
+          <div><div class="admin-page-title" data-i18n="admin.clientsTitle">Clientes</div><div class="admin-page-sub" data-i18n="admin.clientsSub">Gerencie clientes autenticados e suas configurações</div></div>
+          <div style="display:flex;gap:6px;">
+          <button id="view-toggle-clients" class="btn-sm ghost" onclick="toggleViewMode('clients')" title="Alternar visualização">&#x2612; Cards</button>
+          <button class="btn-sm ghost" onclick="exportClientsCSV()" title="Exportar CSV"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+          <button class="btn-sm yellow" onclick="openClientModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo cliente
+          </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span style="font-size:13px;font-weight:600;color:var(--black);">Clientes cadastrados</span>
+            <input class="table-search" type="text" id="clients-search" placeholder="Buscar cliente..." oninput="renderClientsTable(this.value)">
+          </div>
+          <table><thead><tr><th onclick="_sortTable('clients','code')" style="cursor:pointer;" data-i18n="th.code">Código</th><th onclick="_sortTable('clients','name')" style="cursor:pointer;" data-i18n="th.company">Razão Social</th><th onclick="_sortTable('clients','segment')" style="cursor:pointer;" data-i18n="th.segment">Segmento</th><th data-i18n="th.franchise">Franquia</th><th data-i18n="th.products">Produtos</th><th onclick="_sortTable('clients','status')" style="cursor:pointer;" data-i18n="th.status">Status</th><th data-i18n="th.actions">Ações</th></tr></thead>
+          <tbody id="clients-table"></tbody></table>
+        </div>
+        <div id="clients-pagination"></div>
+      </div>
+
+      <!-- ADM BUNDLES -->
+      <div class="admin-section" id="adm-bundles">
+        <div class="admin-page-header">
+          <div>
+            <div class="admin-page-title">Bundles</div>
+            <div class="admin-page-sub">Produtos adicionais enviados ao Make quando o produto principal é selecionado</div>
+          </div>
+          <button class="btn-sm yellow" onclick="openBundleModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo bundle
+          </button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span style="font-size:13px;font-weight:600;color:var(--black);">Lista de bundles</span>
+            <input class="table-search" type="text" placeholder="Buscar bundle..." oninput="filterBundlesTable(this.value)">
+          </div>
+          <table>
+            <thead><tr><th>SKU Principal</th><th>Cliente</th><th>SKU Bundle</th><th>Nome Bundle</th><th>Preço (R$)</th><th>Ações</th></tr></thead>
+            <tbody id="bundles-tbody"></tbody>
+          </table>
+        </div>
+        <div id="bundles-pagination"></div>
+      </div>
+
+      <!-- ══ ADM HS PRODUTOS ══ -->
+      <div class="admin-section" id="adm-hs-produtos">
+        <div class="admin-page-header">
+          <div>
+            <div class="admin-page-title">Produtos HubSpot</div>
+            <div class="admin-page-sub">Produtos da marca <strong>VM Tecnologia</strong> cadastrados no HubSpot. Selecione e importe para o portal.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div id="hs-last-sync" style="font-size:11px;color:var(--text-hint);"></div>
+            <button class="btn-sm ghost" id="btn-hs-refresh" onclick="hsProductsRefresh()" style="display:flex;align-items:center;gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Atualizar do HubSpot
+            </button>
+          </div>
+        </div>
+        <!-- Barra de progresso da busca -->
+        <div id="hs-progress-wrap" style="display:none;background:var(--white);border:1px solid var(--gray-mid);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;"></div>
+
+        <!-- Toolbar -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+          <div style="position:relative;flex:1;min-width:200px;max-width:320px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="6" cy="6" r="4.5" stroke="#888" stroke-width="1.3"/><path d="M10 10l2 2" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <input id="hs-search" class="admin-input" type="text" placeholder="Buscar por nome ou SKU..." style="padding-left:32px;width:100%;" oninput="hsProductsFilter()">
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;" id="hs-filter-pills">
+            <button class="btn-sm yellow" data-filter="todos" onclick="hsSetFilter('todos',this)">Todos</button>
+            <button class="btn-sm ghost" data-filter="Produto" onclick="hsSetFilter('Produto',this)">Produto</button>
+            <button class="btn-sm ghost" data-filter="service" onclick="hsSetFilter('service',this)">Serviço</button>
+            <button class="btn-sm ghost" data-filter="Mensalidade" onclick="hsSetFilter('Mensalidade',this)">Mensalidade</button>
+            <button class="btn-sm ghost" data-filter="importado" onclick="hsSetFilter('importado',this)">Já importados</button>
+            <button class="btn-sm ghost" data-filter="novo" onclick="hsSetFilter('novo',this)">Novos</button>
+          </div>
+        </div>
+
+        <!-- Barra de seleção -->
+        <div id="hs-sel-bar" style="display:none;align-items:center;justify-content:space-between;background:var(--black);border-radius:var(--radius);padding:10px 16px;margin-bottom:12px;">
+          <div style="font-size:13px;color:rgba(255,255,255,0.7);">
+            <strong id="hs-sel-count" style="color:var(--yellow);">0</strong> selecionado(s) — classificar como:
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button onclick="hsMarkSelected('produto')" style="height:30px;padding:0 14px;border-radius:6px;border:1.5px solid #3b82f640;background:transparent;font-size:12px;font-weight:600;color:#60a5fa;cursor:pointer;">📦 Produto</button>
+            <button onclick="hsMarkSelected('bundle')" style="height:30px;padding:0 14px;border-radius:6px;border:1.5px solid #7c3aed40;background:transparent;font-size:12px;font-weight:600;color:#a78bfa;cursor:pointer;">🎁 Bundle</button>
+            <button onclick="hsClearSelection()" style="height:30px;padding:0 12px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;">✕</button>
+          </div>
+        </div>
+
+        <!-- Layout tabela + painel -->
+        <div style="display:grid;grid-template-columns:1fr 260px;gap:16px;align-items:flex-start;">
+
+          <!-- Tabela -->
+          <div>
+            <div class="table-wrap" style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--gray-mid);overflow:hidden;">
+              <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th style="width:42px;padding:10px 14px;text-align:center;background:#fafaf8;border-bottom:1px solid var(--gray-mid);">
+                      <input type="checkbox" id="hs-chk-all" onchange="hsToggleAll(this)" style="accent-color:var(--yellow);">
+                    </th>
+                    <th style="padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-hint);background:#fafaf8;border-bottom:1px solid var(--gray-mid);white-space:nowrap;">SKU</th>
+                    <th style="padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-hint);background:#fafaf8;border-bottom:1px solid var(--gray-mid);">Nome</th>
+                    <th style="padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-hint);background:#fafaf8;border-bottom:1px solid var(--gray-mid);white-space:nowrap;">Tipo HS</th>
+                    <th style="padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-hint);background:#fafaf8;border-bottom:1px solid var(--gray-mid);white-space:nowrap;">Importar como</th>
+                  </tr>
+                </thead>
+                <tbody id="hs-table-body">
+                  <tr><td colspan="5" style="padding:40px;text-align:center;color:var(--text-hint);font-size:13px;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 10px;opacity:.3;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    Clique em "Atualizar do HubSpot" para carregar os produtos
+                  </td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="font-size:11px;color:var(--text-hint);margin-top:6px;padding-left:2px;">
+              Mostrando <span id="hs-showing">0</span> de <span id="hs-total">0</span> produtos (marca VM Tecnologia)
+            </div>
+            <div id="hs-pagination"></div>
+          </div>
+
+          <!-- Painel lateral de importação -->
+          <div style="background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--gray-mid);padding:16px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;">Fila de Importação</div>
+            <div style="font-size:11px;color:var(--text-hint);margin-bottom:14px;">Classifique e importe para o portal</div>
+            <div id="hs-import-list">
+              <div id="hs-import-empty" style="text-align:center;padding:24px 12px;color:var(--text-hint);font-size:12px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 8px;opacity:.3;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                Selecione produtos e classifique
+              </div>
+            </div>
+            <div id="hs-import-summary" style="display:none;background:var(--black);border-radius:var(--radius);padding:12px;margin-top:12px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+                <span style="color:rgba(255,255,255,0.45);">Produtos</span><span id="hs-sum-p" style="font-weight:600;color:#60a5fa;">0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+                <span style="color:rgba(255,255,255,0.45);">Bundles</span><span id="hs-sum-b" style="font-weight:600;color:#a78bfa;">0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;margin-top:4px;">
+                <span style="color:rgba(255,255,255,0.45);">Total</span><span id="hs-sum-t" style="font-weight:600;color:var(--yellow);">0</span>
+              </div>
+            </div>
+            <button id="hs-btn-import" onclick="hsDoImport()" disabled style="width:100%;height:38px;margin-top:12px;background:var(--yellow);border:none;border-radius:var(--radius);font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:var(--black);cursor:pointer;opacity:.4;">
+              Importar para o Portal
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="admin-section" id="adm-products">
+        <div class="admin-page-header">
+          <div><div class="admin-page-title" data-i18n="admin.productsTitle">Produtos</div><div class="admin-page-sub" data-i18n="admin.productsSub">Edite o catálogo e informações dos produtos</div></div>
+          <button class="btn-sm yellow" onclick="openProductModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo produto
+          </button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span style="font-size:13px;font-weight:600;color:var(--black);">Catálogo de produtos</span>
+            <input class="table-search" type="text" id="products-search" placeholder="Buscar produto..." oninput="renderProductsTable(this.value)">
+          </div>
+          <table><thead><tr><th data-i18n="th.name">Nome</th><th>SKU</th><th data-i18n="th.category">Categoria</th><th data-i18n="th.basePrice">Preço base</th><th data-i18n="th.status">Status</th><th data-i18n="th.actions">Ações</th></tr></thead>
+          <tbody id="products-table"></tbody></table>
+        </div>
+        <div id="products-pagination"></div>
+      </div>
+
+      <div class="admin-section" id="adm-sales">
+        <div class="admin-page-header">
+          <div><div class="admin-page-title" data-i18n="admin.salesTitle">Vendas</div><div class="admin-page-sub" data-i18n="admin.salesSub">Consulte e acompanhe as vendas por cliente</div></div>
+          <button class="btn-sm ghost" onclick="exportSalesCSV()" title="Exportar CSV"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Exportar CSV</button>
+        </div>
+        <div style="margin-bottom:1rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <select id="sales-client-filter" class="admin-input" style="max-width:220px;" onchange="renderSalesTable()">
+            <option value="">Todos os clientes</option>
+          </select>
+          <div style="position:relative;flex:1;min-width:200px;max-width:360px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="6" cy="6" r="4.5" stroke="#888" stroke-width="1.3"/><path d="M10 10l2 2" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <input id="sales-search" class="admin-input" type="text" placeholder="Buscar por pedido, cliente ou CNPJ..." style="padding-left:32px;width:100%;" oninput="renderSalesTable()" />
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <label style="font-size:12px;color:#888;white-space:nowrap;">De</label>
+            <input type="date" id="sales-date-from" style="padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;" onchange="renderSalesTable()">
+            <label style="font-size:12px;color:#888;white-space:nowrap;">Até</label>
+            <input type="date" id="sales-date-to" style="padding:8px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:12px;" onchange="renderSalesTable()">
+          </div>
+          <span style="font-size:13px;color:var(--text-muted);" id="sales-summary-text"></span>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr><th>HubSpot</th><th onclick="_sortTable('sales','client')" style="cursor:pointer;" data-i18n="th.client">Cliente</th><th onclick="_sortTable('sales','date')" style="cursor:pointer;" data-i18n="th.date">Data</th><th data-i18n="th.products">Produtos</th><th onclick="_sortTable('sales','total')" style="cursor:pointer;" data-i18n="th.total">Total</th><th data-i18n="th.actions">Ações</th></tr></thead>
+          <tbody id="sales-table"></tbody></table>
+        </div>
+        <div id="sales-pagination"></div>
+      </div>
+
+      <div class="admin-section" id="adm-ranking">
+        <div class="admin-page-header">
+          <div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="admin-page-title" data-i18n="admin.rankingTitle">Ranking de Clientes</div><button class="btn-sm ghost" onclick="exportRankingCSV()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Exportar CSV</button></div><div class="admin-page-sub" data-i18n="admin.rankingSub">Clientes ordenados por retorno financeiro e volume de pedidos</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-sm yellow" onclick="renderRanking('volume')" id="rank-btn-volume">Por volume (R$)</button>
+            <button class="btn-sm ghost" onclick="renderRanking('pedidos')" id="rank-btn-pedidos">Por pedidos</button>
+            <button class="btn-sm ghost" onclick="renderRanking('itens')" id="rank-btn-itens">Por itens vendidos</button>
+          </div>
+        </div>
+        
+        <div style="background:var(--white);border:1px solid var(--gray-mid);border-radius:var(--radius-lg);padding:1rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:var(--shadow-card);">
+          <span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Período:</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn-sm yellow" id="rdf-today"    onclick="setRankDateFilter('today',this)">Hoje</button>
+            <button class="btn-sm ghost"  id="rdf-yesterday" onclick="setRankDateFilter('yesterday',this)">Ontem</button>
+            <button class="btn-sm ghost"  id="rdf-week"     onclick="setRankDateFilter('week',this)">Esta semana</button>
+            <button class="btn-sm ghost"  id="rdf-month"    onclick="setRankDateFilter('month',this)">Este mês</button>
+            <button class="btn-sm ghost"  id="rdf-3months"  onclick="setRankDateFilter('3months',this)">3 meses</button>
+            <button class="btn-sm ghost"  id="rdf-custom"   onclick="setRankDateFilter('custom',this)">Personalizado</button>
+          </div>
+          <div id="rdf-custom-inputs" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;display:none;">
+            <input type="date" id="rdf-from" style="height:32px;border:1.5px solid var(--gray-line);border-radius:var(--radius);padding:0 8px;font-size:13px;outline:none;" onchange="renderRanking(currentRankMode)">
+            <span style="font-size:13px;color:var(--text-muted);">até</span>
+            <input type="date" id="rdf-to" style="height:32px;border:1.5px solid var(--gray-line);border-radius:var(--radius);padding:0 8px;font-size:13px;outline:none;" onchange="renderRanking(currentRankMode)">
+          </div>
+          <span id="rdf-label" style="font-size:12px;color:var(--text-hint);margin-left:auto;"></span>
+        </div>
+        <div class="stats-grid" id="ranking-kpis"></div>
+        <div id="ranking-cards" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+
+      <div class="admin-section" id="adm-equipe">
+        <div class="admin-page-header">
+          <div><div class="admin-page-title" data-i18n="admin.teamTitle">Equipe</div><div class="admin-page-sub" data-i18n="admin.teamSub">Gerencie os usuários com acesso ao painel administrativo</div></div>
+          <button class="btn-sm yellow" id="btn-new-member" onclick="openMemberModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo membro
+          </button>
+        </div>
+        <div style="background:#FFF7E0;border:1px solid rgba(255,199,0,0.4);border-radius:var(--radius);padding:12px 16px;font-size:13px;color:#7A5F00;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span><strong>Perfis de acesso:</strong> Admin — acesso total | Editor — sem gerenciar equipe | Visualizador — somente leitura</span>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header">
+            <span style="font-size:13px;font-weight:600;color:var(--black);">Membros da equipe</span>
+            <input class="table-search" type="text" placeholder="Buscar membro..." oninput="renderTeamTable(this.value)">
+          </div>
+          <table><thead><tr><th data-i18n="th.name">Nome</th><th data-i18n="th.email">E-mail</th><th data-i18n="th.profile">Perfil</th><th data-i18n="th.lastAccess">Último acesso</th><th data-i18n="th.status">Status</th><th data-i18n="th.actions">Ações</th></tr></thead>
+          <tbody id="team-table"></tbody></table>
+        </div>
+      </div>
+
+      <div class="admin-section" id="adm-integracoes">
+        <div class="admin-page-header">
+          <div>
+            <div class="admin-page-title" data-i18n="admin.integracoes">Integrações</div>
+            <div class="admin-page-sub" data-i18n="admin.integracoesSub">Gerencie os tokens e conexões com sistemas externos</div>
+          </div>
+        </div>
+
+        <!-- HubSpot -->
+        <div style="background:#fff;border-radius:12px;border:1px solid #E8E6DF;padding:24px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#FF7A59;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.266-1.978V3.04A2.2 2.2 0 0 0 17.234.84h-.067a2.2 2.2 0 0 0-2.196 2.2v.067a2.198 2.198 0 0 0 1.266 1.978V7.93a6.232 6.232 0 0 0-2.962 1.307L5.64 3.646a2.432 2.432 0 1 0-1.077 1.247l7.518 5.527a6.26 6.26 0 0 0 .037 7.056l-2.29 2.29a2.01 2.01 0 1 0 1.414 1.414l2.29-2.29a6.267 6.267 0 1 0 4.632-10.96zm-.997 9.39a3.268 3.268 0 1 1 0-6.536 3.268 3.268 0 0 1 0 6.536z"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:15px;color:#262626;">HubSpot CRM</div>
+              <div style="font-size:12px;color:#888;">Sincronização de deals, contatos e produtos</div>
+            </div>
+            <div id="hs-status-badge" style="margin-left:auto;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#EAF3DE;color:#3B6D11;">Verificando...</div>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <label style="font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">Token de Acesso (PAT)</label>
+            <div style="display:flex;gap:8px;">
+              <input id="hs-token-input" type="password"
+                placeholder="pat-na1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                style="flex:1;padding:10px 14px;border:1.5px solid #E8E6DF;border-radius:8px;font-size:13px;font-family:monospace;outline:none;"
+                onfocus="this.style.borderColor='#FFCD00'"
+                onblur="this.style.borderColor='#E8E6DF'">
+              <button onclick="toggleHsToken()" style="padding:10px 14px;border:1.5px solid #E8E6DF;border-radius:8px;background:#fff;cursor:pointer;" title="Mostrar/ocultar">
+                <svg id="hs-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+              <button onclick="saveHsToken()" style="padding:10px 20px;border:none;border-radius:8px;background:#FFCD00;color:#262626;font-weight:600;font-size:13px;cursor:pointer;">Salvar</button>
+            </div>
+            <div style="font-size:11px;color:#999;margin-top:6px;">O token é armazenado de forma segura e usado apenas nas Edge Functions do servidor.</div>
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <button onclick="testHsToken()" style="padding:8px 16px;border:1.5px solid #E8E6DF;border-radius:8px;background:#fff;font-size:12px;font-weight:600;color:#444;cursor:pointer;">
+              🔍 Testar conexão
+            </button>
+            <div id="hs-test-result" style="font-size:12px;color:#666;padding:8px 0;"></div>
+          </div>
+        </div>
+
+        <!-- Atualizar Servidor -->
+        <div style="background:#fff;border-radius:12px;border:1px solid #E8E6DF;padding:24px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#262626;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFCD00" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:15px;color:#262626;">Atualizar Servidor</div>
+              <div style="font-size:12px;color:#888;">Puxa as últimas alterações do Git e reinicia os containers</div>
+            </div>
+          </div>
+          <div id="deploy-status" style="font-size:12px;color:#666;margin-bottom:12px;padding:8px 12px;background:#F9F8F5;border-radius:8px;">Carregando status...</div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <button id="deploy-btn" onclick="triggerDeploy()" style="padding:8px 20px;border:none;border-radius:8px;background:#FFCD00;color:#262626;font-weight:600;font-size:13px;cursor:pointer;">🚀 Atualizar Servidor</button>
+            <button onclick="loadServerStatus()" style="padding:8px 14px;border:1.5px solid #E8E6DF;border-radius:8px;background:#fff;font-size:12px;color:#666;cursor:pointer;">↻ Verificar status</button>
+          </div>
+          <div id="deploy-log" style="display:none;background:#1A1A1A;border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;"></div>
+        </div>
+
+        <!-- DealNayax (Portal de Orçamentos) -->
+        <div style="background:#fff;border-radius:12px;border:1px solid #E8E6DF;padding:24px;margin-bottom:16px;opacity:0.7;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#262626;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFCD00" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="font-weight:600;font-size:15px;color:#262626;">DealNayax — Portal de Orçamentos</div>
+                <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#F1EFE8;color:#888;letter-spacing:.5px;">EM BREVE</span>
+              </div>
+              <div style="font-size:12px;color:#888;">Geração de propostas, aprovações e CPQ integrado</div>
+            </div>
+            <div style="margin-left:auto;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#F1EFE8;color:#888;">Não conectado</div>
+          </div>
+          <div style="background:#F9F8F5;border-radius:8px;padding:12px 16px;font-size:12px;color:#666;line-height:1.6;">
+            <strong>Funcionalidades previstas:</strong> sincronização automática de propostas aprovadas como deals no HubSpot, controle de desconto por nível de aprovação, numeração sequencial de propostas e geração de PDF.
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+  </div>  <!-- /admin-main -->
+
+</div>
+
+<div class="modal-overlay" id="modal-member">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-header">
+      <div class="modal-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+      <div class="modal-header-title" id="member-modal-title">Novo membro</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid cols-1" style="margin-bottom:12px;">
+        <div class="form-group"><label>Nome completo *</label><input id="m-name" type="text" placeholder="Nome do colaborador"></div>
+      </div>
+      <div class="form-grid cols-1" style="margin-bottom:12px;">
+        <div class="form-group"><label>Perfil de acesso *</label>
+          <select id="m-role">
+            <option value="admin">Admin — acesso total</option>
+            <option value="editor">Editor — sem gerenciar equipe</option>
+            <option value="viewer">Visualizador — somente leitura</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid cols-1" style="margin-bottom:12px;">
+        <div class="form-group"><label>E-mail *</label><input id="m-email" type="email" placeholder="email@empresa.com"></div>
+      </div>
+      <div class="form-grid" style="margin-bottom:12px;">
+        <div class="form-group"><label>Senha *</label><input id="m-pass" type="password" placeholder="Mínimo 6 caracteres"></div>
+        <div class="form-group"><label>Status</label>
+          <select id="m-status"><option value="active">Ativo</option><option value="inactive">Inativo</option></select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-ghost" onclick="closeModal('modal-member')">Cancelar</button>
+        <button class="btn-confirm" onclick="saveMember()">Salvar membro</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-checkout">
+  <div class="modal-box" style="max-width:820px;padding:0;overflow:hidden;overflow-y:auto;">
+
+    <!-- Header -->
+    <div class="modal-header" style="padding:1.25rem 1.75rem;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="modal-header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <div>
+          <div class="modal-header-title" style="font-size:16px;" data-i18n="checkout.modalTitle">Finalizar pedido</div>
+          <div id="co-header-sub" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;"></div>
+        </div>
+      </div>
+      <button onclick="closeModal('modal-checkout')" style="width:32px;height:32px;background:rgba(255,255,255,0.15);border:none;border-radius:8px;color:#FFCD00;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;flex-shrink:0;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">×</button>
+    </div>
+
+    <!-- Stepper -->
+    <div id="co-stepper" style="background:var(--black);padding:0.75rem 1.75rem 1.1rem;display:flex;align-items:center;overflow:visible;"></div>
+
+    <!-- Body -->
+    <div style="display:grid;grid-template-columns:1fr 230px;min-height:400px;">
+
+      <!-- Formulário -->
+      <div id="co-form-col" style="padding:1.5rem 1.75rem;overflow-y:auto;max-height:520px;border-right:1px solid var(--gray-mid);">
+
+        <!-- ETAPA 1: Empresa -->
+        <div class="co-step-form" id="co-form-1">
+          <div class="modal-section-title" style="margin-top:0;padding-top:0;border-top:none;"><span data-i18n="checkout.step1Label">Dados da Empresa</span></div>
+          <div id="co-prefill-1" style="display:none;align-items:center;gap:6px;background:#ECFDF5;border:1px solid #a7e9c6;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:#16A34A;margin-bottom:14px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Dados preenchidos automaticamente
+          </div>
+          <div class="form-grid cols-1" style="margin-bottom:10px;">
+            <div class="form-group"><label>CNPJ *</label><input id="f-cnpj" type="text" placeholder="00.000.000/0000-00" oninput="maskCNPJ(this)" onblur="if(this.value.replace(/\D/g,'').length===14){lookupCNPJ(this);prefillByCnpj(this.value);}"></div>
+          </div>
+          <div class="form-grid cols-1">
+            <div class="form-group"><label>Razão Social *</label><input id="f-razao" type="text" placeholder="Nome da empresa"></div>
+          </div>
+        </div>
+
+        <!-- ETAPA 2: Responsável -->
+        <div class="co-step-form" id="co-form-2">
+          <div class="modal-section-title" style="margin-top:0;padding-top:0;border-top:none;"><span data-i18n="checkout.step2Label">Dados do Responsável</span></div>
+          <div id="co-prefill-2" style="display:none;align-items:center;gap:6px;background:#ECFDF5;border:1px solid #a7e9c6;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:#16A34A;margin-bottom:14px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Dados preenchidos automaticamente
+          </div>
+          <div class="form-grid" style="margin-bottom:10px;">
+            <div class="form-group"><label>Nome *</label><input id="f-nome" type="text" placeholder="Primeiro nome"></div>
+            <div class="form-group"><label>Sobrenome *</label><input id="f-sobrenome" type="text" placeholder="Sobrenome"></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:10px;">
+            <div class="form-group"><label>CPF *</label><input id="f-cpf" type="text" placeholder="000.000.000-00" oninput="maskCPF(this)"></div>
+            <div class="form-group"><label>Data de Nascimento *</label><input id="f-nasc" type="date"></div>
+          </div>
+          <div class="form-grid cols-1" style="margin-bottom:10px;">
+            <div class="form-group"><label>E-mail *</label><input id="f-email" type="email" placeholder="email@empresa.com.br"></div>
+          </div>
+          <div class="form-grid cols-1">
+            <div class="form-group">
+              <label>Telefone / WhatsApp *</label>
+              <div id="tel-wrap" style="display:flex;align-items:stretch;border:1.5px solid var(--gray-line);border-radius:var(--radius);overflow:hidden;transition:border-color .2s,box-shadow .2s;background:var(--white);">
+                <span style="padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--text-muted);background:var(--gray-mid);border-right:1.5px solid var(--gray-line);white-space:nowrap;flex-shrink:0;">🇧🇷 +55</span>
+                <input id="f-tel" type="text" placeholder="(11) 99999-9999" oninput="maskTel(this)" style="border:none!important;box-shadow:none!important;flex:1;outline:none;padding:0 12px;font-family:'Inter',sans-serif;font-size:14px;height:42px;background:transparent;" onfocus="document.getElementById('tel-wrap').style.cssText+=';border-color:var(--yellow)!important;box-shadow:0 0 0 3px rgba(255,199,0,0.12)!important;'" onblur="document.getElementById('tel-wrap').style.borderColor='';document.getElementById('tel-wrap').style.boxShadow='';">
+              </div>
+            </div>
+          </div>
+        </div>        <!-- ETAPA 3: Endereço -->
+        <div class="co-step-form" id="co-form-3">
+          <div class="modal-section-title" style="margin-top:0;padding-top:0;border-top:none;">Endereço de Entrega</div>
+          <div class="form-grid" style="margin-bottom:10px;">
+            <div class="form-group"><label>CEP *</label><input id="f-cep" type="text" placeholder="00000-000" oninput="maskCEP(this)" onblur="fetchCEP(this.value)"></div>
+            <div class="form-group"><label>Estado (UF) *</label>
+              <select id="f-uf">
+                <option value="">Selecione</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option>
+                <option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option>
+                <option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option>
+                <option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                <option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option>
+                <option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid cols-1" style="margin-bottom:10px;">
+            <div class="form-group"><label>Rua / Logradouro *</label><input id="f-rua" type="text" placeholder="Nome da rua, avenida, etc."></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:10px;">
+            <div class="form-group"><label>Número *</label><input id="f-num" type="text" placeholder="Ex: 123"></div>
+            <div class="form-group"><label>Complemento</label><input id="f-comp" type="text" placeholder="Apto, sala, bloco..."></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label>Bairro *</label><input id="f-bairro" type="text" placeholder="Nome do bairro"></div>
+            <div class="form-group"><label>Cidade *</label><input id="f-cidade" type="text" placeholder="Nome da cidade"></div>
+          </div>
+        </div>
+
+        <!-- ETAPA 4: Confirmar -->
+        <div class="co-step-form" id="co-form-4">
+          <div class="modal-section-title" style="margin-top:0;padding-top:0;border-top:none;">Confirmar Pedido</div>
+          <div style="background:var(--yellow-light);border:1.5px solid #dfc800;border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-hint);margin-bottom:6px;">Empresa</div>
+            <div id="co-confirm-razao" style="font-size:14px;font-weight:600;color:var(--black);"></div>
+            <div id="co-confirm-cnpj" style="font-size:12px;color:var(--text-muted);margin-top:3px;"></div>
+          </div>
+          <div style="background:#fafaf8;border:1.5px solid var(--gray-mid);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-hint);margin-bottom:6px;">Responsável</div>
+            <div id="co-confirm-nome" style="font-size:14px;font-weight:600;color:var(--black);"></div>
+            <div id="co-confirm-contato" style="font-size:12px;color:var(--text-muted);margin-top:3px;"></div>
+          </div>
+          <div style="background:#fafaf8;border:1.5px solid var(--gray-mid);border-radius:var(--radius);padding:14px 16px;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-hint);margin-bottom:6px;">Endereço de Entrega</div>
+            <div id="co-confirm-rua" style="font-size:14px;font-weight:600;color:var(--black);"></div>
+            <div id="co-confirm-cidade" style="font-size:12px;color:var(--text-muted);margin-top:3px;"></div>
+          </div>
+        </div>
+
+      </div><!-- /form-col -->
+
+      <!-- Resumo lateral fixo -->
+      <div style="background:var(--black);padding:1.5rem 1.1rem;display:flex;flex-direction:column;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:14px;"><span data-i18n="checkout.summary">Resumo</span></div>
+        <div id="co-side-items" style="flex:1;overflow-y:auto;"></div>
+        <div style="height:1px;background:rgba(255,255,255,0.1);margin:12px 0;"></div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);">Total do pedido</div>
+        <div id="co-side-total" style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:var(--yellow);margin-top:4px;"></div>
+      </div>
+
+    </div><!-- /grid -->
+
+    <!-- Footer -->
+    <div style="padding:12px 1.75rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--gray-mid);background:#fafaf8;">
+      <button id="co-btn-back" class="btn-ghost" style="flex:0;height:38px;padding:0 16px;display:flex;align-items:center;gap:6px;visibility:hidden;" onclick="coChangeStep(-1)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Voltar
+      </button>
+      <span id="co-step-info" style="font-size:12px;color:var(--text-hint);font-weight:500;"></span>
+      <button id="co-btn-next" class="btn-confirm" style="flex:0;height:38px;padding:0 20px;display:flex;align-items:center;gap:8px;" onclick="coChangeStep(1)">
+        <span data-i18n="cat.continue">Continuar</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-client">
+  <div class="modal-box" style="max-width:600px;border-radius:12px;overflow:hidden;padding:0;">
+    <div style="background:#111;padding:18px 24px;display:flex;align-items:center;gap:12px;">
+      <div style="width:36px;height:36px;border-radius:8px;background:#FFCD00;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" fill="#111"/><path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <h3 id="client-modal-title" style="margin:0;color:#fff;font-size:16px;font-weight:500;">Novo cliente</h3>
+    </div>
+    <div style="padding:24px;overflow-y:auto;max-height:72vh;background:#fff;">
+      <p style="font-size:11px;font-weight:500;letter-spacing:.6px;color:#888;text-transform:uppercase;margin:0 0 12px;">Identificação</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Código <span style="color:#E24B4A;">*</span></label>
+          <input id="c-code" type="text" placeholder="Ex: CLI004" style="width:100%;box-sizing:border-box;"><small id="c-code-warn" style="color:#E24B4A;font-size:11px;display:none;">Código já existe.</small>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Segmento</label>
+          <select id="c-segment" style="width:100%;box-sizing:border-box;">
+            <option value="">— Selecione o segmento —</option>
+            <option value="MICRO MARKET">Micro Market</option>
+            <option value="VENDING MACHINE">Vending Machine</option>
+            <option value="LAVANDERIA">Lavanderia</option>
+            <option value="FOOD">Food</option>
+            <option value="CARROS ELÉTRICOS">Carros Elétricos</option>
+            <option value="GRUA">Grua</option>
+            <option value="OUTROS">Outros</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Senha de acesso</label>
+          <!-- Toggle alterar senha -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--text-muted);user-select:none;">
+              <input type="checkbox" id="c-pw-change-toggle" onchange="togglePwChange(this)" style="accent-color:var(--yellow);width:14px;height:14px;">
+              Alterar senha
+            </label>
+            <button type="button" id="c-pw-reveal-btn" onclick="revealClientPw()" title="Ver senha atual" style="display:none;border:none;background:none;cursor:pointer;font-size:11px;font-weight:600;color:var(--text-muted);padding:2px 8px;border-radius:4px;border:1px solid var(--gray-line);transition:all .15s;">
+              👁 Ver senha atual
+            </button>
+          </div>
+          <div style="position:relative;">
+            <input id="c-password" type="password" placeholder="Digite a nova senha" disabled
+              style="width:100%;box-sizing:border-box;padding-right:36px;background:#f5f5f5;color:#aaa;cursor:not-allowed;opacity:.6;">
+            <button type="button" data-toggle="c-password" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#aaa;padding:2px;line-height:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <small style="font-size:11px;color:#888;">Deixe em branco para manter a senha atual</small>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Confirmar senha</label>
+          <div style="position:relative;">
+            <input id="c-password-confirm" type="password" placeholder="Repita a senha" style="width:100%;box-sizing:border-box;padding-right:36px;">
+            <button type="button" data-toggle="c-password-confirm" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#aaa;padding:2px;line-height:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <small id="c-pw-warn" style="color:#E24B4A;font-size:11px;display:none;">Senhas não conferem.</small>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Razão Social <span style="color:#E24B4A;">*</span></label>
+          <input id="c-name" type="text" placeholder="Nome da empresa" style="width:100%;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Status</label>
+          <select id="c-status" style="width:100%;box-sizing:border-box;">
+            <option value="active">Ativo</option>
+            <option value="inactive">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Consultor Responsável</label>
+        <select id="c-owner-id" style="width:100%;box-sizing:border-box;">
+          <option value="">— Selecione o consultor —</option>
+          <option value="83943888">LuanHenrique Santos</option>
+          <option value="83943879">Nicole Emiliano</option>
+          <option value="85578642">Fernando Penz</option>
+          <option value="85578620">Caroline Marinho Martins</option>
+          <option value="85578673">Lohan Amorim</option>
+          <option value="85001768">Guilherme Raksa</option>
+          <option value="85001952">Aline Prado</option>
+          <option value="85002050">Gilson Ywasse</option>
+          <option value="85775979">Luiz Guilherme</option>
+          <option value="88209646">Vinícius Dias</option>
+          <option value="88589190">Elison Fernandes</option>
+          <option value="89694869">Karolay Correia</option>
+          <option value="86371394">Leticia Ribeiro</option>
+          <option value="76289356">Felipe Oliveira</option>
+        </select>
+        <small style="color:#aaa;font-size:11px;">Proprietário do negócio no HubSpot.</small>
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:12px;color:#666;display:block;margin-bottom:4px;">Franquia de Empresa</label>
+        <select id="c-franchise" style="width:100%;box-sizing:border-box;">
+          <option value="">— Selecione a franquia —</option>
+          <option value="ARMAZEM FIT STORE">ARMAZEM FIT STORE</option>
+          <option value="BUBBLE BOX">BUBBLE BOX</option>
+          <option value="LAVOMAQ">LAVOMAQ</option>
+          <option value="THE HOT MACHINE">THE HOT MACHINE</option>
+          <option value="RHEMA">RHEMA</option>
+          <option value="SELAVA EXPRESS">SELAVA EXPRESS</option>
+          <option value="TAKEAT">TAKEAT</option>
+          <option value="TA NA MAO CONVENIENCIAS">TA NA MAO CONVENIENCIAS</option>
+          <option value="COLOLIDO">COLOLIDO</option>
+          <option value="MINIMART 24hrs">MINIMART 24hrs</option>
+          <option value="BITMARKET">BITMARKET</option>
+          <option value="MERCADOCHEF">MERCADOCHEF</option>
+          <option value="ITAKE">ITAKE</option>
+          <option value="AT HOME STORE">AT HOME STORE</option>
+          <option value="NOSSA QUITANDA">NOSSA QUITANDA</option>
+          <option value="PEGGO">PEGGO</option>
+          <option value="NOSSO MERCADINHO">NOSSO MERCADINHO</option>
+          <option value="NOMERKADO">NOMERKADO</option>
+          <option value="ALGODOCE">ALGODOCE</option>
+          <option value="COMPACT STORE">COMPACT STORE</option>
+          <option value="LAVATERIA">LAVATERIA</option>
+          <option value="MIKRO MARKET">MIKRO MARKET</option>
+          <option value="CANTINA STORE 24H">CANTINA STORE 24H</option>
+          <option value="FRUGALE">FRUGALE</option>
+          <option value="MERCADO QUADRADO">MERCADO QUADRADO</option>
+          <option value="MARKET IN HOME">MARKET IN HOME</option>
+          <option value="LAVBLUE">LAVBLUE</option>
+          <option value="HONEST MARKET">HONEST MARKET</option>
+          <option value="LE QUITAN">LE QUITAN</option>
+          <option value="SHELF">SHELF</option>
+          <option value="AKI MERCADO">AKI MERCADO</option>
+          <option value="OKEO">OKEO</option>
+          <option value="LAUNDREXPRESS">LAUNDREXPRESS</option>
+          <option value="NEW MARKET PLACE">NEW MARKET PLACE</option>
+          <option value="TAKE">TAKE</option>
+          <option value="REDEMARKET">REDEMARKET</option>
+          <option value="SELD">SELD</option>
+          <option value="LAVANDORI">LAVANDORI</option>
+          <option value="BALCÃO URBANO">BALCÃO URBANO</option>
+          <option value="GO3 MARKET">GO3 MARKET</option>
+          <option value="REDSTORE">REDSTORE</option>
+          <option value="LAVESELF">LAVESELF</option>
+          <option value="FRIGO SERVICE">FRIGO SERVICE</option>
+          <option value="LAVE OPEN">LAVE OPEN</option>
+          <option value="CONDOVENIENCIA">CONDOVENIENCIA</option>
+          <option value="MBOX">MBOX</option>
+          <option value="QUICKER">QUICKER</option>
+          <option value="LEVE E LAVE">LEVE E LAVE</option>
+          <option value="Market WOW">Market WOW</option>
+          <option value="NOVO MERCATO">NOVO MERCATO</option>
+          <option value="PIT STOP">PIT STOP</option>
+          <option value="SEO DELICIO">SEO DELICIO</option>
+          <option value="APPLE CARAMEL">APPLE CARAMEL</option>
+          <option value="LAVI.COM">LAVI.COM</option>
+          <option value="LONDON MARKET">LONDON MARKET</option>
+          <option value="LAVUP">LAVUP</option>
+          <option value="INHOUSE">INHOUSE</option>
+          <option value="LAV.ME">LAV.ME</option>
+          <option value="EAI BRIGADEIRO">EAI BRIGADEIRO</option>
+          <option value="ONBOX">ONBOX</option>
+          <option value="ISTOBAL DO BRASIL">ISTOBAL DO BRASIL</option>
+          <option value="ISTOK">ISTOK</option>
+          <option value="NOSSA CONVENIENCIA">NOSSA CONVENIENCIA</option>
+          <option value="HELP ME">HELP ME</option>
+          <option value="UBEEP">UBEEP</option>
+          <option value="CANECA E CHOPP">CANECA E CHOPP</option>
+          <option value="BONASECCO">BONASECCO</option>
+          <option value="MY FAST MART">MY FAST MART</option>
+          <option value="MERCATU">MERCATU</option>
+          <option value="LAVSELF">LAVSELF</option>
+          <option value="AVEND FRANCHISING">AVEND FRANCHISING</option>
+          <option value="O BIGADELLO">O BIGADELLO</option>
+          <option value="GERAÇÃO VALOR">GERAÇÃO VALOR</option>
+          <option value="FAST SUPPLE">FAST SUPPLE</option>
+          <option value="FRATELLI">FRATELLI</option>
+          <option value="DESCE LAVA">DESCE LAVA</option>
+          <option value="MY PHOTO">MY PHOTO</option>
+          <option value="MFC TECNOLOGIA">MFC TECNOLOGIA</option>
+          <option value="TYMBA LAUNDRY">TYMBA LAUNDRY</option>
+          <option value="FM STORE">FM STORE</option>
+          <option value="#1">#1</option>
+          <option value="BROTHER GROUP">BROTHER GROUP</option>
+          <option value="SAM'S STORE">SAM'S STORE</option>
+          <option value="ISTOK HOME MARKET">ISTOK HOME MARKET</option>
+          <option value="FRANQUEOU FRANCHISING">FRANQUEOU FRANCHISING</option>
+          <option value="ECOVILLE LAVANDERIAS">ECOVILLE LAVANDERIAS</option>
+          <option value="RLAV">RLAV</option>
+          <option value="REDEHG">REDEHG</option>
+          <option value="MERCADEX">MERCADEX</option>
+          <option value="XÔ VARAL">XÔ VARAL</option>
+          <option value="DOLCE AROMA">DOLCE AROMA</option>
+          <option value="OPEN YOU">OPEN YOU</option>
+          <option value="NESTLÉ">NESTLÉ</option>
+          <option value="LAUNDRY KING">LAUNDRY KING</option>
+        </select>
+        <small style="color:#aaa;font-size:11px;">Preenchido nos negócios e na empresa associada no HubSpot.</small>
+      </div>
+      <div style="border-top:0.5px solid #E8E6E0;margin-bottom:20px;"></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px;">
+        <p style="font-size:11px;font-weight:500;letter-spacing:.6px;color:#888;text-transform:uppercase;margin:0;">Produtos visíveis</p>
+      </div>
+      <p style="font-size:12px;color:#aaa;margin:0 0 12px;">Ative os produtos que este cliente pode visualizar no catálogo.</p>
+      <div id="c-prod-toggles" style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;"></div>
+      <div style="border-top:0.5px solid #E8E6E0;margin-bottom:20px;"></div>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.6px;color:#888;text-transform:uppercase;margin:0 0 4px;">Valores personalizados</p>
+      <p style="font-size:12px;color:#aaa;margin:0 0 12px;">Deixe em branco para usar o preço base do produto.</p>
+      <div id="c-price-overrides" style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px;"></div>
+    </div>
+    <div style="padding:16px 24px;background:#f9f9f7;border-top:0.5px solid #E8E6E0;display:flex;gap:10px;">
+      <button class="btn-secondary" onclick="closeModal('modal-client')" style="flex:1;padding:10px;font-size:13px;">Cancelar</button>
+      <button class="btn-primary" onclick="saveClient()" style="flex:2;padding:10px;font-size:13px;font-weight:500;background:#FFCD00;color:#111;border:none;border-radius:8px;cursor:pointer;">Salvar cliente</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-bundle">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header"><h3 id="bundle-modal-title">Novo bundle</h3><button class="modal-close" onclick="closeModal('modal-bundle')">&times;</button></div>
+    <div class="modal-body" style="padding:20px;display:flex;flex-direction:column;gap:14px">
+      <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">SKU(s) do Produto Principal * <small style="font-weight:400;color:#999">(selecione um ou mais)</small></label>
+        <input type="text" id="b-parent-search" placeholder="Filtrar produtos..." oninput="filterBundleProds(this.value)" style="width:100%;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-size:13px;box-sizing:border-box;margin-bottom:6px">
+        <div id="b-parent-list" style="max-height:160px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:6px 0;background:var(--bg-input)"></div>
+        <div id="b-parent-selected" style="font-size:11px;color:#888;margin-top:4px"></div></div>
+      <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Cliente (deixe vazio para aplicar a todos)</label>
+        <select id="b-client-code" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-size:14px"><option value="">— Todos os clientes —</option></select></div>
+      <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">SKU do Bundle *</label>
+        <input type="text" id="b-sku" placeholder="Ex: ETQ0048" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-size:14px;box-sizing:border-box"></div>
+      <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Nome do Bundle *</label>
+        <input type="text" id="b-name" placeholder="Ex: Etiqueta adesiva" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-size:14px;box-sizing:border-box"></div>
+      <div><label style="font-size:12px;font-weight:600;display:block;margin-bottom:4px">Preço (R$) — 0 para sem custo</label>
+        <input type="number" id="b-price" value="0" min="0" step="0.01" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-size:14px;box-sizing:border-box"></div>
+    </div>
+    <div class="modal-footer" style="display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--border)">
+      <button class="btn-secondary" style="flex:1" onclick="closeModal('modal-bundle')">Cancelar</button>
+      <button class="btn-sm yellow" style="flex:2;padding:10px" onclick="saveBundle()">SALVAR BUNDLE</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-product">
+  <div class="modal-box" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div class="modal-header-title" id="product-modal-title">Novo produto</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid" style="margin-bottom:12px;">
+        <div class="form-group"><label>Nome *</label><input id="p-name" type="text" placeholder="Nome do produto"></div>
+        <div class="form-group"><label>SKU *</label><input id="p-sku" type="text" placeholder="Ex: NAYAX-VPOS-001" oninput="this.value=this.value.toUpperCase()"></div>
+      </div>
+      <div class="form-grid" style="margin-bottom:12px;">
+        <div class="form-group"><label>Categoria *</label>
+          <select id="p-cat">
+            <option value="Produtos">Produtos</option>
+            <option value="Serviços">Serviços</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Preço base (R$) *</label><input id="p-price" type="number" placeholder="0,00" min="0"></div>
+      </div>
+      <div class="form-grid" style="margin-bottom:12px;">
+        <div class="form-group"><label>Status</label>
+          <select id="p-status"><option value="active">Ativo</option><option value="inactive">Inativo</option></select>
+        </div>
+      </div>
+      <div class="form-grid cols-1" style="margin-bottom:12px;">
+        <div class="form-group"><label>Descrição</label><input id="p-desc" type="text" placeholder="Descrição curta do produto"></div>
+      </div>
+      <div class="form-grid cols-1" style="margin-bottom:12px;">
+        <div class="form-group">
+          <label>Foto do produto</label>
+          <div class="img-upload-area" id="p-img-area">
+            <input type="file" accept="image/*" id="p-img-input" onchange="handleProductImg(this)">
+            <img id="p-img-preview" class="img-upload-preview">
+            <div id="p-img-placeholder">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-hint)" stroke-width="1.5" style="margin-bottom:6px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <div class="img-upload-label">Clique ou arraste uma imagem</div>
+              <div class="img-upload-hint">JPG, PNG ou WEBP — máx. 2MB</div>
+            </div>
+            <button id="p-img-remove" type="button" onclick="removeProductImg(event)" style="display:none;position:absolute;top:8px;right:8px;background:var(--danger-bg);color:var(--danger);border:1px solid #FECACA;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;">Remover</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <label style="font-size:13px;color:var(--text-body);display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="p-isnew"> Marcar como <strong>Novo</strong>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-ghost" onclick="closeModal('modal-product')">Cancelar</button>
+        <button class="btn-confirm" onclick="saveProduct()">Salvar produto</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-sale-detail">
+  <div class="modal-box" style="max-width:600px;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <div class="modal-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+      <div class="modal-header-title">Detalhes do Pedido</div>
+    </div>
+    <div class="modal-body" id="sale-detail-body"></div>
+  </div>
+</div>
+
+<!-- Modal Trocar Senha -->
+<div class="modal-overlay" id="modal-change-password" style="align-items:center;">
+  <div style="background:#fff;border-radius:14px;width:100%;max-width:400px;margin:20px;overflow:hidden;font-family:inherit;">
+
+    <div style="background:#1a1a1a;padding:18px 20px;display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:#FFCD00;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:500;color:#fff;">Trocar senha</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Membro: <span id="cpwd-member-name"></span></div>
+      </div>
+      <button onclick="closeModal('modal-change-password')" style="background:rgba(255,255,255,0.1);border:none;border-radius:6px;width:26px;height:26px;color:rgba(255,255,255,0.5);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;padding:0;">&#x2715;</button>
+    </div>
+
+    <div style="padding:20px;">
+
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;display:flex;gap:8px;align-items:flex-start;margin-bottom:18px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span style="font-size:12px;color:#92400e;line-height:1.5;">A nova senha deve ter no mínimo 6 caracteres.</span>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-size:11px;font-weight:500;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Nova senha</label>
+        <div style="position:relative;">
+          <input id="cpwd-new" type="password" placeholder="Digite a nova senha" oninput="cpwdCheck()"
+            style="width:100%;box-sizing:border-box;height:42px;padding:0 40px 0 12px;font-size:14px;border-radius:8px;border:1px solid #d0d0d0;background:#fff;color:#1a1a1a;outline:none;font-family:inherit;transition:border .15s;">
+          <button type="button" onclick="cpwdToggle('cpwd-new',this)" style="position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;color:#999;display:flex;align-items:center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div style="display:flex;gap:3px;margin-top:6px;align-items:center;">
+          <div id="cpb1" style="height:3px;flex:1;border-radius:2px;background:#e5e7eb;transition:background .2s;"></div>
+          <div id="cpb2" style="height:3px;flex:1;border-radius:2px;background:#e5e7eb;transition:background .2s;"></div>
+          <div id="cpb3" style="height:3px;flex:1;border-radius:2px;background:#e5e7eb;transition:background .2s;"></div>
+          <div id="cpb4" style="height:3px;flex:1;border-radius:2px;background:#e5e7eb;transition:background .2s;"></div>
+          <span id="cpb-lbl" style="font-size:11px;color:#aaa;margin-left:6px;min-width:38px;transition:color .2s;"></span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="display:block;font-size:11px;font-weight:500;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Confirmar nova senha</label>
+        <div style="position:relative;">
+          <input id="cpwd-confirm" type="password" placeholder="Repita a nova senha" oninput="cpwdCheck()"
+            style="width:100%;box-sizing:border-box;height:42px;padding:0 40px 0 12px;font-size:14px;border-radius:8px;border:1px solid #d0d0d0;background:#fff;color:#1a1a1a;outline:none;font-family:inherit;transition:border .15s;">
+          <button type="button" onclick="cpwdToggle('cpwd-confirm',this)" style="position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;color:#999;display:flex;align-items:center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <p id="cpwd-msg" style="margin:5px 0 0;font-size:12px;color:#aaa;min-height:16px;"></p>
+      </div>
+
+      <div style="display:flex;gap:8px;">
+        <button onclick="closeModal('modal-change-password')" style="flex:1;height:40px;background:#f5f5f5;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;color:#555;cursor:pointer;font-family:inherit;">Cancelar</button>
+        <button onclick="saveChangePassword()" style="flex:2;height:40px;background:#FFCD00;border:none;border-radius:8px;font-size:13px;font-weight:500;color:#1a1a1a;cursor:pointer;font-family:inherit;">Salvar senha</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Modal Bundle -->
+  <div id="modal-bundle" class="modal-overlay">
+    <div class="modal-box" style="max-width:480px">
+      <div class="modal-header">
+        <h3 id="bundle-modal-title">Novo vínculo</h3>
+        <button class="modal-close" onclick="closeModal('modal-bundle')">×</button>
+      </div>
+      <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;padding:20px">
+        <div>
+          <label class="field-label">SKU do produto principal *</label>
+          <input id="b-parent-sku" class="field-input" placeholder="Ex: TOT1022" style="text-transform:uppercase">
+        </div>
+        <div>
+          <label class="field-label">SKU do produto vinculado *</label>
+          <input id="b-bundle-sku" class="field-input" placeholder="Ex: ETQ0048" style="text-transform:uppercase">
+        </div>
+        <div>
+          <label class="field-label">Nome do produto vinculado *</label>
+          <input id="b-bundle-name" class="field-input" placeholder="Ex: Etiqueta adesiva">
+        </div>
+        <div>
+          <label class="field-label">Preço (0 = sem custo)</label>
+          <input id="b-bundle-price" class="field-input" type="number" min="0" step="0.01" value="0" placeholder="0,00">
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex;gap:10px;padding:16px 20px;justify-content:flex-end">
+        <button class="btn-sm" onclick="closeModal('modal-bundle')">Cancelar</button>
+        <button class="btn-sm yellow" onclick="saveBundle()">Salvar vínculo</button>
+      </div>
+    </div>
+  </div>
+
+<!-- Dependências -->
+<!-- supabase.min.js removido — portal migrado para AWS API Gateway -->
+
+  <!-- ── AWS API Gateway — trocar pela URL real após deploy ── -->
+  <script>
+    window.AWS_API = ''; // ex: https://abc123.execute-api.sa-east-1.amazonaws.com/prod
+    window.AWS_KEY = ''; // x-api-key do API Gateway (opcional)
+    // Enquanto vazio, o portal usa Supabase como fallback automático
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<!-- App -->
+<script>
+function lgShowTab(t) {
+  document.getElementById('tab-catalog').classList.toggle('act', t === 'catalog');
+  document.getElementById('tab-admin').classList.toggle('act', t === 'admin');
+  document.getElementById('lg-panel-catalog').style.display = t === 'catalog' ? 'flex' : 'none';
+  document.getElementById('lg-panel-admin').style.display   = t === 'admin'   ? 'flex' : 'none';
+  var err = document.getElementById('login-error');
+  if (err) err.style.display = 'none';
+}
+// openAdmin() compatibility — used by existing JS
+function openAdmin() { lgShowTab('admin'); }
+</script>
+<script src="/app-data.js?v28"></script>
+<script src="/app-auth.js?v28"></script>
+<script src="/app-client.js?v28"></script>
+<script src="/app-admin.js?v28"></script>
+<script src="/app-db.js?v28"></script>
+
+  <!-- Dropdown de notificações — fora do topbar para não sofrer blur do modal -->
+  <div id="notif-dropdown-wrap" style="display:none;position:fixed;top:70px;right:16px;width:320px;background:var(--white);border:1px solid var(--gray-mid);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.2);z-index:100000;overflow:hidden;animation:fadeInDown .15s ease;">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-size:13px;font-weight:700;color:var(--black);">Notificações</span>
+      <button onclick="toggleNotifDropdown(false)" style="border:none;background:none;cursor:pointer;color:var(--text-hint);font-size:18px;line-height:1;padding:2px 6px;">×</button>
+    </div>
+    <div id="notif-dropdown" style="max-height:360px;overflow-y:auto;"></div>
+  </div>
+</body>
+</html>

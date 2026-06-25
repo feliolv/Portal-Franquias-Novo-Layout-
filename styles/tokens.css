@@ -1,0 +1,200 @@
+/* ════════════════════════════════════════════════════════
+   Portal Nayax — Tokens (Nayax Brand Official)
+   Cores e tipografia conforme guideline oficial Nayax.
+   ════════════════════════════════════════════════════════ */
+
+/* ─────── Hurme Geometric Sans 3 — primary font ─────── */
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('../fonts/HurmeGeometricSans3_Light.otf') format('opentype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('../fonts/HurmeGeometricSans3_Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('../fonts/HurmeGeometricSans3_SemiBold.otf') format('opentype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('../fonts/HurmeGeometricSans3_Bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hurme Geometric Sans 3';
+  src: url('../fonts/HurmeGeometricSans3_Black.otf') format('opentype');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+
+/* JetBrains Mono via Google Fonts for tabular numbers */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ═══ MAIN COLORS (Nayax brand) ═══ */
+  --taxi-yellow: #FFCD00;   /* TAXI YELLOW MAIN — Pantone 123 C */
+  --dark:        #262626;   /* DARK MAIN — Pantone Black */
+  --light:       #FFFFFF;   /* LIGHT MAIN — Pantone White */
+  --mid:         #F3F3F3;   /* MID MAIN — Pantone 1 C */
+
+  /* ═══ SUPPORTIVE — MAIN ═══ */
+  --iris:        #6D5BF7;   /* IRIS MAIN — Pantone 2725 C */
+  --violet:      #2C1036;   /* VIOLET MAIN — Pantone 2695 C */
+  --spring:      #25EF89;   /* SPRING MAIN — Pantone 7479 C */
+  --coral:       #FF5C6C;   /* BRIGHT CORAL MAIN — Pantone 805 C */
+
+  /* ═══ SUPPORTIVE YELLOWS — SUB ═══ */
+  --taxi-y-1: #FFFAE6;
+  --taxi-y-2: #FFF0B0;
+  --taxi-y-3: #FFE88A;
+  --taxi-y-4: #FFDE54;
+  --lemon-1: #FFFFE6;
+  --lemon-2: #FFFEB0;
+  --lemon-3: #FFFD8A;
+  --lemon-4: #FFFB00;
+
+  /* ═══ SUPPORTIVE GRAYS — SUB ═══ */
+  --mid-1:      #FBFBFB;
+  --yellow-2:   #F9F9F9;
+  --yellow-3:   #F5F5F5;
+  --yellow-4:   #DDDDDD;
+  --gray-1:     #ADADAD;
+  --gray-2:     #868686;
+  --gray-3:     #666666;
+
+  /* ═══ SUPPORTIVE COLORS — SUB ═══ */
+  --iris-1:     #F0EFFE;
+  --iris-2:     #BCB4FB;
+  --violet-1:   #EAE7EB;
+  --violet-2:   #9F8EA3;
+  --spring-1:   #E9FDF3;
+  --spring-2:   #9BF8C9;
+  --coral-1:    #FFEFF0;
+  --coral-2:    #FFCCD1;
+
+  /* ═══ SEMANTIC MAPPINGS ═══ */
+  --accent:        var(--taxi-yellow);
+  --accent-strong: #E6B800;
+  --accent-on:     var(--dark);
+  --accent-soft:   var(--taxi-y-1);
+
+  --bg-app:        #F7F5F0;
+  --bg-surface:    var(--light);
+  --bg-surface-2:  var(--mid-1);
+  --bg-inverse:    var(--dark);
+  --bg-inverse-2:  #1c1c1c;
+
+  --text-1:        var(--dark);
+  --text-2:        var(--gray-2);
+  --text-3:        var(--gray-1);
+  --text-on-inverse:   #F2EFEA;
+  --text-on-inverse-2: var(--gray-1);
+  --text-link:     var(--iris);
+
+  --line-1:        rgba(38, 38, 38, 0.08);
+  --line-2:        rgba(38, 38, 38, 0.14);
+  --line-on-inverse:    rgba(255, 255, 255, 0.08);
+  --line-on-inverse-2:  rgba(255, 255, 255, 0.14);
+
+  /* Status tokens (Nayax) */
+  --green-30: #0E9B58;
+  --green-50: var(--spring);
+  --green-soft: var(--spring-1);
+  --red-30:   #DC3447;
+  --red-50:   var(--coral);
+  --red-soft: var(--coral-1);
+  --orange-30:#C2570B;
+  --orange-50:#F08A20;
+  --orange-soft:#FDF1E2;
+  --blue-30:  #4536B8;
+  --blue-50:  var(--iris);
+  --blue-soft: var(--iris-1);
+
+  /* Compatibility (legacy refs in code) */
+  --yellow-00: #8A6E00;
+  --yellow-30: var(--taxi-yellow);
+  --yellow-80: var(--taxi-y-2);
+  --yellow-90: var(--taxi-y-1);
+  --purple-10: var(--violet);
+  --purple-30: var(--iris);
+  --purple-50: var(--iris);
+  --purple-80: var(--iris-2);
+  --purple-90: var(--iris-1);
+  --neutral-00: #000000;
+  --neutral-10: #0D0D0D;
+  --neutral-15: var(--dark);
+  --neutral-20: var(--dark);
+  --neutral-30: #404040;
+  --neutral-40: var(--gray-2);
+  --neutral-50: var(--gray-2);
+  --neutral-60: var(--gray-1);
+  --neutral-70: var(--yellow-4);
+  --neutral-75: var(--yellow-4);
+  --neutral-80: var(--mid);
+  --neutral-85: var(--mid-1);
+  --neutral-90: var(--light);
+
+  /* ═══ TYPOGRAPHY ═══ */
+  --font-sans: 'Hurme Geometric Sans 3', 'Urbanist', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;     /* Hurme doesn't ship 500 — falls to 400 */
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  /* ═══ SPACING (8pt grid, conforme guideline) ═══ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 96px;
+
+  /* ═══ RADII ═══ */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  /* ═══ SHADOWS ═══ */
+  --shadow-xs: 0 1px 2px rgba(38, 38, 38, 0.04);
+  --shadow-sm: 0 1px 3px rgba(38, 38, 38, 0.06), 0 1px 2px rgba(38, 38, 38, 0.04);
+  --shadow-md: 0 8px 24px rgba(38, 38, 38, 0.06), 0 2px 4px rgba(38, 38, 38, 0.04);
+  --shadow-lg: 0 20px 48px rgba(38, 38, 38, 0.10), 0 4px 8px rgba(38, 38, 38, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(255, 205, 0, 0.30);
+
+  /* ═══ LAYOUT ═══ */
+  --sidebar-w: 248px;
+  --topbar-h: 60px;
+  --content-max: 1440px;
+}
+
+/* ════ Energetic personality variant (mais amarelo) ════ */
+[data-personality="energetic"] {
+  --bg-app: #FFFAE6;
+  --bg-surface: #FFFFFF;
+  --accent-soft: var(--taxi-y-2);
+  --line-1: rgba(38, 38, 38, 0.10);
+}
+
+/* ════ Density ════ */
+[data-density="compact"] {
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+}
