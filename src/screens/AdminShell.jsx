@@ -120,7 +120,7 @@ const AdminDashboard = () => {
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <div>
-              <div className="t-overline">t('admin.dashboard.volumeTitle', 'Volume de pedidos · 30 dias')</div>
+              <div className="t-overline">{t('admin.dashboard.volumeTitle', 'Volume de pedidos · 30 dias')}</div>
               <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', marginTop: 4 }}>R$ 1,42 M</div>
               <div style={{ fontSize: 12, color: 'var(--green-30)', fontWeight: 600 }}><Icon name="trending-up" size={11}/> +24% vs. 30 dias anteriores</div>
             </div>
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="card card-pad">
-          <div className="t-overline" style={{ marginBottom: 12 }}>t('admin.dashboard.bySegment', 'Pedidos por segmento')</div>
+          <div className="t-overline" style={{ marginBottom: 12 }}>{t('admin.dashboard.bySegment', 'Pedidos por segmento')}</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             <DonutChart data={SEGMENTS} size={130} stroke={20}/>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -155,8 +155,8 @@ const AdminDashboard = () => {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-            <div className="t-overline">t('admin.dashboard.topProducts', 'Top produtos por receita')</div>
-            <button className="btn btn-link btn-sm" style={{ fontSize: 11.5, color: 'var(--text-link)' }}>Ver todos →</button>
+            <div className="t-overline">{t('admin.dashboard.topProducts', 'Top produtos por receita')}</div>
+            <button className="btn btn-link btn-sm" onClick={() => window.setRoute && window.setRoute('admin-sales')} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>{t('common.viewAll', 'Ver todos →')}</button>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {TOP_PRODUCTS.map((p, i) => {
@@ -180,8 +180,8 @@ const AdminDashboard = () => {
 
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-            <div className="t-overline">t('admin.dashboard.franchiseRanking', 'Ranking de franquias')</div>
-            <button className="btn btn-link btn-sm" style={{ fontSize: 11.5, color: 'var(--text-link)' }}>Ver todos →</button>
+            <div className="t-overline">{t('admin.dashboard.franchiseRanking', 'Ranking de franquias')}</div>
+            <button className="btn btn-link btn-sm" onClick={() => window.setRoute && window.setRoute('admin-clients')} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>{t('common.viewAll', 'Ver todos →')}</button>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {TOP_CLIENTS.map((c, i) => (
@@ -202,10 +202,10 @@ const AdminDashboard = () => {
       <div className="card card-pad">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
           <div>
-            <div className="t-overline">t('admin.dashboard.recentActivity', 'Atividade recente')</div>
-            <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>t('admin.dashboard.events24h', 'Eventos do portal nas últimas 24 horas')</div>
+            <div className="t-overline">{t('admin.dashboard.recentActivity', 'Atividade recente')}</div>
+            <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>{t('admin.dashboard.events24h', 'Eventos do portal nas últimas 24 horas')}</div>
           </div>
-          <button className="btn btn-link btn-sm" onClick={() => setFeedOpen(true)} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>t('admin.dashboard.viewFeed', 'Ver feed completo →')</button>
+          <button className="btn btn-link btn-sm" onClick={() => setFeedOpen(true)} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>{t('admin.dashboard.viewFeed', 'Ver feed completo →')}</button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {ACTIVITY.slice(0, 6).map((ev, i) => (
@@ -256,24 +256,47 @@ const AdminDashboard = () => {
 /* ─────── Helpers ─────── */
 const PeriodPicker = ({ value, onChange }) => {
   const { t } = useLang();
+  const [customOpen, setCustomOpen] = React.useState(false);
+  const [customStart, setCustomStart] = React.useState('');
+  const [customEnd, setCustomEnd]     = React.useState('');
   const opts = [
-    { id: 'today',     label: t('admin.period.today') },
-    { id: 'week',      label: t('admin.period.week') },
-    { id: 'month',     label: t('admin.period.month') },
-    { id: '3m',        label: t('admin.period.3m') },
-    { id: 'all',       label: t('admin.period.all') },
+    { id: 'today', label: t('admin.period.today', 'Hoje') },
+    { id: 'week',  label: t('admin.period.week',  'Semana') },
+    { id: 'month', label: t('admin.period.month', 'Mês') },
+    { id: '3m',    label: t('admin.period.3m',    '3 meses') },
+    { id: 'all',   label: t('admin.period.all',   'Tudo') },
   ];
+  const btnStyle = (id) => ({
+    padding: '5px 11px', fontSize: 12, fontWeight: 600, borderRadius: 5,
+    background: value === id ? 'var(--dark)' : 'transparent',
+    color: value === id ? 'var(--taxi-yellow)' : 'var(--text-2)',
+    cursor: 'pointer', border: 'none',
+  });
   return (
-    <div style={{ display: 'flex', background: 'var(--bg-surface)', border: '1px solid var(--line-2)', borderRadius: 'var(--radius-sm)', padding: 3 }}>
-      {opts.map(o => (
-        <button key={o.id} onClick={() => onChange(o.id)} style={{
-          padding: '5px 11px',
-          fontSize: 12, fontWeight: 600,
-          borderRadius: 5,
-          background: value === o.id ? 'var(--neutral-15)' : 'transparent',
-          color: value === o.id ? 'white' : 'var(--text-2)',
-        }}>{o.label}</button>
-      ))}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div style={{ display: 'flex', background: 'var(--bg-surface)', border: '1px solid var(--line-2)', borderRadius: 'var(--radius-sm)', padding: 3 }}>
+        {opts.map(o => (
+          <button key={o.id} onClick={() => { onChange(o.id); setCustomOpen(false); }} style={btnStyle(o.id)}>{o.label}</button>
+        ))}
+      </div>
+      <div style={{ position: 'relative' }}>
+        <button onClick={() => setCustomOpen(!customOpen)} style={{ ...btnStyle('custom'), background: value === 'custom' ? 'var(--dark)' : 'var(--bg-surface)', border: '1px solid var(--line-2)', borderRadius: 'var(--radius-sm)', padding: '5px 11px' }}>
+          <Icon name="calendar" size={13}/> {value === 'custom' ? `${customStart} – ${customEnd}` : t('admin.period.custom', 'Personalizado')}
+        </button>
+        {customOpen && (
+          <div style={{ position: 'absolute', right: 0, top: 36, background: 'var(--bg-surface-2)', border: '1px solid var(--line-2)', borderRadius: 'var(--radius-md)', padding: 16, zIndex: 100, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 240, boxShadow: 'var(--shadow-md)' }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-2)' }}>{t('admin.period.custom', 'Período personalizado')}</div>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <input type="date" value={customStart} onChange={e => setCustomStart(e.target.value)} className="input" style={{ fontSize: 12, padding: '4px 8px' }}/>
+              <span style={{ color: 'var(--text-3)', fontSize: 12 }}>→</span>
+              <input type="date" value={customEnd} onChange={e => setCustomEnd(e.target.value)} className="input" style={{ fontSize: 12, padding: '4px 8px' }}/>
+            </div>
+            <button className="btn btn-primary btn-sm" onClick={() => { if (customStart && customEnd) { onChange('custom'); setCustomOpen(false); } }} style={{ alignSelf: 'flex-end' }}>
+              {t('common.confirm')}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
