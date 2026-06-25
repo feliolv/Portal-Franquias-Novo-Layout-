@@ -291,7 +291,7 @@ const AdminHubSpot = () => {
           <div style={{ fontSize: 13.5, fontWeight: 600 }}>Conectado · API Nayax BR</div>
           <div style={{ fontSize: 12, color: 'var(--text-2)' }}>OAuth válido · próxima sync automática em 6h · 3 novos produtos detectados</div>
         </div>
-        <button className="btn btn-secondary btn-sm">Configurar</button>
+        <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Configurações HubSpot — abre em breve')}>Configurar</button>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 18, alignItems: 'flex-start' }}>

@@ -175,7 +175,7 @@ const AdminWorkflows = () => {
                 <div style={{ fontSize: 14, fontWeight: 700 }}>{tpl.title}</div>
                 <div style={{ fontSize: 12.5, color: 'var(--text-2)', marginTop: 4, lineHeight: 1.5 }}>{tpl.desc}</div>
               </div>
-              <button className="btn btn-dark btn-sm" style={{ marginTop: 4 }}><Icon name="plus" size={12}/> Usar template</button>
+              <button className="btn btn-dark btn-sm" style={{ marginTop: 4 }} onClick={() => { setNewOpen(true); }}><Icon name="plus" size={12}/> Usar template</button>
             </div>
           ))}
         </div>

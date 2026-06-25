@@ -108,8 +108,8 @@ const SettingsEmpresa = () => {
             <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Logo principal (PNG)</div>
             <div style={{ fontSize: 12, color: 'var(--text-2)', marginBottom: 10 }}>Mínimo 512×512 · transparência recomendada</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn btn-secondary btn-sm"><Icon name="upload" size={13}/> Trocar logo</button>
-              <button className="btn btn-ghost btn-sm">Restaurar padrão</button>
+              <button className="btn btn-secondary btn-sm" onClick={() => { const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=()=>window.toast&&window.toast('Logo enviada com sucesso'); inp.click(); }}><Icon name="upload" size={13}/> Trocar logo</button>
+              <button className="btn btn-ghost btn-sm" onClick={async () => { const ok = await window.confirmAction({ title: 'Restaurar logo padrão?', body: 'A logo atual será substituída pela logo padrão Nayax.', confirmLabel: 'Restaurar' }); if(ok) window.toast&&window.toast('Logo restaurada para o padrão'); }}>Restaurar padrão</button>
             </div>
           </div>
         </div>
@@ -470,7 +470,7 @@ const SettingsIntegracoes = () => {
     { id: 'pipefy',  name: 'Pipefy',           desc: 'Gestão de processos e fluxo de produção',             icon: 'grid',    tone: '#00C29D', status: 'connected', meta: 'Pipe Produção · 4 fases' },
   ]);
   return (
-    <SettingsBlock title="Integrações" sub="Conectores externos do portal Nayax." action={<button className="btn btn-secondary btn-sm"><Icon name="plus" size={13}/> Conectar nova</button>}>
+    <SettingsBlock title="Integrações" sub="Conectores externos do portal Nayax." action={<button className="btn btn-secondary btn-sm" onClick={() => window.toast&&window.toast('Catálogo de integrações — em breve')}><Icon name="plus" size={13}/> Conectar nova</button>}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
         {items.map(it => (
           <div key={it.id} className="card" style={{ padding: 16 }}>
@@ -599,7 +599,7 @@ const SettingsSeguranca = () => {
               <div style={{ fontSize: 13, fontWeight: 600 }}>{s.dev} {s.current && <span className="badge badge-green" style={{ fontSize: 9, marginLeft: 6 }}>Esta sessão</span>}</div>
               <div style={{ fontSize: 11.5, color: 'var(--text-3)' }}>{s.loc} · IP {s.ip} · {s.last}</div>
             </div>
-            {!s.current && <button className="btn btn-danger btn-sm">Encerrar</button>}
+            {!s.current && <button className="btn btn-danger btn-sm" onClick={async () => { const ok = await window.confirmAction({ title: 'Encerrar sessão?', body: 'O usuário será desconectado imediatamente.', danger: true, confirmLabel: 'Encerrar' }); if(ok) window.toast&&window.toast('Sessão encerrada'); }}>Encerrar</button>}
           </div>
         ))}
       </SettingsBlock>

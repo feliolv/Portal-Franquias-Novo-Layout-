@@ -444,7 +444,7 @@ const BundleModal = ({ existing, onClose }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, padding: '16px 28px', borderTop: '1px solid var(--line-1)', background: 'var(--bg-surface)' }}>
           <button className="btn btn-ghost" onClick={onClose}>Cancelar</button>
           <div style={{ display: 'flex', gap: 8 }}>
-            {isEdit && <button className="btn btn-danger"><Icon name="trash" size={13}/> Excluir</button>}
+            {isEdit && <button className="btn btn-danger" onClick={async () => { const ok = await window.confirmAction({ title: 'Excluir bundle?', body: 'Esta ação não pode ser desfeita.', danger: true, confirmLabel: 'Excluir' }); if(ok){ onDelete && onDelete(editing.id); onClose(); } }}><Icon name="trash" size={13}/> Excluir</button>}
             <button className="btn btn-primary" onClick={submit} disabled={!valid}>
               <Icon name="check" size={14} stroke={3}/> {isEdit ? 'Salvar alterações' : 'Criar bundle'}
             </button>

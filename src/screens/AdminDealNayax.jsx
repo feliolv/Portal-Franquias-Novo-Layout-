@@ -116,7 +116,7 @@ const AdminDealNayax = () => {
         actions={
           <>
             <button className="btn btn-secondary btn-sm" onClick={() => setSettingsOpen(true)}><Icon name="settings" size={13}/> Configurações</button>
-            <button className="btn btn-secondary btn-sm"><Icon name="refresh" size={13}/> Migrar do HubSpot</button>
+            <button className="btn btn-secondary btn-sm" onClick={async () => { const ok = await window.confirmAction({ title: 'Migrar negócios do HubSpot?', body: 'Importa deals abertos do HubSpot para o DealNayax. Negócios duplicados serão ignorados.', confirmLabel: 'Migrar' }); if(ok) window.toast && window.toast('Migração iniciada — pode levar alguns minutos'); }}><Icon name="refresh" size={13}/> Migrar do HubSpot</button>
             <button className="btn btn-dark btn-sm" onClick={() => setBuilding(true)}><Icon name="plus" size={13}/> Novo orçamento</button>
           </>
         }
@@ -203,10 +203,10 @@ const AdminDealNayax = () => {
             <div className="card">
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--line-1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>t('deal.awaitingSig', 'Aguardando assinatura')</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{t('deal.awaitingSig', 'Aguardando assinatura')}</div>
                   <div style={{ fontSize: 12, color: 'var(--text-2)' }}>Clicksign · 5 orçamentos · R$ 193.840 em jogo</div>
                 </div>
-                <button className="btn btn-ghost btn-sm">Ver todos <Icon name="arrow-right" size={11}/></button>
+                <button className="btn btn-ghost btn-sm" onClick={() => setTab('quotes')}>Ver todos <Icon name="arrow-right" size={11}/></button>
               </div>
               <div style={{ padding: '6px 10px 12px' }}>
                 {[
@@ -237,7 +237,7 @@ const AdminDealNayax = () => {
             <div className="card">
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--line-1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>t('deal.inApproval', 'Em aprovação')</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{t('deal.inApproval', 'Em aprovação')}</div>
                   <div style={{ fontSize: 12, color: 'var(--text-2)' }}>ordenado por prioridade</div>
                 </div>
                 <button className="btn btn-ghost btn-sm" onClick={() => setTab('approvals')}>Ver fila <Icon name="arrow-right" size={11}/></button>
@@ -432,7 +432,7 @@ const AdminDealNayax = () => {
             <div style={{ fontSize: 13, color: 'var(--text-2)' }}>
               Geradas automaticamente de orçamentos <strong style={{ color: 'var(--text-1)' }}>assinados</strong> que possuem endereço de entrega. Itens só-digitais (Cloud, taxas) não geram ordem.
             </div>
-            <button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> Exportar</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando ordens de produção (CSV)…')}><Icon name="download" size={13}/> Exportar</button>
           </div>
           <div className="table-wrap">
             <table className="t">

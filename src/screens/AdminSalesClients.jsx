@@ -173,10 +173,10 @@ const AdminSales = () => {
               <>
                 <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{selected.length} selecionado{selected.length>1?'s':''}</span>
                 <button className="btn btn-secondary btn-sm" onClick={resendBulk}><Icon name="refresh" size={12}/> Reenviar ao HubSpot</button>
-                <button className="btn btn-secondary btn-sm">Marcar como enviado</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => { selected.forEach(id => { const o = orders.find(x=>x.id===id); if(o && o.status==='confirmed') advanceStatus(o,'shipped'); }); }}>Marcar como enviado</button>
               </>
             )}
-            <div style={{ fontSize: 12, color: 'var(--text-3)' }}>t('common.density', 'Densidade')</div>
+            <div style={{ fontSize: 12, color: 'var(--text-3)' }}>{t('common.density', 'Densidade')}</div>
             <div style={{ display: 'flex', padding: 2, background: 'var(--bg-surface-2)', border: '1px solid var(--line-1)', borderRadius: 6 }}>
               <button onClick={() => setDensity('compact')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, color: density === 'compact' ? 'var(--text-1)' : 'var(--text-2)', background: density === 'compact' ? 'var(--bg-surface)' : 'transparent', borderRadius: 4, boxShadow: density === 'compact' ? 'var(--shadow-xs)' : 'none' }}>t('common.compact', 'Compacta')</button>
               <button onClick={() => setDensity('comfort')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, background: density === 'comfort' ? 'var(--bg-surface)' : 'transparent', color: density === 'comfort' ? 'var(--text-1)' : 'var(--text-2)', borderRadius: 4, boxShadow: density === 'comfort' ? 'var(--shadow-xs)' : 'none' }}>t('common.comfortable', 'Confortável')</button>
