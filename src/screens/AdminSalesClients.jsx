@@ -126,7 +126,7 @@ const AdminSales = () => {
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--red-30)' }}>{hsCounts.failed} pedido{hsCounts.failed>1?'s':''} com erro de sincronização HubSpot</div>
-            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.</div>
+            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>t('admin.sales.hsErrorBanner', 'Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.')</div>
           </div>
           <button className="btn btn-sm" onClick={() => setHsFilter('failed')} style={{ background: 'white', border: '1px solid var(--coral-2)', color: 'var(--red-30)' }}>
             Ver com erro <Icon name="arrow-right" size={12}/>
@@ -176,10 +176,10 @@ const AdminSales = () => {
                 <button className="btn btn-secondary btn-sm">Marcar como enviado</button>
               </>
             )}
-            <div style={{ fontSize: 12, color: 'var(--text-3)' }}>Densidade</div>
+            <div style={{ fontSize: 12, color: 'var(--text-3)' }}>t('common.density', 'Densidade')</div>
             <div style={{ display: 'flex', padding: 2, background: 'var(--bg-surface-2)', border: '1px solid var(--line-1)', borderRadius: 6 }}>
-              <button onClick={() => setDensity('compact')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, color: density === 'compact' ? 'var(--text-1)' : 'var(--text-2)', background: density === 'compact' ? 'var(--bg-surface)' : 'transparent', borderRadius: 4, boxShadow: density === 'compact' ? 'var(--shadow-xs)' : 'none' }}>Compacta</button>
-              <button onClick={() => setDensity('comfort')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, background: density === 'comfort' ? 'var(--bg-surface)' : 'transparent', color: density === 'comfort' ? 'var(--text-1)' : 'var(--text-2)', borderRadius: 4, boxShadow: density === 'comfort' ? 'var(--shadow-xs)' : 'none' }}>Confortável</button>
+              <button onClick={() => setDensity('compact')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, color: density === 'compact' ? 'var(--text-1)' : 'var(--text-2)', background: density === 'compact' ? 'var(--bg-surface)' : 'transparent', borderRadius: 4, boxShadow: density === 'compact' ? 'var(--shadow-xs)' : 'none' }}>t('common.compact', 'Compacta')</button>
+              <button onClick={() => setDensity('comfort')} style={{ padding: '3px 8px', fontSize: 11, fontWeight: 600, background: density === 'comfort' ? 'var(--bg-surface)' : 'transparent', color: density === 'comfort' ? 'var(--text-1)' : 'var(--text-2)', borderRadius: 4, boxShadow: density === 'comfort' ? 'var(--shadow-xs)' : 'none' }}>t('common.comfortable', 'Confortável')</button>
             </div>
           </div>
         </div>
@@ -188,11 +188,11 @@ const AdminSales = () => {
           <thead>
             <tr>
               <th style={{ width: 40 }}><input type="checkbox" checked={selected.length === rows.length && rows.length > 0} onChange={toggleAll} style={{ accentColor: 'var(--accent)' }}/></th>
-              <th>Pedido</th>
-              <th>Franquia</th>
+              <th>{>{t('admin.sales.colOrder', 'Pedido')}<}</th>
+              <th>{>{t('admin.sales.colFranchise', 'Franquia')}<}</th>
               <th>Itens</th>
-              <th>Status</th>
-              <th>HubSpot</th>
+              <th>{>{t('admin.sales.colStatus', 'Status')}<}</th>
+              <th>{>{t('admin.sales.colHubspot', 'HubSpot')}<}</th>
               <th>Pagamento</th>
               <th style={{ textAlign: 'right' }}>Valor</th>
               <th>Quando</th>
@@ -284,7 +284,7 @@ const AdminSales = () => {
                             { id: 'deliver',  label: 'Marcar como entregue',icon: 'check',  fn: () => { advanceStatus(o, 'delivered'); setMenuOpen(null); }, hide: o.status !== 'shipped' },
                             { id: 'dup',      label: 'Duplicar pedido',   icon: 'copy',     fn: () => { dupOrder(o); setMenuOpen(null); } },
                             { id: 'sep2' },
-                            { id: 'resend',   label: 'Reenviar ao HubSpot',icon: 'refresh', fn: () => { resendOne(o.id); setMenuOpen(null); }, hide: o.hs === 'synced', danger: o.hs === 'failed' },
+                            { id: 'resend',   label: t('admin.sales.resync', 'Reenviar ao HubSpot'),icon: 'refresh', fn: () => { resendOne(o.id); setMenuOpen(null); }, hide: o.hs === 'synced', danger: o.hs === 'failed' },
                             { id: 'cancel',   label: 'Cancelar pedido',   icon: 'x',        fn: async () => { setMenuOpen(null); await cancelOrder(o); }, danger: true, hide: o.status === 'cancelled' || o.status === 'delivered' },
                           ].filter(i => !i.hide).map(i => i.id.startsWith('sep') ? (
                             <div key={i.id} style={{ height: 1, background: 'var(--line-1)', margin: '4px 6px' }}/>
@@ -403,7 +403,7 @@ const AdminSales = () => {
                   <div style={{ fontSize: 18, fontWeight: 700 }}>{detailOrder.items}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div className="t-overline" style={{ fontSize: 10 }}>Total</div>
+                  <div className="t-overline" style={{ fontSize: 10 }}>{>{t('admin.sales.colTotal', 'Total')}<}</div>
                   <div style={{ fontSize: 22, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{fmtBRL(detailOrder.total)}</div>
                 </div>
               </div>

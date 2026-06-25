@@ -125,10 +125,10 @@ const AdminDealNayax = () => {
       {/* Sub-tabs */}
       <div style={{ display: 'flex', gap: 6, marginBottom: 18, borderBottom: '1px solid var(--line-1)' }}>
         {[
-          { id: 'overview',  label: 'Visão geral' },
-          { id: 'deals',     label: 'Negócios', count: DN_DEALS.length },
-          { id: 'quotes',    label: 'Orçamentos', count: DN_QUOTES.length },
-          { id: 'approvals', label: 'Aprovações', count: approvals.length, alert: approvals.length > 0 },
+          { id: 'overview',  label: t('nav.admin.dashboard') },
+          { id: 'deals',     label: t('deal.deals', 'Negócios'), count: DN_DEALS.length },
+          { id: 'quotes',    label: t('deal.quotes', 'Orçamentos'), count: DN_QUOTES.length },
+          { id: 'approvals', label: t('deal.approvals', 'Aprovações'), count: approvals.length, alert: approvals.length > 0 },
           { id: 'production', label: 'Ordens de Produção', count: DN_PRODUCTION.length },
         ].map(tt => (
           <button key={tt.id} onClick={() => setTab(tt.id)} style={{
@@ -192,8 +192,8 @@ const AdminDealNayax = () => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line-1)', fontSize: 11.5, color: 'var(--text-3)' }}>
               <span>Conversão Em Aberto → Assinado: <strong style={{ color: 'var(--text-1)' }}>40,4%</strong></span>
-              <span>Tempo médio total: <strong style={{ color: 'var(--text-1)' }}>14,2 dias</strong></span>
-              <span>Maior gargalo: <strong style={{ color: 'var(--red-30)' }}>Enviado → Negociação (50% drop)</strong></span>
+              <span>t('deal.avgTime', 'Tempo médio total:') <strong style={{ color: 'var(--text-1)' }}>14,2 dias</strong></span>
+              <span>t('deal.bottleneck', 'Maior gargalo:') <strong style={{ color: 'var(--red-30)' }}>Enviado → Negociação (50% drop)</strong></span>
             </div>
           </div>
 
@@ -203,7 +203,7 @@ const AdminDealNayax = () => {
             <div className="card">
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--line-1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>Aguardando assinatura</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>t('deal.awaitingSig', 'Aguardando assinatura')</div>
                   <div style={{ fontSize: 12, color: 'var(--text-2)' }}>Clicksign · 5 orçamentos · R$ 193.840 em jogo</div>
                 </div>
                 <button className="btn btn-ghost btn-sm">Ver todos <Icon name="arrow-right" size={11}/></button>
@@ -237,7 +237,7 @@ const AdminDealNayax = () => {
             <div className="card">
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--line-1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>Em aprovação</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>t('deal.inApproval', 'Em aprovação')</div>
                   <div style={{ fontSize: 12, color: 'var(--text-2)' }}>ordenado por prioridade</div>
                 </div>
                 <button className="btn btn-ghost btn-sm" onClick={() => setTab('approvals')}>Ver fila <Icon name="arrow-right" size={11}/></button>

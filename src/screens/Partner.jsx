@@ -12,7 +12,8 @@ const PARTNER_STOCK = [
   { id: 'ps6', sku: 'NYX-FOOD-POS', name: 'POS Food Service',     cat: 'Terminais',  stock: 9,  price: 1990, monthly: 59.90 },
 ];
 
-const Partner = ({ setRoute }) => {
+const Partner = ({
+  const { t } = useLang(); setRoute }) => {
   const [selected, setSelected] = useState(null); // product being ordered
   const [nav, setNav] = useState('stock'); // stock | history
   const [search, setSearch] = useState('');
@@ -156,7 +157,7 @@ const PartnerOrder = ({ product, onBack }) => {
           {/* Dados do cliente — igual ao catálogo de clientes */}
           <div className="card card-pad">
             <div className="t-overline" style={{ marginBottom: 14 }}><Icon name="user" size={12}/> Dados do cliente</div>
-            <div style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Dados da empresa</div>
+            <div style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>t('partner.companyData', 'Dados da empresa')</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
               <div><label className="field-label">Razão Social *</label><input className="input" placeholder="Ex: Padaria Estrela Ltda"/></div>
               <div><label className="field-label">Nome fantasia</label><input className="input" placeholder="Padaria Estrela"/></div>
@@ -243,7 +244,7 @@ const PartnerOrder = ({ product, onBack }) => {
           )}
 
           <button className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={!valid} onClick={submit}>
-            <Icon name="refresh" size={15}/> Confirmar transferência
+            <Icon name="refresh" size={15}/> t('partner.confirmTransfer', 'Confirmar transferência')
           </button>
           <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 10 }}>Movimentação registrada no sistema · sem envio físico</div>
         </div>

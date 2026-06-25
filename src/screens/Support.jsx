@@ -14,12 +14,13 @@ const PRIO_META = {
   low:  { color: 'var(--green-30)',  bg: 'var(--green-soft)',  label: 'Baixa' },
 };
 const TICKET_STATUS_META = {
-  open:   { color: 'var(--iris)',  bg: 'var(--iris-1)',    label: 'Aberto' },
+  open:   { color: 'var(--iris)',  bg: 'var(--iris-1)',    label: t('support.statusOpen', 'Aberto') },
   wait:   { color: 'var(--orange-30)', bg: 'var(--orange-soft)', label: 'Aguardando você' },
-  closed: { color: 'var(--text-3)',bg: 'var(--neutral-80)',label: 'Resolvido' },
+  closed: { color: 'var(--text-3)',bg: 'var(--neutral-80)',label: t('support.statusResolved', 'Resolvido') },
 };
 
-const Support = ({ cart, setRoute, openCart }) => {
+const Support = ({
+  const { t } = useLang(); cart, setRoute, openCart }) => {
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   const [newOpen, setNewOpen] = useState(false);
   const [filter, setFilter] = useState('all');
@@ -36,7 +37,7 @@ const Support = ({ cart, setRoute, openCart }) => {
             kicker="Conta NX-7842"
             title="Suporte & chamados"
             sub="Abra um chamado para questões técnicas, financeiras ou comerciais. Tempo médio de resposta: 2h úteis."
-            actions={<button className="btn btn-dark btn-sm" onClick={() => setNewOpen(true)}><Icon name="plus" size={13}/> Novo chamado</button>}
+            actions={<button className="btn btn-dark btn-sm" onClick={() => setNewOpen(true)}><Icon name="plus" size={13}/> t('support.newTicket', 'Novo chamado')</button>}
           />
 
           <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
@@ -62,7 +63,7 @@ const Support = ({ cart, setRoute, openCart }) => {
           ) : (
             <div className="table-wrap">
               <table className="t">
-                <thead><tr><th>Chamado</th><th>Assunto</th><th>Categoria</th><th>Prioridade</th><th>Status</th><th>Última atualização</th><th></th></tr></thead>
+                <thead><tr><th>{>{t('support.ticket', 'Chamado')}<}</th><th>t('support.subject', 'Assunto')</th><th>Categoria</th><th>t('support.priority', 'Prioridade')</th><th>Status</th><th>t('common.lastUpdate', 'Última atualização')</th><th></th></tr></thead>
                 <tbody>
                   {rows.map(t => {
                     const pm = PRIO_META[t.priority], sm = TICKET_STATUS_META[t.status];

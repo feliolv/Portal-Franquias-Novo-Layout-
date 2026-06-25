@@ -61,9 +61,9 @@ const AdminAnnounce = () => {
                 <div style={{ fontSize: 12.5, color: 'var(--text-2)', marginTop: 4, lineHeight: 1.5 }}>{a.body}</div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 1, background: 'var(--line-1)', borderRadius: 'var(--radius-sm)', overflow: 'hidden' }}>
-                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>Público</div><div style={{ fontSize: 12, fontWeight: 600, marginTop: 2 }}>{a.audience}</div></div>
-                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>Período</div><div style={{ fontSize: 11.5, fontWeight: 600, marginTop: 2 }}>{a.starts}{a.ends !== '—' && a.ends !== a.starts ? ' → ' + a.ends : ''}</div></div>
-                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>Visualizações</div><div style={{ fontSize: 12, fontWeight: 700, marginTop: 2, fontFamily: 'var(--font-mono)' }}>{a.views.toLocaleString('pt-BR')}</div></div>
+                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>t('admin.announce.public', 'Público')</div><div style={{ fontSize: 12, fontWeight: 600, marginTop: 2 }}>{a.audience}</div></div>
+                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>t('common.period', 'Período')</div><div style={{ fontSize: 11.5, fontWeight: 600, marginTop: 2 }}>{a.starts}{a.ends !== '—' && a.ends !== a.starts ? ' → ' + a.ends : ''}</div></div>
+                <div style={{ background: 'var(--bg-surface)', padding: '8px 10px' }}><div className="t-overline" style={{ fontSize: 9 }}>t('admin.announce.views', 'Visualizações')</div><div style={{ fontSize: 12, fontWeight: 700, marginTop: 2, fontFamily: 'var(--font-mono)' }}>{a.views.toLocaleString('pt-BR')}</div></div>
               </div>
               <div style={{ display: 'flex', gap: 6 }}>
                 <button className="btn btn-secondary btn-sm" style={{ flex: 1 }}><Icon name="edit" size={12}/> Editar</button>
@@ -142,7 +142,7 @@ const AdminAudit = () => {
             <div className="cell-mono" style={{ fontSize: 11.5, textAlign: 'right' }}>{fmtDateTime(a.when)}</div>
           </div>
         ))}
-        {rows.length === 0 && <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>Nenhuma ação no filtro selecionado</div>}
+        {rows.length === 0 && <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>t('common.empty')</div>}
       </div>
     </>
   );
@@ -183,9 +183,9 @@ const AdminTickets = () => {
       <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
         {[
           { id: 'all',    label: 'Todos' },
-          { id: 'open',   label: 'Abertos' },
+          { id: 'open',   label: t('support.open', 'Abertos') },
           { id: 'wait',   label: 'Aguardando' },
-          { id: 'closed', label: 'Resolvidos' },
+          { id: 'closed', label: t('support.resolved', 'Resolvidos') },
         ].map(f => (
           <button key={f.id} onClick={() => setFilter(f.id)} style={{
             height: 30, padding: '0 12px', borderRadius: 'var(--radius-pill)',
@@ -200,7 +200,7 @@ const AdminTickets = () => {
 
       <div className="table-wrap">
         <table className="t">
-          <thead><tr><th>Chamado</th><th>Cliente</th><th>Assunto</th><th>Categoria</th><th>Prioridade</th><th>Atribuído</th><th>Status</th><th>Atualizado</th></tr></thead>
+          <thead><tr><th>{>{t('support.ticket', 'Chamado')}<}</th><th>Cliente</th><th>t('support.subject', 'Assunto')</th><th>Categoria</th><th>t('support.priority', 'Prioridade')</th><th>Atribuído</th><th>Status</th><th>Atualizado</th></tr></thead>
           <tbody>
             {rows.map(t => {
               const pm = PM[t.priority], sm = SM[t.status];

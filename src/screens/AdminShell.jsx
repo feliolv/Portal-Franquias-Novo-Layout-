@@ -120,7 +120,7 @@ const AdminDashboard = () => {
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <div>
-              <div className="t-overline">Volume de pedidos · 30 dias</div>
+              <div className="t-overline">t('admin.dashboard.volumeTitle', 'Volume de pedidos · 30 dias')</div>
               <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', marginTop: 4 }}>R$ 1,42 M</div>
               <div style={{ fontSize: 12, color: 'var(--green-30)', fontWeight: 600 }}><Icon name="trending-up" size={11}/> +24% vs. 30 dias anteriores</div>
             </div>
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="card card-pad">
-          <div className="t-overline" style={{ marginBottom: 12 }}>Pedidos por segmento</div>
+          <div className="t-overline" style={{ marginBottom: 12 }}>t('admin.dashboard.bySegment', 'Pedidos por segmento')</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             <DonutChart data={SEGMENTS} size={130} stroke={20}/>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-            <div className="t-overline">Top produtos por receita</div>
+            <div className="t-overline">t('admin.dashboard.topProducts', 'Top produtos por receita')</div>
             <button className="btn btn-link btn-sm" style={{ fontSize: 11.5, color: 'var(--text-link)' }}>Ver todos →</button>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -180,7 +180,7 @@ const AdminDashboard = () => {
 
         <div className="card card-pad">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-            <div className="t-overline">Ranking de franquias</div>
+            <div className="t-overline">t('admin.dashboard.franchiseRanking', 'Ranking de franquias')</div>
             <button className="btn btn-link btn-sm" style={{ fontSize: 11.5, color: 'var(--text-link)' }}>Ver todos →</button>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -202,10 +202,10 @@ const AdminDashboard = () => {
       <div className="card card-pad">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
           <div>
-            <div className="t-overline">Atividade recente</div>
-            <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>Eventos do portal nas últimas 24 horas</div>
+            <div className="t-overline">t('admin.dashboard.recentActivity', 'Atividade recente')</div>
+            <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>t('admin.dashboard.events24h', 'Eventos do portal nas últimas 24 horas')</div>
           </div>
-          <button className="btn btn-link btn-sm" onClick={() => setFeedOpen(true)} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>Ver feed completo →</button>
+          <button className="btn btn-link btn-sm" onClick={() => setFeedOpen(true)} style={{ fontSize: 11.5, color: 'var(--text-link)' }}>t('admin.dashboard.viewFeed', 'Ver feed completo →')</button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {ACTIVITY.slice(0, 6).map((ev, i) => (

@@ -87,9 +87,9 @@ const AdminWorkflows = () => {
 
       <div style={{ display: 'flex', gap: 6, marginBottom: 14, borderBottom: '1px solid var(--line-1)' }}>
         {[
-          { id: 'myflows',   label: 'Meus workflows', count: counts.all },
-          { id: 'templates', label: 'Templates',      count: WF_TEMPLATES.length },
-          { id: 'runs',      label: 'Execuções',      count: totalRuns },
+          { id: 'myflows',   label: t('workflows.mine', 'Meus workflows'), count: counts.all },
+          { id: 'templates', label: t('workflows.templates', 'Templates'),      count: WF_TEMPLATES.length },
+          { id: 'runs',      label: t('workflows.executions', 'Execuções'),      count: totalRuns },
         ].map(tabItem => (
           <button key={tabItem.id} onClick={() => setTab(tabItem.id)} style={{
             padding: '10px 14px',
@@ -145,7 +145,7 @@ const AdminWorkflows = () => {
                   <div style={{ fontSize: 10.5, color: w.success >= 95 ? 'var(--green-30)' : w.success >= 80 ? 'var(--orange-30)' : 'var(--red-30)', fontWeight: 600 }}>{w.runs > 0 ? w.success + '% sucesso' : '—'}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div className="t-overline" style={{ fontSize: 9 }}>Último run</div>
+                  <div className="t-overline" style={{ fontSize: 9 }}>t('workflows.lastRun', 'Último run')</div>
                   <div className="cell-mono" style={{ fontSize: 11.5 }}>{w.lastRun ? fmtDateTime(w.lastRun).split(' · ')[0] : '—'}</div>
                   <div style={{ marginTop: 4 }}>
                     {w.status === 'active'  && <span className="badge badge-green"><span className="dot"/> Ativo</span>}
@@ -262,10 +262,10 @@ const WorkflowBuilder = ({ existing, onClose, onSave }) => {
               {/* Filter row */}
               {(trigger === 'order_new' || trigger === 'order_approved') && (
                 <div style={{ marginTop: 12, padding: 12, background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-sm)' }}>
-                  <div className="t-overline" style={{ fontSize: 9, marginBottom: 8 }}>Filtros opcionais</div>
+                  <div className="t-overline" style={{ fontSize: 9, marginBottom: 8 }}>t('workflows.optFilters', 'Filtros opcionais')</div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                     <div>
-                      <label className="field-label" style={{ fontSize: 10.5 }}>Valor mínimo</label>
+                      <label className="field-label" style={{ fontSize: 10.5 }}>t('workflows.minValue', 'Valor mínimo')</label>
                       <input type="number" className="input" style={{ height: 32, fontSize: 12, fontFamily: 'var(--font-mono)' }} value={filters.minValue} onChange={e => setFilters(f => ({ ...f, minValue: +e.target.value }))} placeholder="0"/>
                     </div>
                     <div>
