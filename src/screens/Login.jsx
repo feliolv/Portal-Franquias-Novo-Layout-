@@ -143,7 +143,7 @@ const Login = ({ onSignin }) => {
         {/* Bottom — footer */}
         <div style={{ position: 'relative', zIndex: 1, paddingTop: 22, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <div style={{ fontSize: 11, color: 'var(--text-on-inverse-2)' }}>
-            © 2026 Nayax Brasil · Unattended payments
+            © 2026 Nayax Brasil
           </div>
         </div>
       </div>
@@ -181,17 +181,17 @@ const Login = ({ onSignin }) => {
           {/* Eyebrow */}
           <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--text-3)', marginBottom: 14, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
             <span style={{ width: 18, height: 2, background: 'var(--dark)' }}/>
-            Bem-vinda de volta
+            {t('login.kicker')}
           </div>
 
           {/* Title */}
           <h1 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.05, marginBottom: 10 }}>
-            Acesse seu portal Nayax
+            {t('login.title')}
           </h1>
           <p style={{ fontSize: 15, color: 'var(--text-2)', lineHeight: 1.5, marginBottom: 28 }}>
             {tab === 'client'
-              ? 'Catálogo personalizado, pedidos rastreáveis e suporte direto do time.'
-              : 'Painel administrativo restrito ao time interno Nayax Brasil.'}
+              ? t('login.subClient')
+              : t('login.subAdmin')}
           </p>
 
           {/* Tabs — segmented */}
@@ -205,8 +205,8 @@ const Login = ({ onSignin }) => {
             position: 'relative',
           }}>
             {[
-              { id: 'client', label: 'Cliente',        sub: 'Catálogo' },
-              { id: 'admin',  label: 'Administração',   sub: 'Backoffice' },
+              { id: 'client', label: t('login.tabClientSub'), sub: t('nav.client.catalog') },
+              { id: 'admin',  label: t('login.tabAdmin'), sub: t('login.tabAdminSub') },
             ].map(t => (
               <button key={t.id}
                 onClick={() => { setTab(t.id); setErr(false); }}
@@ -239,10 +239,10 @@ const Login = ({ onSignin }) => {
                       </div>
                       {!resetSent ? (
                         <>
-                          <div style={{ fontSize: 18, fontWeight: 700 }}>Recuperar senha</div>
-                          <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>Informe o código da franquia ou e-mail cadastrado. Enviaremos um link para redefinir a senha.</div>
+                          <div style={{ fontSize: 18, fontWeight: 700 }}>{t('login.forgot')}</div>
+                          <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>{t('login.forgotSub', 'Informe o código da franquia ou e-mail cadastrado.')}</div>
                           <div style={{ margintop: 16, marginTop: 16 }}>
-                            <label className="field-label">Código ou e-mail</label>
+                            <label className="field-label">{t('login.forgotField', 'Código ou e-mail')}</label>
                             <input className="input" defaultValue={code} placeholder="NX-0000 ou e-mail"/>
                           </div>
                           <button type="button" className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: 16 }} onClick={() => setResetSent(true)}>
@@ -251,8 +251,8 @@ const Login = ({ onSignin }) => {
                         </>
                       ) : (
                         <>
-                          <div style={{ fontSize: 18, fontWeight: 700 }}>Link enviado!</div>
-                          <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>Se houver uma conta vinculada, você receberá um e-mail com instruções em alguns minutos. Verifique também a caixa de spam.</div>
+                          <div style={{ fontSize: 18, fontWeight: 700 }}>{t('login.forgotSentTitle', 'Link enviado!')}</div>
+                          <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>{t('login.forgotSentMsg', 'Se houver uma conta vinculada, você receberá um e-mail em alguns minutos.')}</div>
                           <button type="button" className="btn btn-dark btn-lg" style={{ width: '100%', marginTop: 16 }} onClick={() => setForgot(false)}>
                             <Icon name="check" size={15} stroke={3}/> Entendi
                           </button>
@@ -271,11 +271,11 @@ const Login = ({ onSignin }) => {
                   color: 'var(--red-30)', fontSize: 13, fontWeight: 500,
                 }}>
                   <Icon name="alert" size={15}/>
-                  Código ou senha inválidos. Tente novamente.
+                  {t('login.errInvalid')}
                 </div>
               )}
               <div>
-                <label className="field-label">Código de acesso</label>
+                <label className="field-label">{t('login.fieldCode')}</label>
                 <div className="input-group">
                   <Icon name="building" size={15}/>
                   <input value={code} onChange={e => { setCode(e.target.value.toUpperCase()); setErr(false); }} placeholder="NX-0000" style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontSize: 14 }} autoFocus/>
@@ -283,8 +283,8 @@ const Login = ({ onSignin }) => {
               </div>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <label className="field-label" style={{ marginBottom: 0 }}>Senha</label>
-                  <a onClick={() => { setForgot(true); setResetSent(false); }} style={{ fontSize: 12, color: 'var(--text-link)', cursor: 'pointer', fontWeight: 500 }}>Esqueci minha senha</a>
+                  <label className="field-label" style={{ marginBottom: 0 }}>{t('login.fieldPassword')}</label>
+                  <a onClick={() => { setForgot(true); setResetSent(false); }} style={{ fontSize: 12, color: 'var(--text-link)', cursor: 'pointer', fontWeight: 500 }}>{t('login.forgot')}</a>
                 </div>
                 <div className="input-group">
                   <Icon name="lock" size={15}/>
@@ -303,14 +303,14 @@ const Login = ({ onSignin }) => {
 
               <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-2)', cursor: 'pointer', marginTop: 2 }}>
                 <input type="checkbox" defaultChecked style={{ accentColor: 'var(--dark)', width: 14, height: 14 }}/>
-                Manter sessão por 30 dias neste dispositivo
+                {t('login.keep')}
               </label>
 
               <button type="submit" className="btn btn-primary btn-lg" disabled={loading} style={{ marginTop: 10, height: 52, fontSize: 14, fontWeight: 700, letterSpacing: '0.01em' }}>
                 {loading ? (
-                  <><span className="login-spinner"/> Entrando…</>
+                  <><span className="login-spinner"/> {t('login.btnSubmitting')}</>
                 ) : (
-                  <>Acessar catálogo <Icon name="arrow-right" size={15}/></>
+                  <>{t('login.btnAccess')} <Icon name="arrow-right" size={15}/></>
                 )}
               </button>
             </form>
@@ -327,7 +327,7 @@ const Login = ({ onSignin }) => {
                 boxShadow: '0 6px 20px rgba(255,122,89,0.25)',
               }}>
                 <Icon name="hubspot" size={18}/>
-                {loading ? 'Autorizando…' : 'Continuar com HubSpot'}
+                {loading ? loading ? t('login.btnSubmitting') : t('login.btnHubspot')}
                 <Icon name="arrow-right" size={15}/>
               </button>
 
@@ -344,21 +344,14 @@ const Login = ({ onSignin }) => {
                   <div style={{ width: 26, height: 26, borderRadius: 'var(--radius-xs)', background: 'var(--iris-1)', display: 'grid', placeItems: 'center' }}>
                     <Icon name="shield" size={13} style={{ color: 'var(--iris)' }}/>
                   </div>
-                  <strong style={{ color: 'var(--text-1)', fontSize: 13 }}>Acesso restrito</strong>
+                  <strong style={{ color: 'var(--text-1)', fontSize: 13 }}>{t('login.adminRestricted')}</strong>
                 </div>
-                <div>Apenas para usuários da Nayax.</div>
+                <div>{t('login.adminRestrictedSub')}</div>
               </div>
             </div>
           )}
 
-          {/* Footer */}
-          <div style={{ marginTop: 36, paddingTop: 22, borderTop: '1px solid var(--line-1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 12, color: 'var(--text-3)' }}>
-            <span>Primeira vez? <a style={{ color: 'var(--text-link)', fontWeight: 500, cursor: 'pointer' }}>Falar com um consultor</a></span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Icon name="lock" size={11}/>
-              <span style={{ fontFamily: 'var(--font-mono)' }}>v2026.05.27</span>
-            </div>
-          </div>
+
         </div>
       </div>
 
