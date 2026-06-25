@@ -2,8 +2,8 @@
    Cart drawer + Checkout modal (multi-step)
    ════════════════════════════════════════════════════════ */
 
-const CartDrawer = ({
-  const { t } = useLang(); cart, updateQty, clearCart, onClose, onCheckout }) => {
+const CartDrawer = ({ cart, updateQty, clearCart, onClose, onCheckout }) => {
+  const { t } = useLang();
   const total = cart.reduce((a, c) => a + (c.product.price || 0) * c.qty, 0);
   const monthly = cart.reduce((a, c) => a + (c.product.monthly || 0) * c.qty, 0);
   const items = cart.reduce((a, c) => a + c.qty, 0);

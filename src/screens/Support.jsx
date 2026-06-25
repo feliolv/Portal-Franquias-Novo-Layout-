@@ -19,8 +19,8 @@ const TICKET_STATUS_META = {
   closed: { color: 'var(--text-3)',bg: 'var(--neutral-80)',label: t('support.statusResolved', 'Resolvido') },
 };
 
-const Support = ({
-  const { t } = useLang(); cart, setRoute, openCart }) => {
+const Support = ({ cart, setRoute, openCart }) => {
+  const { t } = useLang();
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   const [newOpen, setNewOpen] = useState(false);
   const [filter, setFilter] = useState('all');

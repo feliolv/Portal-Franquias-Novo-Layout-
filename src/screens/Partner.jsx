@@ -12,8 +12,8 @@ const PARTNER_STOCK = [
   { id: 'ps6', sku: 'NYX-FOOD-POS', name: 'POS Food Service',     cat: 'Terminais',  stock: 9,  price: 1990, monthly: 59.90 },
 ];
 
-const Partner = ({
-  const { t } = useLang(); setRoute }) => {
+const Partner = ({ setRoute }) => {
+  const { t } = useLang();
   const [selected, setSelected] = useState(null); // product being ordered
   const [nav, setNav] = useState('stock'); // stock | history
   const [search, setSearch] = useState('');
