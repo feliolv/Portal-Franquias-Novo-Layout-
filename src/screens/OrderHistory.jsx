@@ -29,7 +29,7 @@ const OrderHistory = ({ cart, setRoute, openCart }) => {
     <div className="app-layout">
       <ClientSidebar route="history" setRoute={setRoute} cart={cart}/>
       <div className="app-main">
-        <Topbar breadcrumb={[{ label: 'Histórico de pedidos' }]} onCartClick={openCart} cartCount={cartCount}/>
+        <Topbar breadcrumb={[{ label: t('orders.title', 'Histórico de pedidos') }]} onCartClick={openCart} cartCount={cartCount}/>
 
         <div className="app-content">
           <PageHeader
@@ -38,7 +38,7 @@ const OrderHistory = ({ cart, setRoute, openCart }) => {
             sub={t('oh.sub')}
             actions={
               <>
-                <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Histórico exportado (CSV)')}><Icon name="download" size={13}/> {t('common.export')}</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast(t('orders.exported', 'Histórico exportado (CSV)'))}><Icon name="download" size={13}/> {t('common.export')}</button>
                 <button className="btn btn-dark btn-sm" onClick={() => setRoute('catalog')}><Icon name="plus" size={13}/> {t('oh.newOrder')}</button>
               </>
             }
@@ -47,35 +47,35 @@ const OrderHistory = ({ cart, setRoute, openCart }) => {
           {/* KPI strip */}
           <div className="kpi-strip" style={{ marginBottom: 24 }}>
             <div className="kpi">
-              <div className="label">Pedidos totais</div>
+              <div className="label">{t('orders.kpiTotal', 'Pedidos totais')}</div>
               <div className="value">{allOrders.length}</div>
-              <div className="delta delta-up"><Icon name="trending-up" size={12}/> +3 vs. mês anterior</div>
+              <div className="delta delta-up"><Icon name="trending-up" size={12}/> {t('orders.deltaUp', '+3 vs. mês anterior')}</div>
             </div>
             <div className="kpi">
-              <div className="label">Volume acumulado</div>
+              <div className="label">{t('orders.kpiVolume', 'Volume acumulado')}</div>
               <div className="value t-mono">{fmtBRLcurt(totalSpent)}</div>
               <div className="delta delta-up"><Icon name="trending-up" size={12}/> +12%</div>
             </div>
             <div className="kpi">
-              <div className="label">Ticket médio</div>
+              <div className="label">{t('orders.kpiTicket', 'Ticket médio')}</div>
               <div className="value t-mono">{fmtBRLcurt(avg)}</div>
-              <div className="delta delta-down"><Icon name="trending-down" size={12}/> −4% no mês</div>
+              <div className="delta delta-down"><Icon name="trending-down" size={12}/> {t('orders.deltaDown', '−4% no mês')}</div>
             </div>
             <div className="kpi">
-              <div className="label">Pendentes de aprovação</div>
+              <div className="label">{t('orders.kpiPending', 'Pendentes de aprovação')}</div>
               <div className="value" style={{ color: counts.pending ? 'var(--orange-50)' : 'var(--text-1)' }}>{counts.pending}</div>
-              <div className="delta" style={{ color: 'var(--text-2)' }}><Icon name="clock" size={12}/> Acompanhar</div>
+              <div className="delta" style={{ color: 'var(--text-2)' }}><Icon name="clock" size={12}/> {t('orders.follow', 'Acompanhar')}</div>
             </div>
           </div>
 
           {/* Filter chips */}
           <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
             {[
-              { id: 'all',       label: 'Todos' },
-              { id: 'pending',   label: 'Pendentes' },
-              { id: 'confirmed', label: 'Confirmados' },
-              { id: 'shipped',   label: 'Enviados' },
-              { id: 'delivered', label: 'Entregues' },
+              { id: 'all',       label: t('common.all') },
+              { id: 'pending',   label: t('status.pending') },
+              { id: 'confirmed', label: t('status.confirmed') },
+              { id: 'shipped',   label: t('status.shipped') },
+              { id: 'delivered', label: t('status.delivered') },
             ].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)} style={{
                 height: 30, padding: '0 12px',
@@ -128,7 +128,7 @@ const OrderRow = ({ order, expanded, toggle }) => {
         </div>
         <div>
           <div style={{ fontSize: 13.5, fontWeight: 600 }}>{order.items} {order.items === 1 ? 'item' : 'itens'} · {order.method}</div>
-          <div style={{ fontSize: 12, color: 'var(--text-2)' }}>Pedido por {order.contact}</div>
+          <div style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('orders.by', 'Pedido por')} {order.contact}</div>
         </div>
         <div>
           <StatusPill status={order.status}/>

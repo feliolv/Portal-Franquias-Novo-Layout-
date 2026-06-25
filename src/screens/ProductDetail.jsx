@@ -3,6 +3,7 @@
    ════════════════════════════════════════════════════════ */
 
 const ProductDetail = ({ product, cart, setRoute, addToCart, openProduct, openCart }) => {
+  const { t } = useLang();
   const [qty, setQty] = useState(1);
   if (!product) {
     React.useEffect(() => { setRoute('catalog'); }, []);
@@ -26,7 +27,7 @@ const ProductDetail = ({ product, cart, setRoute, addToCart, openProduct, openCa
 
         <div className="app-content">
           <button className="btn btn-link btn-sm" onClick={() => setRoute('catalog')} style={{ marginBottom: 18, color: 'var(--text-2)' }}>
-            <Icon name="arrow-left" size={14}/> Voltar ao catálogo
+            <Icon name="arrow-left" size={14}/> {t('cat.back', 'Voltar ao catálogo')}
           </button>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 32, marginBottom: 36 }}>
@@ -91,7 +92,7 @@ const ProductDetail = ({ product, cart, setRoute, addToCart, openProduct, openCa
 
           {/* Sobre o produto — bloco único */}
           <div className="card card-pad-lg">
-            <div className="t-overline" style={{ marginBottom: 14 }}>Sobre o produto</div>
+            <div className="t-overline" style={{ marginBottom: 14 }}>{t('cat.aboutProduct', 'Sobre o produto')}</div>
             <p style={{ fontSize: 15, color: 'var(--text-2)', lineHeight: 1.7, maxWidth: 760 }}>
               Solução completa de pagamento cashless e telemetria para máquinas automáticas. Compatível com cartão de crédito/débito, NFC, QR Code (PIX) e carteiras digitais. Integra-se ao protocolo MDB para vending e suporta extensões executivas e MIFARE para self-service.
             </p>
