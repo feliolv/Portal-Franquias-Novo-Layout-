@@ -129,7 +129,7 @@ const Login = ({ onSignin }) => {
 
           {/* Hero indicator dots */}
           <div style={{ display: 'flex', gap: 8, marginTop: 32 }}>
-            {HEADLINES.map((_, i) => (
+            {getHeadlines().map((_, i) => (
               <button key={i} onClick={() => setHeroIdx(i)} style={{
                 width: i === heroIdx ? 30 : 10,
                 height: 4, borderRadius: 2,
