@@ -102,8 +102,8 @@ const Materials = ({ cart, setRoute, openCart }) => {
                       <button className="btn btn-dark btn-sm" style={{ flex: 1 }} onClick={() => window.toast && window.toast('Baixando ' + m.name + '…')}>
                         <Icon name="download" size={13}/> Baixar
                       </button>
-                      <button className="btn btn-ghost btn-sm" style={{ width: 36, padding: 0 }} title="Visualizar"><Icon name="eye" size={13}/></button>
-                      <button className="btn btn-ghost btn-sm" style={{ width: 36, padding: 0 }} title="Copiar link"><Icon name="external" size={13}/></button>
+                      <button className="btn btn-ghost btn-sm" style={{ width: 36, padding: 0 }} title="Visualizar" onClick={() => window.open(doc.url || '#', '_blank')}><Icon name="eye" size={13}/></button>
+                      <button className="btn btn-ghost btn-sm" style={{ width: 36, padding: 0 }} title="Copiar link" onClick={() => { navigator.clipboard?.writeText(doc.url || window.location.href); window.toast && window.toast('Link copiado'); }}><Icon name="external" size={13}/></button>
                     </div>
                   </div>
                 );

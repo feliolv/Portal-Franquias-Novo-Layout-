@@ -35,7 +35,7 @@ const AdminShell = ({ route, setRoute }) => {
                 <input placeholder="Buscar (Ctrl+K)" style={{ fontSize: 12.5 }}/>
                 <kbd style={{ fontSize: 10, padding: '1px 5px', background: 'var(--neutral-80)', borderRadius: 3, fontFamily: 'var(--font-mono)', color: 'var(--text-3)' }}>⌘K</kbd>
               </div>
-              <button className="btn btn-ghost btn-sm" title="Notificações" style={{ position: 'relative', display: 'none' }}>
+              <button className="btn btn-ghost btn-sm" title="Notificações" onClick={() => window.toast && window.toast('Central de notificações — em breve')} style={{ position: 'relative', display: 'none' }}>
                 <Icon name="bell" size={14}/>
                 <span style={{ position: 'absolute', top: 4, right: 4, width: 7, height: 7, borderRadius: '50%', background: 'var(--red-30)' }}/>
               </button>
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
         actions={
           <>
             <PeriodPicker value={period} onChange={setPeriod}/>
-            <button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> {t('common.export')}</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando dashboard (PDF)…')}><Icon name="download" size={13}/> {t('common.export')}</button>
           </>
         }
       />

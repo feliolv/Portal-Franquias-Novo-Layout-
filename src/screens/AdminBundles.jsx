@@ -141,7 +141,7 @@ const AdminBundles = () => {
             <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
               <button className="btn btn-secondary btn-sm" style={{ flex: 1 }} onClick={() => setEditing(b)}><Icon name="edit" size={12}/> Editar</button>
               <button className="btn btn-ghost btn-sm" style={{ width: 32, padding: 0 }} title="Duplicar" onClick={() => setEditing({ ...b, name: b.name + ' (cópia)', sku: b.sku + '-COPY' })}><Icon name="copy" size={13}/></button>
-              <button className="btn btn-ghost btn-sm" style={{ width: 32, padding: 0 }} title="Mais"><Icon name="more" size={14}/></button>
+              <button onClick={() => window.toast && window.toast('Menu de bundle — em breve')} className="btn btn-ghost btn-sm" style={{ width: 32, padding: 0 }} title="Mais"><Icon name="more" size={14}/></button>
             </div>
           </div>
         ))}

@@ -89,7 +89,7 @@ const AdminWorkflows = () => {
         {[
           { id: 'myflows',   label: t('workflows.mine', 'Meus workflows'), count: counts.all },
           { id: 'templates', label: t('workflows.templates', 'Templates'),      count: WF_TEMPLATES.length },
-          { id: 'runs',      label: t('workflows.executions', 'Execuções'),      count: totalRuns },
+          { id: 'runs',      label: {t('workflows.executions', 'Execuções')},      count: totalRuns },
         ].map(tabItem => (
           <button key={tabItem.id} onClick={() => setTab(tabItem.id)} style={{
             padding: '10px 14px',

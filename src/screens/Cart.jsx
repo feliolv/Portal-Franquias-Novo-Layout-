@@ -14,7 +14,7 @@ const CartDrawer = ({ cart, updateQty, clearCart, onClose, onCheckout }) => {
       <aside className="drawer">
         <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--line-1)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <div className="t-overline" style={{ color: 'var(--text-3)' }}>t('cart.title', 'Pedido em aberto')</div>
+            <div className="t-overline" style={{ color: 'var(--text-3)' }}>{t('cart.title', 'Pedido em aberto')}</div>
             <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.015em', marginTop: 2 }}>{items > 0 ? `${items} ${items === 1 ? 'item' : 'itens'}` : 'Seu pedido está vazio'}</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -33,7 +33,7 @@ const CartDrawer = ({ cart, updateQty, clearCart, onClose, onCheckout }) => {
               <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--neutral-80)', display: 'grid', placeItems: 'center', margin: '0 auto 16px', color: 'var(--text-3)' }}>
                 <Icon name="cart" size={26}/>
               </div>
-              <div style={{ fontSize: 16, fontWeight: 600 }}>t('cart.empty', 'Nenhum produto adicionado')</div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>{t('cart.empty', 'Nenhum produto adicionado')}</div>
               <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>Volte ao catálogo e adicione terminais, kits ou serviços para enviar um pedido.</div>
               <button onClick={onClose} className="btn btn-dark" style={{ marginTop: 18 }}><Icon name="arrow-left" size={14}/> Voltar ao catálogo</button>
             </div>
@@ -68,11 +68,11 @@ const CartDrawer = ({ cart, updateQty, clearCart, onClose, onCheckout }) => {
             </div>
             <div style={{ padding: '18px 24px', borderTop: '1px solid var(--line-1)', background: 'var(--bg-surface-2)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-2)' }}>
-                <span>t('cart.subtotal', 'Subtotal')</span><span style={{ fontFamily: 'var(--font-mono)' }}>{fmtBRL(total)}</span>
+                <span>{t('cart.subtotal', 'Subtotal')}</span><span style={{ fontFamily: 'var(--font-mono)' }}>{fmtBRL(total)}</span>
               </div>
               {monthly > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-2)', marginTop: 4 }}>
-                  <span>t('cart.monthly', 'Recorrência mensal')</span><span style={{ fontFamily: 'var(--font-mono)' }}>{fmtBRL(monthly)}/mês</span>
+                  <span>{t('cart.monthly', 'Recorrência mensal')}</span><span style={{ fontFamily: 'var(--font-mono)' }}>{fmtBRL(monthly)}/mês</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-2)', marginTop: 4 }}>
@@ -253,7 +253,7 @@ const CheckoutModal = ({ cart, clearCart, onClose }) => {
             )}
             {step === 3 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <div style={{ fontSize: 13, color: 'var(--text-2)', marginBottom: 4 }}>t('cart.payment', 'Forma de pagamento')</div>
+                <div style={{ fontSize: 13, color: 'var(--text-2)', marginBottom: 4 }}>{t('cart.payment', 'Forma de pagamento')}</div>
                 {[
                   { id: 'boleto', label: 'Boleto bancário · 30 dias', desc: 'Aprovação em até 24h. Sem juros.', icon: 'receipt' },
                   { id: 'fatura', label: 'Fatura mensal · 60 dias', desc: 'Apenas para franquias com crédito aprovado.', icon: 'briefcase' },

@@ -86,7 +86,7 @@ const DealNayaxSettings = ({ onClose }) => {
               </div>
               <select className="select" style={{ width: 'auto', height: 34, fontSize: 12.5 }}><option>Perfil: Todos</option><option>Super Admin</option><option>Coordenador</option><option>Consultor</option></select>
             </div>
-            <button className="btn btn-primary btn-sm"><Icon name="plus" size={13}/> Novo Usuário</button>
+            <button className="btn btn-primary btn-sm" onClick={() => window.toast && window.toast('Novo usuário — modal em breve')}><Icon name="plus" size={13}/> Novo Usuário</button>
           </div>
           <table className="t">
             <thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Equipe</th><th>HubSpot Owner</th><th>Pipelines</th><th>Status</th><th></th></tr></thead>
@@ -145,7 +145,7 @@ const DealNayaxSettings = ({ onClose }) => {
                   <div style={{ width: 36, height: 36, borderRadius: 'var(--radius-sm)', background: 'var(--' + p.tone + '-soft, var(--neutral-80))', color: 'var(--' + p.tone + '-30, var(--text-2))', display: 'grid', placeItems: 'center', flexShrink: 0 }}><Icon name={p.icon} size={16}/></div>
                   <div style={{ minWidth: 90, fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 14 }}>{p.range}</div>
                   <div style={{ flex: 1, fontSize: 13.5, fontWeight: 600 }}>{p.approver}</div>
-                  <button className="btn btn-ghost btn-sm"><Icon name="edit" size={12}/></button>
+                  <button className="btn btn-ghost btn-sm" onClick={() => window.toast && window.toast('Editar alçada — em breve')}><Icon name="edit" size={12}/></button>
                 </div>
               ))}
             </div>
@@ -359,8 +359,8 @@ const DNClicksignPanel = () => (
           </div>
           <div style={{ fontSize: 12, color: '#52525B', lineHeight: 1.6, marginBottom: 16, padding: 12, background: '#F4F6FB', borderRadius: 8 }}>Você é o <strong>1º signatário</strong>. Revise o documento e assine para prosseguir. Após sua assinatura, o documento segue para a Nayax Brasil.</div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button style={{ flex: 1, height: 42, borderRadius: 8, background: '#1B45DA', color: '#fff', border: 'none', fontWeight: 700, fontSize: 13 }}>Assinar documento</button>
-            <button style={{ height: 42, padding: '0 16px', borderRadius: 8, background: '#fff', color: '#52525B', border: '1px solid #E4E4E7', fontWeight: 600, fontSize: 13 }}>Recusar</button>
+            <button style={{ flex: 1, height: 42, borderRadius: 8, background: '#1B45DA', color: '#fff', border: 'none', fontWeight: 700, fontSize: 13, cursor: 'pointer' }} onClick={() => window.toast && window.toast('Redirecionando para Clicksign…')}>Assinar documento</button>
+            <button style={{ height: 42, padding: '0 16px', borderRadius: 8, background: '#fff', color: '#52525B', border: '1px solid #E4E4E7', fontWeight: 600, fontSize: 13, cursor: 'pointer' }} onClick={async () => { const ok = await window.confirmAction({ title: 'Recusar assinatura?', body: 'O proponente será notificado. Esta ação não pode ser desfeita.', danger: true, confirmLabel: 'Recusar' }); if(ok) window.toast && window.toast('Assinatura recusada'); }}>Recusar</button>
           </div>
         </div>
       </div>
@@ -436,7 +436,7 @@ const DNIntegrationsPanel = () => (
       <div className="card" style={{ padding: 16, display: 'flex', alignItems: 'center', gap: 14 }}>
         <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-sm)', background: '#FF7A59', color: '#fff', display: 'grid', placeItems: 'center', flexShrink: 0 }}><Icon name="hubspot" size={18}/></div>
         <div style={{ flex: 1 }}><div style={{ fontWeight: 700, fontSize: 13.5 }}>HubSpot</div><div style={{ fontSize: 11.5, color: 'var(--text-2)' }}>2 pipelines · 412 deals</div><span className="badge badge-green" style={{ marginTop: 4 }}><span className="dot"/> Conectado</span></div>
-        <button className="btn btn-secondary btn-sm">Configurar</button>
+        <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Configurações HubSpot — em breve')}>Configurar</button>
       </div>
       <div className="card" style={{ padding: 16, display: 'flex', alignItems: 'center', gap: 14, opacity: 0.7 }}>
         <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-sm)', background: '#00A1E0', color: '#fff', display: 'grid', placeItems: 'center', flexShrink: 0 }}><Icon name="globe" size={18}/></div>

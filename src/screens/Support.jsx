@@ -37,7 +37,7 @@ const Support = ({ cart, setRoute, openCart }) => {
             kicker="Conta NX-7842"
             title="Suporte & chamados"
             sub="Abra um chamado para questões técnicas, financeiras ou comerciais. Tempo médio de resposta: 2h úteis."
-            actions={<button className="btn btn-dark btn-sm" onClick={() => setNewOpen(true)}><Icon name="plus" size={13}/> t('support.newTicket', 'Novo chamado')</button>}
+            actions={<button className="btn btn-dark btn-sm" onClick={() => setNewOpen(true)}><Icon name="plus" size={13}/> {t('support.newTicket', 'Novo chamado')}</button>}
           />
 
           <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
@@ -78,7 +78,7 @@ const Support = ({ cart, setRoute, openCart }) => {
                         <td><span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 999, background: pm.bg, color: pm.color }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: pm.color }}/> {pm.label}</span></td>
                         <td><span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 999, background: sm.bg, color: sm.color }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: sm.color }}/> {sm.label}</span></td>
                         <td className="cell-mono">{fmtDateTime(t.updated)}</td>
-                        <td style={{ textAlign: 'right' }}><button className="btn btn-ghost btn-sm">Abrir <Icon name="arrow-right" size={12}/></button></td>
+                        <td style={{ textAlign: 'right' }}><button className="btn btn-ghost btn-sm" onClick={() => window.toast && window.toast('Detalhes do chamado — em breve')}>Abrir <Icon name="arrow-right" size={12}/></button></td>
                       </tr>
                     );
                   })}

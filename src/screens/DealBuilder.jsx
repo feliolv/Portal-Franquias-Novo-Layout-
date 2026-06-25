@@ -313,7 +313,7 @@ const DealBuilder = ({ onClose }) => {
                 <div className="t-overline"><Icon name="gift" size={12}/> Bundles sugeridos</div>
                 <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 2 }}>Pré-configurações otimizadas por perfil de cliente</div>
               </div>
-              <button className="btn btn-link btn-sm" style={{ color: 'var(--text-link)', fontSize: 12 }}>Ver todos <Icon name="arrow-right" size={11}/></button>
+              <button className="btn btn-link btn-sm" style={{ color: 'var(--text-link)', fontSize: 12 }} onClick={() => window.toast && window.toast('Catálogo completo de bundles — em breve')}>Ver todos <Icon name="arrow-right" size={11}/></button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
               {DN_BUNDLES.map(b => {

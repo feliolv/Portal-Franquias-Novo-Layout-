@@ -54,7 +54,7 @@ const AdminAnnounce = () => {
                   <span className="badge badge-purple" style={{ fontSize: 10 }}>{a.placement === 'banner' ? '📣 Banner' : '🪧 Modal'}</span>
                   <span style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 999, background: sm.bg, color: sm.c, fontWeight: 600 }}>{sm.l}</span>
                 </div>
-                <button className="btn btn-ghost btn-sm" style={{ width: 28, padding: 0 }}><Icon name="more" size={13}/></button>
+                <button className="btn btn-ghost btn-sm" style={{ width: 28, padding: 0 }} onClick={() => window.toast && window.toast('Opções do comunicado — em breve')}><Icon name="more" size={13}/></button>
               </div>
               <div>
                 <div style={{ fontSize: 15, fontWeight: 700 }}>{a.title}</div>
@@ -106,7 +106,7 @@ const AdminAudit = () => {
         kicker="Sistema · Segurança"
         title="Auditoria"
         sub="Log de todas as ações administrativas no portal · retenção de 90 dias."
-        actions={<button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> Exportar log</button>}
+        actions={<button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando log de auditoria (CSV)…')}><Icon name="download" size={13}/> Exportar log</button>}
       />
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 14, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -170,7 +170,7 @@ const AdminTickets = () => {
         kicker="Atendimento"
         title="Suporte ao cliente"
         sub={`${counts.open} chamados abertos · tempo médio de resposta: 1h 42min`}
-        actions={<button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> Exportar</button>}
+        actions={<button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando chamados (CSV)…')}><Icon name="download" size={13}/> Exportar</button>}
       />
 
       <div className="kpi-strip" style={{ marginBottom: 18 }}>
@@ -242,7 +242,7 @@ const AdminReports = () => {
         kicker="Insights"
         title="Relatórios"
         sub="Gere relatórios customizados com filtros · exporte em PDF ou Excel."
-        actions={<button className="btn btn-secondary btn-sm"><Icon name="clock" size={13}/> Histórico de exports</button>}
+        actions={<button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Histórico de exports — em breve')}><Icon name="clock" size={13}/> Histórico de exports</button>}
       />
 
       <div className="t-overline" style={{ marginBottom: 12 }}>Modelos disponíveis</div>

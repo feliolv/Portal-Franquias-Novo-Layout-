@@ -105,8 +105,8 @@ const AdminSales = () => {
         sub={`${orders.length} pedidos · ${fmtBRL(orders.reduce((a,o)=>a+o.total,0))}`}
         actions={
           <>
-            <button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> {t('admin.sales.exportCsv')}</button>
-            <button className="btn btn-dark btn-sm"><Icon name="plus" size={13}/> {t('admin.sales.manualOrder')}</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando pedidos (CSV)…')}><Icon name="download" size={13}/> {t('admin.sales.exportCsv')}</button>
+            <button className="btn btn-dark btn-sm" onClick={() => window.toast && window.toast('Nova venda manual — em breve')}><Icon name="plus" size={13}/> {t('admin.sales.manualOrder')}</button>
           </>
         }
       />
@@ -126,7 +126,7 @@ const AdminSales = () => {
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--red-30)' }}>{hsCounts.failed} pedido{hsCounts.failed>1?'s':''} com erro de sincronização HubSpot</div>
-            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>t('admin.sales.hsErrorBanner', 'Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.')</div>
+            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('admin.sales.hsErrorBanner', 'Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.')</div>
           </div>
           <button className="btn btn-sm" onClick={() => setHsFilter('failed')} style={{ background: 'white', border: '1px solid var(--coral-2)', color: 'var(--red-30)' }}>
             Ver com erro <Icon name="arrow-right" size={12}/>
@@ -166,7 +166,7 @@ const AdminSales = () => {
               <Icon name="search" size={13}/>
               <input placeholder="Buscar pedido, franquia, CNPJ…" value={search} onChange={e=>setSearch(e.target.value)} style={{ fontSize: 12.5 }}/>
             </div>
-            <button className="btn btn-ghost btn-sm"><Icon name="filter" size={13}/> Filtros</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => setFiltersOpen(true)}><Icon name="filter" size={13}/> Filtros</button>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {selected.length > 0 && (
@@ -319,10 +319,10 @@ const AdminSales = () => {
           <div style={{ fontSize: 12, color: 'var(--text-2)' }}>Mostrando {rows.length} de {orders.length} pedidos</div>
           <div style={{ display: 'flex', gap: 4 }}>
             <button className="btn btn-ghost btn-sm" disabled><Icon name="chevron-left" size={13}/></button>
-            <button className="btn btn-dark btn-sm" style={{ width: 30, padding: 0 }}>1</button>
-            <button className="btn btn-ghost btn-sm" style={{ width: 30, padding: 0 }}>2</button>
-            <button className="btn btn-ghost btn-sm" style={{ width: 30, padding: 0 }}>3</button>
-            <button className="btn btn-ghost btn-sm"><Icon name="chevron-right" size={13}/></button>
+            <button className="btn btn-dark btn-sm" style={{ width: 30, padding: 0 }} onClick={() => setPage(1)}>1</button>
+            <button className="btn btn-ghost btn-sm" style={{ width: 30, padding: 0 }} onClick={() => setPage(2)}>2</button>
+            <button className="btn btn-ghost btn-sm" style={{ width: 30, padding: 0 }} onClick={() => setPage(3)}>3</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => setPage(p => p + 1)}><Icon name="chevron-right" size={13}/></button>
           </div>
         </div>
       </div>
@@ -410,8 +410,8 @@ const AdminSales = () => {
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '12px 24px 20px' }}>
               <button className="btn btn-ghost" onClick={() => setDetailOrder(null)}>Fechar</button>
-              <button className="btn btn-secondary"><Icon name="download" size={13}/> Baixar PDF</button>
-              <button className="btn btn-primary"><Icon name="edit" size={13}/> Editar</button>
+              <button className="btn btn-secondary" onClick={() => window.toast && window.toast('Baixando PDF do pedido…')}><Icon name="download" size={13}/> Baixar PDF</button>
+              <button className="btn btn-primary" onClick={() => window.toast && window.toast('Edição de pedido — em breve')}><Icon name="edit" size={13}/> Editar</button>
             </div>
           </div>
         </div>
@@ -456,7 +456,7 @@ const AdminClients = () => {
               <Icon name="search" size={13}/>
               <input placeholder="Buscar franquia, código, cidade…" value={search} onChange={e=>setSearch(e.target.value)} style={{ fontSize: 12.5 }}/>
             </div>
-            <button className="btn btn-ghost btn-sm"><Icon name="filter" size={13}/> Filtros</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => setFiltersOpen && setFiltersOpen(true)}><Icon name="filter" size={13}/> Filtros</button>
           </div>
           <div style={{ display: 'flex', gap: 4, padding: 3, background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--line-1)' }}>
             {['table','cards'].map(v => (

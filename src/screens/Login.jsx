@@ -306,7 +306,7 @@ const Login = ({ onSignin }) => {
                 {t('login.keep')}
               </label>
 
-              <button type="submit" className="btn btn-primary btn-lg" disabled={loading} style={{ marginTop: 10, height: 52, fontSize: 14, fontWeight: 700, letterSpacing: '0.01em' }}>
+              <button type="submit" className="btn btn-primary btn-lg" onClick={tab === 'client' ? submitClient : submitAdmin} disabled={loading} style={{ marginTop: 10, height: 52, fontSize: 14, fontWeight: 700, letterSpacing: '0.01em' }}>
                 {loading ? (
                   <><span className="login-spinner"/> {t('login.btnSubmitting')}</>
                 ) : (

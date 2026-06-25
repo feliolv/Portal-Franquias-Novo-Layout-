@@ -277,7 +277,7 @@ const AdminHubSpot = () => {
         actions={
           <>
             <span style={{ fontSize: 11, color: 'var(--text-3)' }}>{t('admin.hs.lastSync')}: hoje, 09:42</span>
-            <button className="btn btn-secondary btn-sm"><Icon name="refresh" size={13}/> {t('admin.hs.updateFromHs')}</button>
+            <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Sincronizando produtos com HubSpot…')}><Icon name="refresh" size={13}/> {t('admin.hs.updateFromHs')}</button>
           </>
         }
       />

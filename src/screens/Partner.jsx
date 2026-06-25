@@ -157,7 +157,7 @@ const PartnerOrder = ({ product, onBack }) => {
           {/* Dados do cliente — igual ao catálogo de clientes */}
           <div className="card card-pad">
             <div className="t-overline" style={{ marginBottom: 14 }}><Icon name="user" size={12}/> Dados do cliente</div>
-            <div style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>t('partner.companyData', 'Dados da empresa')</div>
+            <div style={{ fontSize: 10.5, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>{t('partner.companyData', 'Dados da empresa')}</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
               <div><label className="field-label">Razão Social *</label><input className="input" placeholder="Ex: Padaria Estrela Ltda"/></div>
               <div><label className="field-label">Nome fantasia</label><input className="input" placeholder="Padaria Estrela"/></div>
@@ -244,7 +244,7 @@ const PartnerOrder = ({ product, onBack }) => {
           )}
 
           <button className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={!valid} onClick={submit}>
-            <Icon name="refresh" size={15}/> t('partner.confirmTransfer', 'Confirmar transferência')
+            <Icon name="refresh" size={15}/> {t('partner.confirmTransfer', 'Confirmar transferência')}
           </button>
           <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 10 }}>Movimentação registrada no sistema · sem envio físico</div>
         </div>
@@ -277,7 +277,7 @@ const PartnerHistory = () => {
         kicker="Parceiro · F01-204"
         title="Histórico de transferências"
         sub={`${PARTNER_ORDERS.length} transferências · ${totalEquip} equipamentos movimentados`}
-        actions={<button className="btn btn-secondary btn-sm"><Icon name="download" size={13}/> Exportar</button>}
+        actions={<button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Exportando histórico de transferências (CSV)…')}><Icon name="download" size={13}/> Exportar</button>}
       />
 
       <div className="kpi-strip" style={{ marginBottom: 20 }}>

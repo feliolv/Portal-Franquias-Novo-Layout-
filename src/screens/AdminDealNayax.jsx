@@ -448,7 +448,7 @@ const AdminDealNayax = () => {
                       <td style={{ color: 'var(--text-2)', fontSize: 12.5, maxWidth: 220 }}>{p.city}</td>
                       <td><strong>{p.qty}</strong> un.</td>
                       <td><span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 999, background: sm.bg, color: sm.c }}><span style={{ width: 6, height: 6, borderRadius: '50%', background: sm.c }}/> {sm.l}</span></td>
-                      <td style={{ textAlign: 'right' }}><button className="btn btn-ghost btn-sm">Abrir <Icon name="arrow-right" size={12}/></button></td>
+                      <td style={{ textAlign: 'right' }}><button className="btn btn-ghost btn-sm" onClick={() => window.toast && window.toast('Visualizando ordem de produção…')}>Abrir <Icon name="arrow-right" size={12}/></button></td>
                     </tr>
                   );
                 })}
