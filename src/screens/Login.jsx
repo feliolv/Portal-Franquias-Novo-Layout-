@@ -5,8 +5,8 @@
 const Login = ({ onSignin }) => {
   const { t, lang, setLang } = useLang();
   const [tab, setTab] = useState('client');
-  const [code, setCode] = useState('NX-7842');
-  const [pw, setPw] = useState('demo');
+  const [code, setCode] = useState('');
+  const [pw, setPw] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(false);
@@ -31,7 +31,7 @@ const Login = ({ onSignin }) => {
     const c = code.trim().toUpperCase();
     const isNX = /^NX-?\d{3,}/.test(c);
     const isPartner = /^F0?\d+[-\s]?\d+/.test(c) || /^F\d{2}/.test(c);
-    if (pw !== 'demo' || (!isNX && !isPartner)) { setErr(true); return; }
+    if (!isNX && !isPartner) { setErr(true); return; }
     setLoading(true);
     setTimeout(() => onSignin(isPartner ? 'partner' : 'client'), 700);
   };
@@ -304,12 +304,6 @@ const Login = ({ onSignin }) => {
                     <Icon name={showPw ? 'eye-off' : 'eye'} size={15}/>
                   </button>
                 </div>
-              </div>
-
-              <div style={{ marginTop: 6, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 11, color: 'var(--text-3)' }}>Demo:</span>
-                <button type="button" onClick={() => { setCode('NX-7842'); setPw('demo'); setErr(false); }} style={{ fontSize: 11, fontFamily: 'var(--font-mono)', padding: '2px 8px', borderRadius: 999, border: '1px solid var(--line-2)', background: 'var(--bg-surface)', color: 'var(--text-2)', cursor: 'pointer' }}>NX-7842 · cliente</button>
-                <button type="button" onClick={() => { setCode('F01-204'); setPw('demo'); setErr(false); }} style={{ fontSize: 11, fontFamily: 'var(--font-mono)', padding: '2px 8px', borderRadius: 999, border: '1px solid var(--line-2)', background: 'var(--bg-surface)', color: 'var(--text-2)', cursor: 'pointer' }}>F01-204 · parceiro</button>
               </div>
 
               <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-2)', cursor: 'pointer', marginTop: 2 }}>
