@@ -126,7 +126,7 @@ const AdminSales = () => {
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--red-30)' }}>{hsCounts.failed} pedido{hsCounts.failed>1?'s':''} com erro de sincronização HubSpot</div>
-            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('admin.sales.hsErrorBanner', 'Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.')</div>
+            <div style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('admin.sales.hsErrorBanner', 'Negociações não foram enviadas. Você pode reenviá-las individualmente ou em lote.')}</div>
           </div>
           <button className="btn btn-sm" onClick={() => setHsFilter('failed')} style={{ background: 'white', border: '1px solid var(--coral-2)', color: 'var(--red-30)' }}>
             Ver com erro <Icon name="arrow-right" size={12}/>

@@ -8,7 +8,7 @@ const AdminShell = ({ route, setRoute }) => {
 
   let body;
   if (sub === 'dashboard') body = <AdminDashboard/>;
-  else if (sub === 'sales') body = <AdminSales/>;
+  else if (sub === 'sales') body = <AdminSalesClients/>;
   else if (sub === 'dealnayax') body = <AdminDealNayax/>;
   else if (sub === 'clients') body = <AdminClients/>;
   else if (sub === 'products') body = <AdminProducts/>;
