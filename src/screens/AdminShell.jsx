@@ -56,12 +56,46 @@ const AdminDashboard = () => {
   const [period, setPeriod] = useState('month');
   const [feedOpen, setFeedOpen] = useState(false);
 
-  const ACTIVITY = []; // carregado via API
+  // ── Dados reais do dashboard ─────────────────────────────
+  const [statsLoading, setStatsLoading] = React.useState(true);
+  const [VOL,          setVOL]          = React.useState([]);
+  const [SEGMENTS,     setSegments]     = React.useState([]);
+  const [TOP_PRODUCTS, setTopProducts]  = React.useState([]);
+  const [TOP_CLIENTS,  setTopClients]   = React.useState([]);
+  const [ACTIVITY,     setActivity]     = React.useState([]);
+  const [KPI,          setKPI]          = React.useState({});
 
-  const VOL = []; // TODO: carregar via API
-  const SEGMENTS      = []; // carregado via API
-  const TOP_PRODUCTS  = []; // carregado via API
-  const TOP_CLIENTS   = []; // carregado via API
+  React.useEffect(() => {
+    const load = async () => {
+      try {
+        setStatsLoading(true);
+        const r = await fetch('/api/dashboard/stats?period=' + period, {
+          headers: { 'x-api-key': 'pf-api-nayax-2026' }
+        });
+        if (!r.ok) throw new Error('status ' + r.status);
+        const d = await r.json();
+        setKPI(d.kpis || {});
+        setVOL((d.volume || []).map(v => ({ x: v.day, y: v.revenue, y2: v.orders })));
+        setSegments((d.segments || []).map((s, i) => ({
+          label: s.label, value: s.orders,
+          color: ['#FFCD00','#6D5BF7','#25EF89','#FF5C6C','#F08A20','#3B82F6','#A78BFA','#34D399'][i % 8]
+        })));
+        setTopProducts(d.top_products || []);
+        setTopClients(d.top_clients || []);
+        setActivity((d.feed || []).map(f => ({
+          time: new Date(f.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+          icon: f.status === 'cancelado' || f.status === 'cancelled' ? 'x' : 'check',
+          tone: f.status === 'cancelado' || f.status === 'cancelled' ? 'red' : 'green',
+          text: f.client + ' — pedido ' + f.order_id + ' · ' + fmtBRLcurt(f.total),
+        })));
+      } catch (e) {
+        console.error('[dashboard/stats]', e.message);
+      } finally {
+        setStatsLoading(false);
+      }
+    };
+    load();
+  }, [period]);
 
   return (
     <>
