@@ -70,22 +70,10 @@ const AdminDashboard = () => {
     { time: 'ontem 09:30', icon: 'download', tone: 'neutral', text: <><strong>Renata G.</strong> exportou relatório de vendas · Mai/2026</> },
   ];
 
-  const VOL = [12, 18, 14, 22, 28, 24, 30, 36, 28, 38, 44, 40, 48, 42, 36, 50, 54, 48, 58, 62, 56, 64, 70, 66, 72, 80, 76, 84, 88, 92];
+  const VOL = []; // TODO: carregar via API
   const SEGMENTS = [
-    { label: 'Vending Machine',     value: 184, pct: 38, color: 'var(--dark)' },
-    { label: 'Micromercado',        value: 102, pct: 21, color: 'var(--taxi-yellow)' },
-    { label: 'EV',                  value: 78,  pct: 16, color: 'var(--iris)' },
-    { label: 'Lavanderia',          value: 54,  pct: 11, color: 'var(--violet)' },
-    { label: 'Food Service',        value: 38,  pct: 8,  color: 'var(--spring)' },
-    { label: 'Diversão Eletrônica', value: 30,  pct: 6,  color: 'var(--coral)' },
-  ];
-  const TOP_PRODUCTS = [
-    { name: 'VPOS IoT Onyx',         qty: 86, rev: 110940 },
-    { name: 'VPOS Touch v3',         qty: 54, rev: 91260 },
-    { name: 'Kit Lavanderia MDB',    qty: 31, rev: 74090 },
-    { name: 'NayaxCharge 22 kW',     qty: 12, rev: 226800 },
-    { name: 'Amit 3.0 — Telemetria', qty: 48, rev: 25920 },
-  ];
+    [] // TODO: carregar via API;
+  const TOP_PRODUCTS = []; // carregado via API
   const TOP_CLIENTS = [
     { name: 'Brasil Vending Group SA',    code: 'NX-8842', rev: 318900, orders: 31 },
     { name: 'EcoMov Estações Elétricas',  code: 'NX-3318', rev: 489000, orders: 9 },

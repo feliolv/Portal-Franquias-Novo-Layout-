@@ -146,7 +146,7 @@ const App = () => {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute('login')}>Login</button>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute('catalog')}>Catálogo</button>
-            <button className="btn btn-secondary btn-sm" onClick={() => { setActiveProduct(PRODUCTS[0]); setRoute('product'); }}>Produto</button>
+            <button className="btn btn-secondary btn-sm" onClick={async () => { const prods = await API.Products.list(); if (prods[0]) { setActiveProduct(prods[0]); navigate('product'); } }}>Produto</button>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute('history')}>Histórico</button>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute('admin-dashboard')}>Admin</button>
             <button className="btn btn-secondary btn-sm" onClick={() => setRoute('admin-sales')}>Vendas</button>
@@ -157,7 +157,7 @@ const App = () => {
         </TweakSection>
         <TweakSection title="Demonstração">
           <div style={{ display: 'flex', gap: 6, flexDirection: 'column' }}>
-            <button className="btn btn-secondary btn-sm" onClick={() => { setCart([{ product: PRODUCTS[0], qty: 2 }, { product: PRODUCTS[3], qty: 1 }, { product: PRODUCTS[5], qty: 1 }]); window.toast && window.toast('Carrinho preenchido com 3 produtos'); }}>Preencher carrinho demo</button>
+            <button className="btn btn-secondary btn-sm" onClick={async () => { const prods = await API.Products.list(); if (prods.length >= 3) { setCart([{ product: prods[0], qty: 2 }, { product: prods[1], qty: 1 }, { product: prods[2], qty: 1 }]); window.toast && window.toast('Carrinho preenchido'); } else window.toast && window.toast('Nenhum produto disponível'); }}>Preencher carrinho demo</button>
             <button className="btn btn-secondary btn-sm" onClick={() => setCart([])}>Esvaziar carrinho</button>
           </div>
         </TweakSection>
