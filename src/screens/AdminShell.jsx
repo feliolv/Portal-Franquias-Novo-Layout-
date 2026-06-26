@@ -59,12 +59,10 @@ const AdminDashboard = () => {
   const ACTIVITY = [
     { time: 'há 4 min',  icon: 'cart', tone: 'green', text: <><strong>Vending Premier Ltda.</strong> enviou pedido <span className="t-mono">#PD-10428</span> · <span className="t-mono">R$ 8.450</span></> },
     { time: 'há 22 min', icon: 'user', tone: 'blue',  text: <>Nova franquia cadastrada: <strong>Snack Já Distribuidora</strong> · <span className="t-mono">NX-1129</span></> },
-    { time: 'há 1 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10427</span> da <strong>EcoMov</strong> foi marcado como enviado</> },
-    { time: 'há 2 h',    icon: 'plug', tone: 'yellow',text: <>Sincronização HubSpot concluída · <strong>3 produtos novos</strong> aguardando classificação</> },
+    { time: 'há 1 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10427</span> da <strong>    { time: 'há 2 h',    icon: 'plug', tone: 'yellow',text: <>Sincronização HubSpot concluída · <strong>3 produtos novos</strong> aguardando classificação</> },
     { time: 'há 3 h',    icon: 'alert',tone: 'red',   text: <>Pedido <span className="t-mono">#PD-10421</span> da <strong>Snack Já</strong> cancelado pelo cliente</> },
     { time: 'há 5 h',    icon: 'edit', tone: 'neutral',text: <><strong>Renata G.</strong> atualizou preço de <strong>VPOS IoT Onyx</strong> (R$ 1.490 → R$ 1.290)</> },
-    { time: 'há 6 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10425</span> da <strong>Brasil Vending Group</strong> entregue</> },
-    { time: 'há 8 h',    icon: 'gift', tone: 'yellow',text: <>Bundle <strong>Starter Vending</strong> aplicado em 3 novos orçamentos</> },
+    { time: 'há 6 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10425</span> da <strong>    { time: 'há 8 h',    icon: 'gift', tone: 'yellow',text: <>Bundle <strong>Starter Vending</strong> aplicado em 3 novos orçamentos</> },
     { time: 'ontem 17:42', icon: 'user', tone: 'blue', text: <><strong>Felipe Andrade</strong> aprovou desconto de 18% · <span className="t-mono">UPGRADE0664</span></> },
     { time: 'ontem 14:10', icon: 'building', tone: 'neutral', text: <>Franquia <strong>ParkArcade Diversões</strong> atingiu R$ 76,8k de LTV</> },
     { time: 'ontem 09:30', icon: 'download', tone: 'neutral', text: <><strong>Renata G.</strong> exportou relatório de vendas · Mai/2026</> },
@@ -75,11 +73,8 @@ const AdminDashboard = () => {
     [] // TODO: carregar via API;
   const TOP_PRODUCTS = []; // carregado via API
   const TOP_CLIENTS = [
-    { name: 'Brasil Vending Group SA',    code: 'NX-8842', rev: 318900, orders: 31 },
-    { name: 'EcoMov Estações Elétricas',  code: 'NX-3318', rev: 489000, orders: 9 },
-    { name: 'MicroMercado Express SA',    code: 'NX-5577', rev: 162400, orders: 18 },
-    { name: 'Vending Premier Ltda.',      code: 'NX-7842', rev: 142800, orders: 24 },
-    { name: 'ParkArcade Diversões',       code: 'NX-6650', rev: 76800, orders: 6 },
+    { name: '    { name: '    { name: 'MicroMercado Express SA',    code: 'NX-5577', rev: 162400, orders: 18 },
+    { name: 'Vending Premier Ltda.',      code: '    { name: 'ParkArcade Diversões',       code: 'NX-6650', rev: 76800, orders: 6 },
   ];
 
   return (

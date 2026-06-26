@@ -637,7 +637,7 @@ const NewFranchiseModal = ({ onClose, existing = null }) => {
     cnpj: '12.345.678/0001-90', razao: existing.razao, code: existing.code,
     segment: existing.segment,
     city: existing.city.split(' / ')[0], uf: existing.city.split(' / ')[1] || 'SP',
-    contact: 'Marina Reis', email: 'contato@' + existing.razao.toLowerCase().replace(/[^a-z]/g,'').slice(0,12) + '.com',
+    contact: '', email: 'contato@' + existing.razao.toLowerCase().replace(/[^a-z]/g,'').slice(0,12) + '.com',
     phone: '(11) 98765-4321',
     status: existing.status,
     consultor: hubspotCtx.consultor,
