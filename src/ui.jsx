@@ -76,9 +76,9 @@ const ClientSidebar = ({ route, setRoute, cart }) => {
       </nav>
       <div className="sidebar-foot">
         <div className="user-pill" onClick={() => window.setRoute && window.setRoute('profile')}>
-          <div className="avatar">MR</div>
+          <div className="avatar">{((API.Auth.getUser()||{}).name||'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="name">Marina Reis</div>
+            <div className="name">{(API.Auth.getUser()||{}).name || '—'}</div>
             <div className="role">{t('nav.client.role')}</div>
           </div>
           <button onClick={(e) => { e.stopPropagation(); window.setRoute && window.setRoute('login'); }} title="Sair" style={{ width: 28, height: 28, display: 'grid', placeItems: 'center', borderRadius: 6, color: 'var(--text-on-inverse-2)', background: 'transparent' }}
@@ -135,10 +135,10 @@ const AdminSidebar = ({ route, setRoute }) => {
     </nav>
     <div className="sidebar-foot">
       <div className="user-pill" onClick={() => setRoute('login')}>
-        <div className="avatar">RG</div>
+        <div className="avatar">{((API.Auth.getUser()||{}).name||"A").split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase()}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="name">Renata G.</div>
-          <div className="role">{t('nav.admin.role')}</div>
+          <div className="name">{(API.Auth.getUser()||{}).name || '—'}</div>
+          <div className="role">{(API.Auth.getUser()||{}).role || t('nav.admin.role')}</div>
         </div>
         <Icon name="logout" size={14} style={{ color: 'var(--text-on-inverse-2)' }}/>
       </div>
