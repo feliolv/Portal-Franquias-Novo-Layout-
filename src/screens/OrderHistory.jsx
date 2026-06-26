@@ -38,7 +38,7 @@ const OrderHistory = ({ cart, setRoute, openCart }) => {
             sub={t('oh.sub')}
             actions={
               <>
-                <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast({t('orders.exported', 'Histórico exportado (CSV)')})}><Icon name="download" size={13}/> {t('common.export')}</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast(t('orders.exported', 'Histórico exportado (CSV)'))}><Icon name="download" size={13}/> {t('common.export')}</button>
                 <button className="btn btn-dark btn-sm" onClick={() => setRoute('catalog')}><Icon name="plus" size={13}/> {t('oh.newOrder')}</button>
               </>
             }
