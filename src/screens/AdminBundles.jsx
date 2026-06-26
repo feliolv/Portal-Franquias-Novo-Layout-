@@ -2,27 +2,37 @@
    Admin: Bundles — combos de produtos
    ════════════════════════════════════════════════════════ */
 
-const BUNDLES = [
-  { id: 'b1', sku: 'BND-VEND-START', name: 'Starter Vending', main: 'VPOS-NYX-IO', mainName: 'VPOS IoT Onyx', items: 3, price: 1890, savings: 320, segments: ['Vending Machine'], status: 'active', uses: 86 },
-  { id: 'b2', sku: 'BND-LAV-PRO',    name: 'Lavanderia Pro', main: 'LAV-MDB-01', mainName: 'Kit Lavanderia MDB', items: 4, price: 2890, savings: 410, segments: ['Lavanderia'], status: 'active', uses: 42 },
-  { id: 'b3', sku: 'BND-EV-22',      name: 'EV Charge Essencial', main: 'EV-CHARG-22', mainName: 'NayaxCharge 22 kW', items: 5, price: 21490, savings: 1980, segments: ['EV'], status: 'active', uses: 18 },
-  { id: 'b4', sku: 'BND-MICRO-FULL', name: 'Micromercado Completo', main: 'NYX-MICRO-KIT', mainName: 'Kit Micromercado Pro', items: 6, price: 6890, savings: 720, segments: ['Micromercado'], status: 'active', uses: 31 },
-  { id: 'b5', sku: 'BND-FOOD-TRUCK', name: 'Food Truck Box', main: 'NYX-FOOD-POS', mainName: 'POS Food Service', items: 3, price: 2790, savings: 290, segments: ['Food Service'], status: 'draft', uses: 0 },
-  { id: 'b6', sku: 'BND-ARCADE-PK',  name: 'Arcade Park Pack', main: 'ARCADE-PAY-NX', mainName: 'Arcade Payment Module', items: 4, price: 9290, savings: 540, segments: ['Diversão Eletrônica'], status: 'active', uses: 7 },
-  { id: 'b7', sku: 'BND-VEND-PLUS',  name: 'Vending Plus + Telemetria', main: 'VPOS-NYX-V3', mainName: 'VPOS Touch v3', items: 4, price: 2390, savings: 380, segments: ['Vending Machine'], status: 'paused', uses: 22 },
-];
-
 const AdminBundles = () => {
   const { t } = useLang();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
-  const [editing, setEditing] = useState(null); // null | 'new' | bundle obj
+  const [editing, setEditing] = useState(null);
+  const [bundles, setBundles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Carregar bundles reais do RDS
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const data = await API.Bundles.list();
+        setBundles(data || []);
+      } catch (e) {
+        console.error('[AdminBundles]', e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const BUNDLES = bundles; // alias para compatibilidade com JSX existente
 
   const counts = {
-    all: BUNDLES.length,
-    active: BUNDLES.filter(b => b.status === 'active').length,
-    draft: BUNDLES.filter(b => b.status === 'draft').length,
-    paused: BUNDLES.filter(b => b.status === 'paused').length,
+    all: bundles.length,
+    active: bundles.filter(b => b.status === 'active').length,
+    draft: bundles.filter(b => b.status === 'draft').length,
+    paused: bundles.filter(b => b.status === 'paused').length,
   };
 
   const rows = BUNDLES.filter(b =>

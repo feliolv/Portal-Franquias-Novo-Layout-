@@ -8,9 +8,32 @@ const AdminSales = () => {
   const [hsFilter, setHsFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState([]);
-  const [orders, setOrders] = useState(ORDERS);
+  const [orders, setOrders] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [resending, setResending] = useState({});
   const [errorDetail, setErrorDetail] = useState(null);
+
+  // Carregar dados reais do RDS
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const [ordersData, clientsData] = await Promise.all([
+          API.Sales.list(200),
+          API.Clients.list(),
+        ]);
+        setOrders(ordersData || []);
+        setClients(clientsData || []);
+      } catch (e) {
+        console.error('[AdminSales]', e.message);
+        if (window.toast) window.toast('Erro ao carregar dados: ' + e.message, 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   const hsCounts = {
     all: orders.length,
@@ -430,14 +453,14 @@ const AdminClients = () => {
   const [newOpen, setNewOpen] = useState(false);
   const [editFranchise, setEditFranchise] = useState(null);
 
-  const rows = FRANCHISES.filter(f => search === '' || (f.razao + ' ' + f.code + ' ' + f.city).toLowerCase().includes(search.toLowerCase()));
+  const rows = clients.filter(f => search === '' || (f.razao + ' ' + f.code + ' ' + f.city).toLowerCase().includes(search.toLowerCase()));
 
   return (
     <>
       <PageHeader
         kicker={t('admin.clients.kicker')}
         title={t('admin.clients.title')}
-        sub={`${FRANCHISES.length} · ${FRANCHISES.filter(f=>f.status==='active').length}`}
+        sub={`${clients.length} · ${clients.filter(f=>f.status==='active').length}`}
         actions={
           <>
             <button className="btn btn-secondary btn-sm"><Icon name="upload" size={13}/> {t('common.import')}</button>

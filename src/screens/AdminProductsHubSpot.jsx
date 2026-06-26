@@ -6,11 +6,29 @@ const AdminProducts = () => {
   const { t } = useLang();
   const [search, setSearch] = useState('');
   const [cat, setCat] = useState('Todos');
-  const [editing, setEditing] = useState(null); // null | 'new' | product
+  const [editing, setEditing] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
   const [onlyStock, setOnlyStock] = useState(false);
   const [menuOpen, setMenuOpen] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Carregar produtos reais do RDS
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const data = await API.Products.list(false); // false = incluir inativos
+        setProducts(data || []);
+      } catch (e) {
+        console.error('[AdminProducts]', e.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -48,7 +66,7 @@ const AdminProducts = () => {
       <PageHeader
         kicker={t('admin.products.kicker')}
         title={t('admin.products.title')}
-        sub={`${PRODUCTS.length} · ${PRODUCTS.filter(p=>p.new).length} ${t('common.new').toLowerCase()}`}
+        sub={`${products.length} · ${PRODUCTS.filter(p=>p.new).length} ${t('common.new').toLowerCase()}`}
         actions={
           <>
             <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Sincronizando com HubSpot…')}><Icon name="plug" size={13}/> {t('admin.products.syncHs')}</button>
@@ -59,7 +77,7 @@ const AdminProducts = () => {
 
       <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
         {CATEGORIES.map(c => {
-          const count = c === 'Todos' ? PRODUCTS.length
+          const count = c === 'Todos' ? products.length
             : c === 'Serviços' ? PRODUCTS.filter(p => p.cat === 'Serviços').length
             : c === 'Produtos' ? PRODUCTS.filter(p => p.cat !== 'Serviços').length
             : PRODUCTS.filter(p => p.cat === c).length;
