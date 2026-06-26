@@ -14,8 +14,10 @@
    Error com message legível para exibir no toast.
    ════════════════════════════════════════════════════════ */
 
-const BASE_URL  = '';          // mesmo origin — nginx proxia /api/* → porta 3000
-const API_PREFIX = '/api';     // prefixo do nginx: /api/products → node:3000/products
+const BASE_URL   = '';
+const API_PREFIX = '/api';
+// Preview: fora de produção, simula respostas da API sem backend
+const IS_PREVIEW = !window.location.hostname.includes('nayax.com.br');
 
 // ── Helpers ──────────────────────────────────────────────
 
@@ -30,6 +32,12 @@ const _headers = () => {
 };
 
 const _req = async (method, path, body) => {
+  // Em preview, intercepta chamadas de escrita e retorna mock de sucesso
+  if (IS_PREVIEW && (method === 'POST' || method === 'PUT' || method === 'PATCH' || method === 'DELETE')) {
+    await new Promise(r => setTimeout(r, 600)); // simula latência
+    const seq = String(Math.floor(Math.random() * 9000) + 1000);
+    return { ok: true, id: seq, order_id: 'PED' + seq, status: 'pendente', created_at: new Date().toISOString(), ...((typeof body === 'object' && body) || {}) };
+  }
   const opts = { method, headers: _headers() };
   if (body !== undefined) opts.body = JSON.stringify(body);
   const res = await fetch(BASE_URL + API_PREFIX + path, opts);
