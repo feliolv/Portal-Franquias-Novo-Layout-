@@ -9,12 +9,38 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showCartDrawer": true
 }/*EDITMODE-END*/;
 
+const SplashScreen = ({ text }) => (
+  <div style={{
+    position: 'fixed', inset: 0,
+    background: 'var(--bg-app)',
+    display: 'flex', flexDirection: 'column',
+    alignItems: 'center', justifyContent: 'center',
+    gap: 24, zIndex: 9999,
+  }}>
+    <svg width="120" height="36" viewBox="0 0 120 36" fill="none">
+      <text x="0" y="28" fontFamily="var(--font-sans, sans-serif)" fontWeight="800"
+            fontSize="28" letterSpacing="-1" fill="var(--text-1)">Nayax</text>
+    </svg>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+      <div style={{
+        width: 32, height: 32, border: '3px solid var(--line-2)',
+        borderTopColor: 'var(--taxi-yellow)', borderRadius: '50%',
+        animation: 'spin 0.8s linear infinite',
+      }}/>
+      <div style={{ fontSize: 13, color: 'var(--text-2)', fontWeight: 500 }}>{text || 'Carregando portal...'}</div>
+      <div style={{ fontSize: 12, color: 'var(--text-3)' }}>Buscando dados reais no HubSpot</div>
+    </div>
+    <style>{'@keyframes spin { to { transform: rotate(360deg); } }'}</style>
+  </div>
+);
+
 const App = () => {
   // Restaura rota e usuário do sessionStorage ao recarregar
   const _savedRoute = sessionStorage.getItem('nayax_route');
   const _savedUser  = (() => { try { return JSON.parse(sessionStorage.getItem('portal_user')); } catch { return null; } })();
   const _initRoute  = (_savedUser && _savedRoute && _savedRoute !== 'login') ? _savedRoute : 'login';
 
+  const [booting, setBooting] = useState(true); // splash screen
   const [route, setRoute] = useState(_initRoute); // login | catalog | product | history | admin-*
   const [activeProduct, setActiveProduct] = useState(null);
   const [cart, setCart] = useState([]);
@@ -43,6 +69,12 @@ const App = () => {
     window.setRoute = navigate;
     window.openCart = () => setCartOpen(true);
     window.openCheckout = () => { setCartOpen(false); setCheckoutOpen(true); };
+  }, []);
+
+  // Boot: pequeno delay para garantir que os scripts Babel carregaram
+  useEffect(() => {
+    const timer = setTimeout(() => setBooting(false), 800);
+    return () => clearTimeout(timer);
   }, []);
 
   // OAuth HubSpot callback — lê ?session= ou ?auth_error= da URL
@@ -135,6 +167,8 @@ const App = () => {
   } else {
     body = <Login onSignin={() => navigate('catalog')}/>;
   }
+
+  if (booting) return <SplashScreen text="Carregando portal..."/>;
 
   return (
     <>
