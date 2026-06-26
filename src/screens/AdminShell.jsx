@@ -86,7 +86,7 @@ const AdminDashboard = () => {
           time: new Date(f.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
           icon: f.status === 'cancelado' || f.status === 'cancelled' ? 'x' : 'check',
           tone: f.status === 'cancelado' || f.status === 'cancelled' ? 'red' : 'green',
-          text: f.client + ' — pedido ' + f.order_id + ' · ' + fmtBRLcurt(f.total),
+          text: f.client + ' — pedido ' + f.order_id + ' · ' + fmtBRLcurt(parseFloat(f.total)||0),
         })));
       } catch (e) {
         console.error('[dashboard/stats]', e.message);
@@ -118,18 +118,18 @@ const AdminDashboard = () => {
             <KpiCard label={t('admin.kpi.orders')}
               value={KPI.orders != null ? String(KPI.orders) : '—'}
               delta={KPI.orders_delta != null ? (KPI.orders_delta > 0 ? '+' : '') + KPI.orders_delta + '%' : null}
-              up={(KPI.orders_delta||0) >= 0} data={VOL.map(v=>v.y||0)} accent="dark"/>
+              up={(KPI.orders_delta||0) >= 0} data={VOL.length > 0 ? VOL.map(v=>parseFloat(v.y)||0) : [0,0]} accent="dark"/>
             <KpiCard label={t('admin.kpi.revenue')}
               value={KPI.revenue != null ? fmtBRLcurt(KPI.revenue) : '—'}
               delta={KPI.revenue_delta != null ? (KPI.revenue_delta > 0 ? '+' : '') + KPI.revenue_delta + '%' : null}
-              up={(KPI.revenue_delta||0) >= 0} data={VOL.map(v=>v.y||0)} accent="yellow"/>
+              up={(KPI.revenue_delta||0) >= 0} data={VOL.length > 0 ? VOL.map(v=>parseFloat(v.y)||0) : [0,0]} accent="yellow"/>
             <KpiCard label={t('admin.kpi.avg')}
               value={KPI.avg_ticket != null ? fmtBRLcurt(KPI.avg_ticket) : '—'}
               delta={KPI.avg_ticket_delta != null ? (KPI.avg_ticket_delta > 0 ? '+' : '') + KPI.avg_ticket_delta + '%' : null}
-              up={(KPI.avg_ticket_delta||0) >= 0} data={VOL.map(v=>v.y||0)}/>
+              up={(KPI.avg_ticket_delta||0) >= 0} data={VOL.length > 0 ? VOL.map(v=>parseFloat(v.y)||0) : [0,0]}/>
             <KpiCard label={t('admin.kpi.franchises')}
               value={KPI.active_franchises != null ? String(KPI.active_franchises) : '—'}
-              delta={null} up={true} data={VOL.map(v=>v.y||0)}/>
+              delta={null} up={true} data={VOL.length > 0 ? VOL.map(v=>parseFloat(v.y)||0) : [0,0]}/>
           </>}
       </div>
 
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
             <div>
               <div className="t-overline">{t('admin.dashboard.volumeTitle', 'Volume de pedidos · 30 dias')}</div>
-              <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', marginTop: 4 }}>R$ 1,42 M</div>
+              <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', marginTop: 4 }}>{KPI.revenue != null ? fmtBRLcurt(KPI.revenue) : '—'}</div>
               <div style={{ fontSize: 12, color: 'var(--green-30)', fontWeight: 600 }}><Icon name="trending-up" size={11}/> +24% vs. 30 dias anteriores</div>
             </div>
             <div style={{ display: 'flex', gap: 12 }}>
@@ -148,7 +148,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           <div style={{ marginTop: 18 }}>
-            {VOL.length > 0 ? <DualLineChart data={VOL} h={200}/> : <div style={{ height: 200, display: 'grid', placeItems: 'center', color: 'var(--text-3)', fontSize: 13 }}>{t('common.loading', 'Carregando…')}</div>}
+            {VOL.length > 1 ? <DualLineChart data={VOL} h={200}/> : <div style={{ height: 200, display: 'grid', placeItems: 'center', color: 'var(--text-3)', fontSize: 13 }}>{t('common.loading', 'Carregando…')}</div>}
           </div>
         </div>
 
