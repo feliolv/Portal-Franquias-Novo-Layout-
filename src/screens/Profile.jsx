@@ -5,7 +5,6 @@
 const Profile = ({ cart, setRoute, openCart }) => {
   const { t } = useLang();
   const _user = API.Auth.getUser() || {};
-  const { t } = useLang();
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   const [tab, setTab] = useState('dados');
   const [twoFA, setTwoFA] = useState(true);

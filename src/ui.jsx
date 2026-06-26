@@ -125,7 +125,7 @@ const AdminSidebar = ({ route, setRoute }) => {
              onClick={() => setRoute('admin-' + item.id)}>
           <Icon name={item.icon}/>
           {NAV_LABELS[item.id] || item.label}
-          {/* badges carregados via API — pendente */
+          {/* badges carregados via API — pendente */}
         </div>
       ))}
       <div className="nav-section-label">{t('nav.admin.system')}</div>

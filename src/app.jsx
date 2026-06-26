@@ -2,6 +2,8 @@
    App root — router, cart state, theme/tweaks wiring
    ════════════════════════════════════════════════════════ */
 
+const { useState, useEffect, useRef } = React;
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "personality": "sober",
   "density": "comfortable",
