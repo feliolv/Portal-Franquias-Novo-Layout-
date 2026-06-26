@@ -8,9 +8,7 @@ const OrderHistory = ({ cart, setRoute, openCart }) => {
   const [expanded, setExpanded] = useState(null);
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
 
-  // Only this client's orders for demo
-  const myOrders = ORDERS.filter(o => o.code === 'NX-7842');
-  const allOrders = [...myOrders, ...ORDERS.filter(o => o.code !== 'NX-7842').slice(0, 4).map(o => ({ ...o, code: 'NX-7842', razao: 'Vending Premier Ltda.' }))];
+  // allOrders carregado via API.Sales.listForClient()
 
   const filtered = allOrders.filter(o => filter === 'all' || o.status === filter);
 

@@ -33,7 +33,7 @@ const Partner = ({ setRoute }) => {
         <div className="sidebar-account">
           <div className="label">Parceiro autenticado</div>
           <div className="name">TechVend Distribuição</div>
-          <div className="code"><Icon name="lock" size={10}/> F01-204</div>
+          <div className="code"><Icon name="lock" size={10}/> {(API.Auth.getUser()||{}).code || "PARCEIRO"}</div>
         </div>
         <nav className="sidebar-nav">
           <div className="nav-section-label">Operação</div>

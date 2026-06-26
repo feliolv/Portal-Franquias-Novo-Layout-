@@ -107,8 +107,8 @@ const App = () => {
     body = <Login onSignin={(kind, user) => {
       // Salvar user mock no sessionStorage para persistir F5
       const mockUser = user || {
-        code: kind === 'partner' ? 'F01-204' : 'NX-7842',
-        name: kind === 'admin' ? 'Admin Nayax' : 'Vending Premier Ltda.',
+        code: kind === 'partner' ? 'PARCEIRO' : 'CLIENTE',
+        name: kind === 'admin' ? 'Admin Nayax' : 'Portal Demo',
         role: kind === 'admin' ? 'admin' : 'client',
         tipo: kind,
       };

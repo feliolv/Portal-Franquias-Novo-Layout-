@@ -4,6 +4,8 @@
 
 const Profile = ({ cart, setRoute, openCart }) => {
   const { t } = useLang();
+  const _user = API.Auth.getUser() || {};
+  const { t } = useLang();
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   const [tab, setTab] = useState('dados');
   const [twoFA, setTwoFA] = useState(true);
@@ -18,14 +20,14 @@ const Profile = ({ cart, setRoute, openCart }) => {
       <div className="app-main">
         <Topbar breadcrumb={[{ label: 'Minha conta' }]} onCartClick={openCart} cartCount={cartCount}/>
         <div className="app-content">
-          <PageHeader kicker="Conta NX-7842" title="Minha conta" sub="Gerencie seus dados, senha e preferências de notificação."/>
+          <PageHeader kicker={"Conta " + (_user.code || "")} title="Minha conta" sub="Gerencie seus dados, senha e preferências de notificação."/>
 
           {/* Identity banner */}
           <div className="card" style={{ padding: 20, display: 'flex', alignItems: 'center', gap: 16, marginBottom: 18 }}>
             <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'var(--accent)', color: 'var(--dark)', display: 'grid', placeItems: 'center', fontSize: 22, fontWeight: 700 }}>MR</div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 18, fontWeight: 700 }}>Marina Reis</div>
-              <div style={{ fontSize: 13, color: 'var(--text-2)' }}>Compradora · Vending Premier Ltda. · <span className="t-mono">NX-7842</span></div>
+              <div style={{ fontSize: 18, fontWeight: 700 }}>{_user.name || '—'}</div>
+              <div style={{ fontSize: 13, color: 'var(--text-2)' }}>{_user.role || ''} · <span className="t-mono">{_user.code || ''}</span></div>
             </div>
             <button className="btn btn-secondary btn-sm"><Icon name="edit" size={13}/> Trocar foto</button>
           </div>
