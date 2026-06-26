@@ -1259,3 +1259,5 @@ const NewFranchiseModal = ({ onClose, existing = null }) => {
 };
 
 window.NewFranchiseModal = NewFranchiseModal;
+
+window.AdminSalesClients = AdminSales;
