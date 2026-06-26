@@ -43,7 +43,7 @@ const AdminProducts = () => {
     if (cat === 'Produtos') return p.cat !== 'Serviços';
     return p.cat === cat;
   };
-  const rows = PRODUCTS.filter(p =>
+  const rows = products.filter(p =>
     matchCat(p) &&
     (!onlyNew || p.new) &&
     (!onlyStock || (p.stock != null && p.stock > 20)) &&
@@ -66,7 +66,7 @@ const AdminProducts = () => {
       <PageHeader
         kicker={t('admin.products.kicker')}
         title={t('admin.products.title')}
-        sub={`${products.length} · ${PRODUCTS.filter(p=>p.new).length} ${t('common.new').toLowerCase()}`}
+        sub={`${products.length} · ${products.filter(p=>p.new).length} ${t('common.new').toLowerCase()}`}
         actions={
           <>
             <button className="btn btn-secondary btn-sm" onClick={() => window.toast && window.toast('Sincronizando com HubSpot…')}><Icon name="plug" size={13}/> {t('admin.products.syncHs')}</button>
@@ -78,9 +78,9 @@ const AdminProducts = () => {
       <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
         {CATEGORIES.map(c => {
           const count = c === 'Todos' ? products.length
-            : c === 'Serviços' ? PRODUCTS.filter(p => p.cat === 'Serviços').length
-            : c === 'Produtos' ? PRODUCTS.filter(p => p.cat !== 'Serviços').length
-            : PRODUCTS.filter(p => p.cat === c).length;
+            : c === 'Serviços' ? products.filter(p => p.cat === 'Serviços').length
+            : c === 'Produtos' ? products.filter(p => p.cat !== 'Serviços').length
+            : products.filter(p => p.cat === c).length;
           return (
             <button key={c} onClick={() => setCat(c)} style={{
               height: 30, padding: '0 12px', borderRadius: 'var(--radius-pill)',
