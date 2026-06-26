@@ -59,13 +59,9 @@ const AdminDashboard = () => {
   const ACTIVITY = []; // carregado via API
 
   const VOL = []; // TODO: carregar via API
-  const SEGMENTS = [
-    [] // TODO: carregar via API;
-  const TOP_PRODUCTS = []; // carregado via API
-  const TOP_CLIENTS = [
-    { name: '    { name: '    { name: 'MicroMercado Express SA',    code: 'NX-5577', rev: 162400, orders: 18 },
-    { name: 'Vending Premier Ltda.',      code: '    { name: 'ParkArcade Diversões',       code: 'NX-6650', rev: 76800, orders: 6 },
-  ];
+  const SEGMENTS      = []; // carregado via API
+  const TOP_PRODUCTS  = []; // carregado via API
+  const TOP_CLIENTS   = []; // carregado via API
 
   return (
     <>
