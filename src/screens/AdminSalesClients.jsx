@@ -454,6 +454,54 @@ const AdminClients = () => {
   const [editFranchise, setEditFranchise] = useState(null);
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(null); // code do client com menu aberto
+  const menuRef = React.useRef(null);
+
+  // Fecha menu ao clicar fora
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDoc = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(null); };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [menuOpen]);
+
+  const deleteClient = async (client) => {
+    const ok = await window.confirmAction({
+      title: 'Excluir ' + (client.name || client.code) + '?',
+      body: 'Esta ação não pode ser desfeita. O cliente e todos os seus dados serão removidos.',
+      danger: true,
+      confirmLabel: 'Excluir',
+    });
+    if (!ok) return;
+    try {
+      await fetch('/api/clients/' + client.code, {
+        method: 'DELETE',
+        headers: { 'x-api-key': 'pf-api-nayax-2026' }
+      });
+      setClients(prev => prev.filter(cl => cl.code !== client.code));
+      window.__portal_clients = (window.__portal_clients || []).filter(cl => cl.code !== client.code);
+      window.toast && window.toast('Cliente ' + client.code + ' excluído');
+    } catch (e) {
+      window.toast && window.toast('Erro ao excluir: ' + e.message, 'error');
+    }
+    setMenuOpen(null);
+  };
+
+  const toggleStatus = async (client) => {
+    const newStatus = client.status === 'active' ? 'inactive' : 'active';
+    try {
+      await fetch('/api/clients/' + client.code, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': 'pf-api-nayax-2026' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      setClients(prev => prev.map(cl => cl.code === client.code ? { ...cl, status: newStatus } : cl));
+      window.toast && window.toast('Status atualizado para ' + (newStatus === 'active' ? 'Ativo' : 'Inativo'));
+    } catch (e) {
+      window.toast && window.toast('Erro: ' + e.message, 'error');
+    }
+    setMenuOpen(null);
+  };
 
   useEffect(() => {
     API.Clients.list().then(data => {
@@ -542,7 +590,37 @@ const AdminClients = () => {
                   <td>
                     <div style={{ display: 'flex', gap: 4, justifyContent: 'flex-end' }}>
                       <button className="btn btn-ghost btn-sm" style={{ width: 28, padding: 0 }} title="Editar" onClick={() => setEditFranchise(c)}><Icon name="edit" size={13}/></button>
-                      <button className="btn btn-ghost btn-sm" style={{ width: 28, padding: 0 }} title="Mais opções"><Icon name="more" size={14}/></button>
+                      <div style={{ position: 'relative' }} ref={menuOpen === c.code ? menuRef : null}>
+                        <button className="btn btn-ghost btn-sm" style={{ width: 28, padding: 0 }} title="Mais opções"
+                          onClick={(e) => { e.stopPropagation(); setMenuOpen(menuOpen === c.code ? null : c.code); }}>
+                          <Icon name="more" size={14}/>
+                        </button>
+                        {menuOpen === c.code && (
+                          <div style={{
+                            position: 'absolute', right: 0, top: 32, zIndex: 100,
+                            background: 'var(--bg-surface)', border: '1px solid var(--line-2)',
+                            borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)',
+                            minWidth: 160, padding: '4px 0',
+                          }}>
+                            <button onClick={() => { setEditFranchise(c); setMenuOpen(null); }} style={{ width: '100%', padding: '8px 14px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-1)' }}
+                              onMouseEnter={e => e.currentTarget.style.background='var(--bg-hover)'}
+                              onMouseLeave={e => e.currentTarget.style.background='none'}>
+                              <Icon name="edit" size={13}/> Editar cadastro
+                            </button>
+                            <button onClick={() => toggleStatus(c)} style={{ width: '100%', padding: '8px 14px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-1)' }}
+                              onMouseEnter={e => e.currentTarget.style.background='var(--bg-hover)'}
+                              onMouseLeave={e => e.currentTarget.style.background='none'}>
+                              <Icon name={c.status === 'active' ? 'eye-off' : 'eye'} size={13}/> {c.status === 'active' ? 'Desativar' : 'Ativar'}
+                            </button>
+                            <div style={{ height: 1, background: 'var(--line-1)', margin: '4px 0' }}/>
+                            <button onClick={() => deleteClient(c)} style={{ width: '100%', padding: '8px 14px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--red-40)' }}
+                              onMouseEnter={e => e.currentTarget.style.background='var(--red-soft, #fef2f2)'}
+                              onMouseLeave={e => e.currentTarget.style.background='none'}>
+                              <Icon name="trash" size={13}/> Excluir cliente
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </td>
                 </tr>
