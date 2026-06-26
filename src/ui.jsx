@@ -411,13 +411,7 @@ const LangPicker = ({ initial = 'pt' }) => {
 const NotifBell = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
-  const [items, setItems] = useState([
-    { id: 1, kind: 'order',  tone: 'green',  read: false, time: 'há 4 min',  text: <><strong>(API.Auth.getUser()||{}).name || '—'</strong> enviou pedido <span className="t-mono">#PD-10428</span></>, sub: 'R$ 8.450 · aguarda aprovação' },
-    { id: 2, kind: 'user',   tone: 'blue',   read: false, time: 'há 22 min', text: <>Nova franquia cadastrada: <strong>Snack Já Distribuidora</strong></>, sub: 'NX-1129 · pendente de aprovação' },
-    { id: 3, kind: 'plug',   tone: 'yellow', read: false, time: 'há 1 h',    text: <>Sincronização HubSpot concluída</>, sub: '3 produtos novos aguardando classificação' },
-    { id: 4, kind: 'check',  tone: 'green',  read: true,  time: 'há 2 h',    text: <>Pedido <span className="t-mono">#PD-10427</span> marcado como enviado</>, sub: 'EcoMov Estações Elétricas' },
-    { id: 5, kind: 'alert',  tone: 'red',    read: true,  time: 'há 3 h',    text: <>Pedido <span className="t-mono">#PD-10421</span> cancelado</>, sub: 'Snack Já Distribuidora' },
-  ]);
+  const [items, setItems] = useState([]); // carregado via API
 
   const unread = items.filter(i => !i.read).length;
 
