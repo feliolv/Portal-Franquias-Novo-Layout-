@@ -457,7 +457,9 @@ const AdminClients = () => {
 
   useEffect(() => {
     API.Clients.list().then(data => {
-      setClients(data || []);
+      const list = data || [];
+      setClients(list);
+      window.__portal_clients = list; // disponível para NewFranchiseModal
     }).catch(e => console.error('[AdminClients]', e.message))
     .finally(() => setLoading(false));
   }, []);
@@ -611,7 +613,7 @@ const NewFranchiseModal = ({ onClose, existing = null }) => {
   const autoCode = useMemo(() => {
     if (existing) return existing.code;
     const prefix = (kind && CODE_PREFIX[kind]) || 'NX';
-    const used = new Set(FRANCHISES.map(f => f.code));
+    const used = new Set((window.__portal_clients || []).map(f => f.code));
     let n;
     do { n = Math.floor(1000 + Math.random() * 9000); } while (used.has(prefix + '-' + n));
     return prefix + '-' + n;
@@ -623,12 +625,39 @@ const NewFranchiseModal = ({ onClose, existing = null }) => {
     consultorAvatar: 'FA',
   };
 
-  // Pre-select products
-  const [items, setItems] = useState(() => PRODUCTS.map(p => ({
-    id: p.id, enabled: !p.service,
-    customPrice: p.price,
-    customMonthly: p.monthly || 0,
-  })));
+  // Carregar produtos via API
+  const [items, setItems] = useState([]);
+  const [prodsLoading, setProdsLoading] = useState(true);
+
+  useEffect(() => {
+    API.Products.list(false).then(prods => {
+      const pList = prods || [];
+      // Se editando, pre-selecionar produtos visíveis do cliente
+      const visibleIds = existing?.visible_products
+        ? (typeof existing.visible_products === 'string'
+            ? JSON.parse(existing.visible_products)
+            : existing.visible_products)
+        : [];
+      const customPrices = existing?.custom_prices
+        ? (typeof existing.custom_prices === 'string'
+            ? JSON.parse(existing.custom_prices)
+            : existing.custom_prices)
+        : {};
+      setItems(pList.map(p => ({
+        id: p.id || p.sku,
+        sku: p.sku,
+        name: p.name,
+        cat: p.cat || p.category || 'Produto',
+        price: parseFloat(p.price) || 0,
+        monthly: parseFloat(p.monthly) || 0,
+        service: p.service || false,
+        enabled: visibleIds.length === 0 ? true : visibleIds.includes(p.id || p.sku),
+        customPrice: customPrices[p.id || p.sku] || parseFloat(p.price) || 0,
+        customMonthly: parseFloat(p.monthly) || 0,
+      })));
+    }).catch(e => console.error('[Modal products]', e))
+    .finally(() => setProdsLoading(false));
+  }, []);
   const [payMethods, setPayMethods] = useState([
     { id: 'pix',      label: 'PIX à vista',           type: 'avista',     term: 0,  discount: 3,  icon: 'zap',       tone: 'green',   enabled: true,  builtin: true },
     { id: 'cartao',   label: 'Cartão de crédito',     type: 'parcelado',  term: 0,  installments: 12, icon: 'tag',   tone: 'blue',    enabled: true,  builtin: true },
