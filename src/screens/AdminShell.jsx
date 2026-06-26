@@ -56,17 +56,7 @@ const AdminDashboard = () => {
   const [period, setPeriod] = useState('month');
   const [feedOpen, setFeedOpen] = useState(false);
 
-  const ACTIVITY = [
-    { time: 'há 4 min',  icon: 'cart', tone: 'green', text: <><strong>Vending Premier Ltda.</strong> enviou pedido <span className="t-mono">#PD-10428</span> · <span className="t-mono">R$ 8.450</span></> },
-    { time: 'há 22 min', icon: 'user', tone: 'blue',  text: <>Nova franquia cadastrada: <strong>Snack Já Distribuidora</strong> · <span className="t-mono">NX-1129</span></> },
-    { time: 'há 1 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10427</span> da <strong>    { time: 'há 2 h',    icon: 'plug', tone: 'yellow',text: <>Sincronização HubSpot concluída · <strong>3 produtos novos</strong> aguardando classificação</> },
-    { time: 'há 3 h',    icon: 'alert',tone: 'red',   text: <>Pedido <span className="t-mono">#PD-10421</span> da <strong>Snack Já</strong> cancelado pelo cliente</> },
-    { time: 'há 5 h',    icon: 'edit', tone: 'neutral',text: <><strong>Renata G.</strong> atualizou preço de <strong>VPOS IoT Onyx</strong> (R$ 1.490 → R$ 1.290)</> },
-    { time: 'há 6 h',    icon: 'check',tone: 'green', text: <>Pedido <span className="t-mono">#PD-10425</span> da <strong>    { time: 'há 8 h',    icon: 'gift', tone: 'yellow',text: <>Bundle <strong>Starter Vending</strong> aplicado em 3 novos orçamentos</> },
-    { time: 'ontem 17:42', icon: 'user', tone: 'blue', text: <><strong>Felipe Andrade</strong> aprovou desconto de 18% · <span className="t-mono">UPGRADE0664</span></> },
-    { time: 'ontem 14:10', icon: 'building', tone: 'neutral', text: <>Franquia <strong>ParkArcade Diversões</strong> atingiu R$ 76,8k de LTV</> },
-    { time: 'ontem 09:30', icon: 'download', tone: 'neutral', text: <><strong>Renata G.</strong> exportou relatório de vendas · Mai/2026</> },
-  ];
+  const ACTIVITY = []; // carregado via API
 
   const VOL = []; // TODO: carregar via API
   const SEGMENTS = [
