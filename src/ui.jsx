@@ -62,8 +62,8 @@ const ClientSidebar = ({ route, setRoute, cart }) => {
       </div>
       <div className="sidebar-account">
         <div className="label">{t('nav.client.account')}</div>
-        <div className="name">Vending Premier Ltda.</div>
-        <div className="code"><Icon name="lock" size={10}/> NX-7842</div>
+        <div className="name">{(API.Auth.getUser()||{}).name || '—'}</div>
+        <div className="code"><Icon name="lock" size={10}/> {(API.Auth.getUser()||{}).code || ''}</div>
       </div>
       <nav className="sidebar-nav">
         <div className="nav-section-label">{t('nav.client.catalogSection')}</div>
@@ -125,16 +125,14 @@ const AdminSidebar = ({ route, setRoute }) => {
              onClick={() => setRoute('admin-' + item.id)}>
           <Icon name={item.icon}/>
           {NAV_LABELS[item.id] || item.label}
-          {item.id === 'sales' && <span className="count">128</span>}
-          {item.id === 'bundles' && <span className="count">7</span>}
-          {item.id === 'hubspot' && <span className="count">3</span>}
+          {/* badges carregados via API — pendente */
         </div>
       ))}
       <div className="nav-section-label">{t('nav.admin.system')}</div>
       <div className={'nav-item ' + (route === 'admin-settings' ? 'active' : '')} onClick={() => setRoute('admin-settings')}><Icon name="settings"/> {t('nav.admin.settings')}</div>
     </nav>
     <div className="sidebar-foot">
-      <div className="user-pill" onClick={() => setRoute('login')}>
+      <div className="user-pill" onClick={() => setRoute('admin-settings')} style={{ cursor: 'pointer' }} title="Configurações de perfil">
         <div className="avatar">{((API.Auth.getUser()||{}).name||"A").split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase()}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="name">{(API.Auth.getUser()||{}).name || '—'}</div>
