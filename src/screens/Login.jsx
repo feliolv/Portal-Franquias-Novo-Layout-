@@ -37,7 +37,18 @@ const Login = ({ onSignin }) => {
   };
   const submitAdmin = () => {
     setLoading(true);
-    setTimeout(() => onSignin('admin'), 700);
+    const isProd = window.location.hostname.includes('nayax.com.br');
+    if (!isProd) {
+      // Preview: bypass OAuth — entra como admin diretamente
+      const mockAdmin = { code: 'ADMIN', name: 'Admin Nayax (Preview)', role: 'admin', tipo: 'admin', email: 'admin@nayax.com' };
+      sessionStorage.setItem('portal_user', JSON.stringify(mockAdmin));
+      sessionStorage.setItem('nayax_route', 'admin-dashboard');
+      setTimeout(() => { setLoading(false); onSignin('admin', mockAdmin); }, 400);
+      return;
+    }
+    // Produção: HubSpot OAuth real
+    setLoading(false);
+    API.Auth.loginHubSpot();
   };
 
   return (
@@ -316,6 +327,12 @@ const Login = ({ onSignin }) => {
             </form>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {!window.location.hostname.includes('nayax.com.br') && (
+                <div style={{ background: '#FEF3C7', border: '1px solid #F59E0B', borderRadius: 6, padding: '8px 12px', fontSize: 11.5, color: '#92400E', display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
+                  <span>⚡</span>
+                  <span><strong>Preview:</strong> clique no botão abaixo para entrar como admin sem OAuth.</span>
+                </div>
+              )}
               <button onClick={submitAdmin} disabled={loading} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
                 height: 52, borderRadius: 'var(--radius-md)',
