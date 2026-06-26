@@ -99,14 +99,14 @@ const AdminDashboard = () => {
             </div>
           </div>
           <div style={{ marginTop: 18 }}>
-            <DualLineChart data={VOL} h={200}/>
+            {VOL.length > 0 ? <DualLineChart data={VOL} h={200}/> : <div style={{ height: 200, display: 'grid', placeItems: 'center', color: 'var(--text-3)', fontSize: 13 }}>{t('common.loading', 'Carregando…')}</div>}
           </div>
         </div>
 
         <div className="card card-pad">
           <div className="t-overline" style={{ marginBottom: 12 }}>{t('admin.dashboard.bySegment', 'Pedidos por segmento')}</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-            <DonutChart data={SEGMENTS} size={130} stroke={20}/>
+            {SEGMENTS.length > 0 ? <DonutChart data={SEGMENTS} size={130} stroke={20}/> : null}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
               {SEGMENTS.map(s => (
                 <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5 }}>
