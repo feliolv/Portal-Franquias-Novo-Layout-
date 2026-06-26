@@ -45,6 +45,45 @@ const App = () => {
     window.openCheckout = () => { setCartOpen(false); setCheckoutOpen(true); };
   }, []);
 
+  // OAuth HubSpot callback — lê ?session= ou ?auth_error= da URL
+  // O backend redireciona para /admin?session=TOKEN após autenticação
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionToken = params.get('session');
+    const authError    = params.get('auth_error');
+    const authEmail    = params.get('email');
+
+    if (sessionToken) {
+      sessionStorage.setItem('session_token', decodeURIComponent(sessionToken));
+      // Verificar token e salvar user
+      API.Auth.verify().then(user => {
+        if (user) {
+          API.Auth.setUser(user);
+          sessionStorage.setItem('nayax_route', 'admin-dashboard');
+          navigate('admin-dashboard');
+        } else {
+          navigate('login');
+        }
+      }).catch(() => navigate('login'));
+      window.history.replaceState({}, '', '/');
+    } else if (authError) {
+      window.history.replaceState({}, '', '/');
+      const msgs = {
+        nao_autorizado: authEmail
+          ? 'Acesso negado: ' + decodeURIComponent(authEmail) + ' não está autorizado.'
+          : 'Acesso negado. Conta não autorizada.',
+        token_invalido: 'Token HubSpot inválido. Tente novamente.',
+        sem_email:      'Não foi possível obter o e-mail da conta HubSpot.',
+        acesso_negado:  'Acesso negado pelo HubSpot.',
+        erro_interno:   'Erro interno. Tente novamente em instantes.',
+      };
+      const msg = msgs[authError] || 'Erro de autenticação: ' + authError;
+      if (window.toast) window.toast(msg, 'error');
+      else alert(msg);
+      navigate('login');
+    }
+  }, []);
+
   const cartCount = cart.reduce((a, c) => a + c.qty, 0);
   const addToCart = (product, qty = 1) => {
     setCart(prev => {
