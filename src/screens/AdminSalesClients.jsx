@@ -449,9 +449,18 @@ const AdminSales = () => {
 const AdminClients = () => {
   const { t } = useLang();
   const [search, setSearch] = useState('');
-  const [view, setView] = useState('table'); // table | cards
+  const [view, setView] = useState('table');
   const [newOpen, setNewOpen] = useState(false);
   const [editFranchise, setEditFranchise] = useState(null);
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    API.Clients.list().then(data => {
+      setClients(data || []);
+    }).catch(e => console.error('[AdminClients]', e.message))
+    .finally(() => setLoading(false));
+  }, []);
 
   const rows = clients.filter(f => search === '' || (f.razao + ' ' + f.code + ' ' + f.city).toLowerCase().includes(search.toLowerCase()));
 

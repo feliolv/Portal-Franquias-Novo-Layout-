@@ -26,7 +26,7 @@ const AdminBundles = () => {
     load();
   }, []);
 
-  const BUNDLES = bundles; // alias para compatibilidade com JSX existente
+  const BUNDLES = bundles;
 
   const counts = {
     all: bundles.length,
@@ -42,6 +42,12 @@ const AdminBundles = () => {
 
   const totalUses = BUNDLES.reduce((a, b) => a + b.uses, 0);
   const totalSavings = BUNDLES.filter(b => b.status === 'active').reduce((a, b) => a + b.savings * b.uses, 0);
+
+  if (loading) return (
+    <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>
+      Carregando bundles…
+    </div>
+  );
 
   return (
     <>
@@ -144,7 +150,7 @@ const AdminBundles = () => {
               </div>
               <div style={{ background: 'var(--bg-surface)', padding: '10px 12px' }}>
                 <div className="t-overline" style={{ fontSize: 9 }}>Vendas</div>
-                <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', marginTop: 2 }}>{b.uses}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', marginTop: 2 }}>{parseInt(b.uses)||0}</div>
               </div>
             </div>
 
