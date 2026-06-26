@@ -456,6 +456,9 @@ const AdminClients = () => {
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(null); // code do client com menu aberto
   const menuRef = React.useRef(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filterSeg, setFilterSeg] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
 
   // Fecha menu ao clicar fora
   useEffect(() => {
@@ -512,7 +515,14 @@ const AdminClients = () => {
     .finally(() => setLoading(false));
   }, []);
 
-  const rows = clients.filter(f => search === '' || (f.razao + ' ' + f.code + ' ' + f.city).toLowerCase().includes(search.toLowerCase()));
+  const rows = clients.filter(f => {
+    const q = search.toLowerCase();
+    const matchSearch = search === '' || [f.name, f.code, f.city, f.segment].filter(Boolean).join(' ').toLowerCase().includes(q);
+    const matchSeg    = !filterSeg    || f.segment === filterSeg;
+    const matchStatus = !filterStatus || f.status  === filterStatus;
+    return matchSearch && matchSeg && matchStatus;
+  });
+  const segments = [...new Set(clients.map(f => f.segment).filter(Boolean))];
 
   return (
     <>
@@ -538,7 +548,40 @@ const AdminClients = () => {
               <Icon name="search" size={13}/>
               <input placeholder="Buscar franquia, código, cidade…" value={search} onChange={e=>setSearch(e.target.value)} style={{ fontSize: 12.5 }}/>
             </div>
-            <button className="btn btn-ghost btn-sm" onClick={() => setFiltersOpen && setFiltersOpen(true)}><Icon name="filter" size={13}/> Filtros</button>
+            <button className="btn btn-ghost btn-sm"
+              onClick={() => setFiltersOpen(v => !v)}
+              style={{ background: (filterSeg || filterStatus) ? 'var(--taxi-yellow)' : '', color: (filterSeg || filterStatus) ? 'var(--dark)' : '' }}>
+              <Icon name="filter" size={13}/> Filtros {(filterSeg || filterStatus) ? '·' + [filterSeg, filterStatus].filter(Boolean).length : ''}
+            </button>
+            {filtersOpen && (
+              <div style={{ position: 'absolute', top: 44, left: 0, zIndex: 50, background: 'var(--bg-surface)', border: '1px solid var(--line-2)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', padding: 16, minWidth: 280, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Filtros</div>
+                <div>
+                  <div style={{ fontSize: 12, color: 'var(--text-2)', marginBottom: 6 }}>Segmento</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {['', ...segments].map(s => (
+                      <button key={s} onClick={() => setFilterSeg(s)} style={{ padding: '4px 10px', borderRadius: 999, fontSize: 12, fontWeight: 500, cursor: 'pointer', border: '1px solid ' + (filterSeg === s ? 'var(--dark)' : 'var(--line-2)'), background: filterSeg === s ? 'var(--dark)' : 'var(--bg-surface)', color: filterSeg === s ? 'var(--taxi-yellow)' : 'var(--text-2)' }}>
+                        {s || 'Todos'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 12, color: 'var(--text-2)', marginBottom: 6 }}>Status</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[['', 'Todos'], ['active', 'Ativo'], ['inactive', 'Inativo']].map(([val, label]) => (
+                      <button key={val} onClick={() => setFilterStatus(val)} style={{ padding: '4px 10px', borderRadius: 999, fontSize: 12, fontWeight: 500, cursor: 'pointer', border: '1px solid ' + (filterStatus === val ? 'var(--dark)' : 'var(--line-2)'), background: filterStatus === val ? 'var(--dark)' : 'var(--bg-surface)', color: filterStatus === val ? 'var(--taxi-yellow)' : 'var(--text-2)' }}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 4, borderTop: '1px solid var(--line-1)' }}>
+                  <button onClick={() => { setFilterSeg(''); setFilterStatus(''); }} style={{ fontSize: 12, color: 'var(--text-3)', background: 'none', border: 'none', cursor: 'pointer' }}>Limpar filtros</button>
+                  <button className="btn btn-dark btn-sm" onClick={() => setFiltersOpen(false)}>Aplicar</button>
+                </div>
+              </div>
+            )}
           </div>
           <div style={{ display: 'flex', gap: 4, padding: 3, background: 'var(--bg-surface-2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--line-1)' }}>
             {['table','cards'].map(v => (
