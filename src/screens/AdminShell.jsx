@@ -112,10 +112,25 @@ const AdminDashboard = () => {
       />
 
       <div className="kpi-strip" style={{ marginBottom: 18 }}>
-        <KpiCard label={t('admin.kpi.orders')}     value="248"        delta="+18%" up data={VOL} accent="dark"/>
-        <KpiCard label={t('admin.kpi.revenue')}    value="R$ 1,42 M" delta="+24%" up data={VOL.map(v=>v*1.2)} accent="yellow"/>
-        <KpiCard label={t('admin.kpi.avg')}        value="R$ 5.730"  delta="−4%"  data={VOL.map((v,i)=>v + Math.sin(i)*5)}/>
-        <KpiCard label={t('admin.kpi.franchises')} value="312"        delta="+6"   up data={VOL.map(v=>v*0.6)}/>
+        {statsLoading
+          ? [1,2,3,4].map(i => <div key={i} className="card card-pad" style={{ flex:1, height: 96 }}><Skeleton h={14} w="60%" style={{marginBottom:8}}/><Skeleton h={28} w="40%"/></div>)
+          : <>
+            <KpiCard label={t('admin.kpi.orders')}
+              value={KPI.orders != null ? String(KPI.orders) : '—'}
+              delta={KPI.orders_delta != null ? (KPI.orders_delta > 0 ? '+' : '') + KPI.orders_delta + '%' : null}
+              up={(KPI.orders_delta||0) >= 0} data={VOL.map(v=>v.y||0)} accent="dark"/>
+            <KpiCard label={t('admin.kpi.revenue')}
+              value={KPI.revenue != null ? fmtBRLcurt(KPI.revenue) : '—'}
+              delta={KPI.revenue_delta != null ? (KPI.revenue_delta > 0 ? '+' : '') + KPI.revenue_delta + '%' : null}
+              up={(KPI.revenue_delta||0) >= 0} data={VOL.map(v=>v.y||0)} accent="yellow"/>
+            <KpiCard label={t('admin.kpi.avg')}
+              value={KPI.avg_ticket != null ? fmtBRLcurt(KPI.avg_ticket) : '—'}
+              delta={KPI.avg_ticket_delta != null ? (KPI.avg_ticket_delta > 0 ? '+' : '') + KPI.avg_ticket_delta + '%' : null}
+              up={(KPI.avg_ticket_delta||0) >= 0} data={VOL.map(v=>v.y||0)}/>
+            <KpiCard label={t('admin.kpi.franchises')}
+              value={KPI.active_franchises != null ? String(KPI.active_franchises) : '—'}
+              delta={null} up={true} data={VOL.map(v=>v.y||0)}/>
+          </>}
       </div>
 
       {/* Row 1: Volume chart + Segments */}
