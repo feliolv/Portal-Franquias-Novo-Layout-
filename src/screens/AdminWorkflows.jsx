@@ -45,9 +45,77 @@ const WF_TEMPLATES = [
 ];
 
 const AdminWorkflows = () => {
-  const [tab, setTab] = useState('myflows'); // myflows | templates | runs
-  const [items, setItems] = useState(WORKFLOWS);
-  const [editing, setEditing] = useState(null); // null | 'new' | wf
+  const [tab, setTab] = useState('myflows');
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [toggling, setToggling] = useState(null); // id do wf sendo alterado
+  const [editing, setEditing] = useState(null);
+
+  // Carregar workflows reais do HubSpot
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const r = await fetch('/api/hubspot/workflows', {
+          headers: { 'x-api-key': 'pf-api-nayax-2026' }
+        });
+        if (!r.ok) throw new Error('status ' + r.status);
+        const d = await r.json();
+        // Mapear para o formato esperado pelo JSX existente
+        setItems((d.workflows || []).map(w => ({
+          id:       w.id,
+          name:     w.name,
+          trigger:  'hubspot',
+          actions:  ['hubspot'],
+          status:   w.enabled ? 'active' : 'paused',
+          runs:     0,
+          lastRun:  w.updatedAt,
+          success:  100,
+          hsUrl:    w.hsUrl,
+          enabled:  w.enabled,
+        })));
+      } catch (e) {
+        console.error('[AdminWorkflows]', e.message);
+        if (window.toast) window.toast('Erro ao carregar workflows: ' + e.message, 'error');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  // Toggle ativar/pausar no HubSpot
+  const toggleWorkflow = async (wf) => {
+    setToggling(wf.id);
+    try {
+      const newEnabled = !wf.enabled;
+      const r = await fetch('/api/hubspot/workflows/' + wf.id + '/toggle', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': 'pf-api-nayax-2026' },
+        body: JSON.stringify({ enabled: newEnabled }),
+      });
+      if (!r.ok) throw new Error('status ' + r.status);
+      setItems(prev => prev.map(w => w.id === wf.id
+        ? { ...w, enabled: newEnabled, status: newEnabled ? 'active' : 'paused' }
+        : w
+      ));
+      window.toast && window.toast(
+        (newEnabled ? 'Workflow ativado: ' : 'Workflow pausado: ') + wf.name
+      );
+    } catch (e) {
+      window.toast && window.toast('Erro: ' + e.message, 'error');
+    } finally {
+      setToggling(null);
+    }
+  };
+
+  if (loading) return (
+    <div style={{ padding: 60, textAlign: 'center', color: 'var(--text-3)', fontSize: 13, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+      <div style={{ width: 28, height: 28, border: '3px solid var(--line-2)', borderTopColor: 'var(--taxi-yellow)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
+      Carregando workflows do HubSpot…
+      <style>{'@keyframes spin { to { transform: rotate(360deg); } }'}</style>
+    </div>
+  );
 
   const counts = {
     all: items.length,
