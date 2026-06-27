@@ -250,15 +250,18 @@ const AdminWorkflows = () => {
       )}
 
       {tab === 'runs' && (
+        <div className="card" style={{ padding: 40, textAlign: 'center', color: 'var(--text-3)', fontSize: 13 }}>
+          <Icon name="clock" size={28} style={{ marginBottom: 12, display: 'block', margin: '0 auto 12px' }}/>
+          Histórico de execuções disponível no HubSpot.
+          <br/><br/>
+          <a href="https://app.hubspot.com/workflows/9186157" target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
+            <Icon name="external" size={12}/> Abrir HubSpot Workflows
+          </a>
+        </div>
+      )}
+      {tab === 'runs_DISABLED' && (
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-          {[
-            { wf: 'Notificar Slack em novo pedido > R$ 10k', when: '2026-05-22T14:33', status: 'ok',   detail: '#PD-10428 · R$ 8.450', duration: '420ms' },
-            { wf: 'Reenviar ao HubSpot em caso de erro',     when: '2026-05-22T11:02', status: 'fail', detail: 'Timeout 504', duration: '5.2s' },
-            { wf: 'E-mail de boas-vindas para nova franquia',when: '2026-05-21T16:48', status: 'ok',   detail: 'NX-1129 · Snack Já', duration: '180ms' },
-            { wf: 'Alerta estoque baixo via Slack',          when: '2026-05-22T10:00', status: 'ok',   detail: 'VPOS Touch v3 < 40 un.', duration: '94ms' },
-            { wf: 'Notificar WhatsApp Marina',               when: '2026-05-20T09:14', status: 'ok',   detail: '#PD-10422 · NX-7842', duration: '320ms' },
-            { wf: 'Reenviar ao HubSpot em caso de erro',     when: '2026-05-20T16:55', status: 'ok',   detail: '#PD-10426 · LavaBem', duration: '380ms' },
-          ].map((r, i, arr) => (
+          {[].map((r, i, arr) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '32px 1.4fr 1fr 100px 100px', gap: 14, padding: '12px 18px', alignItems: 'center', borderBottom: i < arr.length-1 ? '1px solid var(--line-1)' : 'none' }}>
               <div style={{ width: 26, height: 26, borderRadius: '50%', background: r.status === 'ok' ? 'var(--green-soft)' : 'var(--red-soft)', color: r.status === 'ok' ? 'var(--green-30)' : 'var(--red-30)', display: 'grid', placeItems: 'center' }}>
                 <Icon name={r.status === 'ok' ? 'check' : 'x'} size={12} stroke={3}/>
@@ -272,7 +275,50 @@ const AdminWorkflows = () => {
         </div>
       )}
 
-      {editing && <WorkflowBuilder existing={editing === 'new' ? null : editing} onClose={() => setEditing(null)} onSave={(wf) => { window.toast && window.toast('Workflow ' + (editing === 'new' ? 'criado' : 'salvo')); setEditing(null); }}/>}
+      {editing && <WorkflowBuilder
+        existing={editing === 'new' ? null : editing}
+        onClose={() => setEditing(null)}
+        onSave={async (data) => {
+          const isNew = editing === 'new';
+          try {
+            const r = await fetch('/api/hubspot/workflows' + (isNew ? '' : '/' + editing.id + '/toggle'), {
+              method: isNew ? 'POST' : 'PATCH',
+              headers: { 'Content-Type': 'application/json', 'x-api-key': 'pf-api-nayax-2026' },
+              body: JSON.stringify(isNew ? data : { enabled: true }),
+            });
+            const result = await r.json();
+            if (isNew) {
+              // Adicionar o novo workflow à lista
+              setItems(prev => [...prev, {
+                id:      result.id,
+                name:    data.name,
+                trigger: data.trigger,
+                actions: data.actions,
+                status:  'draft',
+                runs:    0,
+                lastRun: null,
+                success: 100,
+                enabled: false,
+                hsUrl:   result.hsCreateUrl,
+              }]);
+              if (result.hsCreateUrl) {
+                // Abrir HubSpot para publicar
+                const goHS = await window.confirmAction({
+                  title: 'Rascunho criado!',
+                  body: 'Seu workflow foi salvo. Clique em "Publicar no HubSpot" para ativá-lo com as condições completas.',
+                  confirmLabel: 'Publicar no HubSpot →',
+                  cancelLabel: 'Depois',
+                });
+                if (goHS) window.open(result.hsCreateUrl, '_blank');
+              }
+            }
+            window.toast && window.toast('Workflow ' + (isNew ? 'criado' : 'salvo'));
+          } catch (e) {
+            window.toast && window.toast('Erro: ' + e.message, 'error');
+          }
+          setEditing(null);
+        }}
+      />}
     </>
   );
 };
@@ -416,8 +462,8 @@ const WorkflowBuilder = ({ existing, onClose, onSave }) => {
           <button className="btn btn-ghost" onClick={onClose}>Cancelar</button>
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="btn btn-secondary" onClick={() => window.toast && window.toast('Workflow testado · 1 execução de exemplo')}><Icon name="zap" size={13}/> Testar</button>
-            <button className="btn btn-primary" onClick={() => onSave({ name, trigger, actions })} disabled={!valid}>
-              <Icon name="check" size={13} stroke={3}/> {isEdit ? 'Salvar workflow' : 'Criar e ativar'}
+            <button className="btn btn-primary" onClick={() => onSave({ name, trigger, actions, filters })} disabled={!valid}>
+              <Icon name="check" size={13} stroke={3}/> {isEdit ? 'Salvar alterações' : 'Salvar rascunho'}
             </button>
           </div>
         </div>
